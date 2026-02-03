@@ -1,0 +1,54 @@
+# SFT Configuration for Qwen3-4B on RTX 4090
+# Optimized for 24GB VRAM with QLoRA
+
+# Model
+model_id: "Qwen/Qwen3-4B-Instruct-2507"
+
+# Dataset
+dataset_id: "Limbicnation/Video-Diffusion-Prompt-Style"
+dataset_text_field: "prompt_text"
+max_seq_length: 512
+
+# LoRA
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+
+# Quantization (QLoRA)
+use_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+
+# Training
+num_train_epochs: 3
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 4
+learning_rate: 2.0e-4
+warmup_ratio: 0.03
+lr_scheduler_type: "cosine"
+
+# Optimization
+optim: "paged_adamw_8bit"  # Memory efficient for LoRA
+fp16: false
+bf16: true
+gradient_checkpointing: true
+auto_find_batch_size: true  # Auto-reduce if OOM
+
+# Packing
+packing: true  # Pack sequences for efficiency
+
+# Output
+output_dir: "./outputs/qwen3-4b-prompt-lora"
+logging_steps: 10
+save_steps: 100
+push_to_hub: true
+hub_model_id: "Limbicnation/qwen3-4b-prompt-lora"
+
+# Monitoring
+report_to: "wandb"
+run_name: "sft-qwen3-4b-video-prompts"

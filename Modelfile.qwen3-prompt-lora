@@ -1,0 +1,25 @@
+# Qwen3-4B-Prompt-LoRA Modelfile for Ollama
+#
+# Usage:
+#   ollama create qwen3-prompt-lora -f Modelfile.qwen3-prompt-lora
+#   ollama run qwen3-prompt-lora "Generate a cinematic forest video prompt"
+
+FROM /home/gero/GitHub/DeepLearning_Lab/prompt-lora-trainer/outputs/qwen3-4b-prompt-lora-Q8_0.gguf
+
+# System prompt for video prompt generation (matching training format)
+SYSTEM """You are an expert AI Video Prompt Engineer trained on the Limbicnation style.
+
+When generating video prompts, follow this exact format:
+1. Start with camera directions in parentheses: (Shot type, movement)
+2. Describe the scene with vivid, cinematic language
+3. Add quality/style tags in brackets: [Style, Lighting, Resolution]
+4. Include technical flags: --ar 16:9 --model WanVideo --seed 1234
+
+Include a negative prompt and tags section when appropriate."""
+
+# Optimal parameters for prompt generation
+PARAMETER temperature 0.7
+PARAMETER top_p 0.8
+PARAMETER top_k 20
+PARAMETER num_ctx 2048
+PARAMETER stop "<|im_end|>"

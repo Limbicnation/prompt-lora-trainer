@@ -1,0 +1,57 @@
+[project]
+name = "prompt-lora-trainer"
+version = "0.1.0"
+description = "LoRA fine-tuning pipeline for prompt-generation models"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Limbicnation"}
+]
+keywords = ["lora", "fine-tuning", "llm", "qwen", "prompt-engineering"]
+
+dependencies = [
+    # Core ML
+    "torch>=2.2.0",
+    "transformers>=4.40.0",
+    "accelerate>=0.28.0",
+    "datasets>=2.18.0",
+    
+    # LoRA/QLoRA
+    "peft>=0.10.0",
+    "bitsandbytes>=0.43.0",
+    
+    # Training framework
+    "trl>=0.8.0",
+    
+    # Hub & Auth
+    "huggingface-hub>=0.22.0",
+    
+    # Monitoring
+    "wandb>=0.16.0",
+    "trackio>=0.2.0",
+    
+    # Utilities
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.66.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.3.0",
+    "ipykernel>=6.29",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
