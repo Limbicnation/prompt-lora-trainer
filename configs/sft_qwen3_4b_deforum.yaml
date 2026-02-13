@@ -8,11 +8,11 @@ model_id: "Qwen/Qwen3-4B-Instruct-2507"
 # Use local path during development, HF Hub path after upload
 dataset_id: "Limbicnation/deforum-prompt-lora-dataset"
 dataset_text_field: "text"  # Pre-formatted chat text
-max_seq_length: 2048  # Increased for longer cinematic prompts
+max_seq_length: 1024  # Reduced from 2048: fits 24GB VRAM with r=32
 
 # LoRA - Enhanced for domain-specific fine-tuning
-lora_r: 64  # Increased from 16 for better domain adaptation
-lora_alpha: 128  # 2x rank (was 32)
+lora_r: 32  # Reduced from 64: r=64 is for 70B models, 32 is plenty for 4B
+lora_alpha: 64  # 2x rank
 lora_dropout: 0.1  # Increased from 0.05: more regularization to combat overfitting
 lora_target_modules:
   - q_proj
