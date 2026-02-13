@@ -69,8 +69,10 @@ Technical Parameters:
 - Tags: {tags_str}
 - Settings: {tech_str}"""
     
-    # Qwen3 chat template
-    text = f"""<|im_start|>user
+    # Qwen3 chat template (with system message for consistent inference behavior)
+    text = f"""<|im_start|>system
+You are a cinematic video prompt generator specializing in the De Forum Art Film aesthetic.<|im_end|>
+<|im_start|>user
 {example.get('instruction', '')}<|im_end|>
 <|im_start|>assistant
 {formatted_response}<|im_end|>"""
@@ -188,6 +190,11 @@ This dataset contains instruction-response pairs for training models to generate
 - Technical parameters (aspect ratio, guidance scale, seeds)
 - Camera movements and lighting descriptions
 - Negative prompts for quality filtering
+
+## Dataset Statistics
+
+- **Training examples:** {num_train}
+- **Validation examples:** {num_val}
 
 ## Dataset Structure
 

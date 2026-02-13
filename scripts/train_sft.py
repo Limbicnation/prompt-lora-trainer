@@ -90,7 +90,8 @@ class TrainingConfig:
     load_best_model_at_end: bool = False
     metric_for_best_model: Optional[str] = None
     greater_is_better: Optional[bool] = None
-    
+    early_stopping_patience: Optional[int] = None
+
     # Preprocessing (optional, for config compatibility)
     preprocessing: Optional[dict] = None
 
@@ -204,7 +205,7 @@ def main():
     except Exception as e:
         print(f"⚠️ Hub loading failed: {e}")
         # Try local fallback if not already tried
-        local_path = "./data/deforum_prompts_processed.json"
+        local_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "deforum_prompts_processed.json")
         if os.path.exists(local_path):
             print(f"📂 Falling back to local data: {local_path}")
             dataset = load_dataset("json", data_files=local_path, split="train")
@@ -222,6 +223,14 @@ def main():
         print("🔄 Formatting prompts using detected schema...")
         dataset = dataset.map(lambda x: {"text": format_prompt(x)}, remove_columns=dataset.column_names)
     
+    # Split into train/eval if eval_strategy is configured
+    eval_dataset = None
+    if config.eval_strategy:
+        split = dataset.train_test_split(test_size=0.1, seed=42)
+        dataset = split["train"]
+        eval_dataset = split["test"]
+        print(f"   Train: {len(dataset)}, Eval: {len(eval_dataset)}")
+
     if args.dry_run:
         print("\n[DRY RUN] Sample formatted prompt:")
         print("-" * 50)
@@ -247,7 +256,7 @@ def main():
         config.model_id,
         quantization_config=bnb_config,
         device_map="auto",
-        trust_remote_code=True,
+        trust_remote_code=True,  # Required for Qwen models; only use with trusted model sources
         token=token,
     )
     
@@ -289,8 +298,8 @@ def main():
         
         # GROUP 2: Dataset-related
         dataset_text_field="text",  # Use pre-mapped text field
-        max_length=config.max_seq_length,
-        packing=False,  # Disabled: requires flash attention for reliable behavior
+        max_seq_length=config.max_seq_length,
+        packing=config.packing,
         
         # GROUP 3: Training parameters
         num_train_epochs=config.num_train_epochs,
@@ -310,19 +319,34 @@ def main():
         fp16=config.fp16,
         bf16=use_bf16,
         
+        # Evaluation
+        eval_strategy=config.eval_strategy or "no",
+        eval_steps=config.eval_steps,
+        load_best_model_at_end=config.load_best_model_at_end,
+        metric_for_best_model=config.metric_for_best_model,
+        greater_is_better=config.greater_is_better,
+
         # Hub
         push_to_hub=config.push_to_hub,
         hub_model_id=config.hub_model_id,
         hub_token=token,
     )
     
+    # Callbacks
+    callbacks = []
+    if config.early_stopping_patience and eval_dataset is not None:
+        from transformers import EarlyStoppingCallback
+        callbacks.append(EarlyStoppingCallback(early_stopping_patience=config.early_stopping_patience))
+
     # Trainer
     print("🏋️ Starting training...")
     trainer = SFTTrainer(
         model=model,
         args=training_args,
         train_dataset=dataset,
+        eval_dataset=eval_dataset,
         processing_class=tokenizer,
+        callbacks=callbacks if callbacks else None,
     )
     
     trainer.train()

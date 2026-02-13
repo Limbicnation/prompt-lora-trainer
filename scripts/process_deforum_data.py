@@ -92,13 +92,20 @@ DEFAULT_NEGATIVE_PROMPT = (
 
 
 def extract_json_frames(text: str) -> Dict[str, str]:
-    """Extract JSON frame descriptions from text."""
+    """Extract JSON frame descriptions from text, including multi-line blocks."""
     frames = {}
-    # Match JSON-like structures with frame numbers
-    json_pattern = r'\{\s*"(\d+)"\s*:\s*"([^"]+)"\s*\}'
-    matches = re.findall(json_pattern, text)
-    for timestamp, description in matches:
-        frames[timestamp] = description
+    # Match JSON-like blocks (potentially multi-line) using brace balancing
+    brace_pattern = re.compile(r'\{[^{}]*\}', re.DOTALL)
+    for match in brace_pattern.finditer(text):
+        block = match.group(0)
+        try:
+            parsed = json.loads(block)
+            if isinstance(parsed, dict):
+                for key, value in parsed.items():
+                    if re.fullmatch(r'\d+', str(key)) and isinstance(value, str):
+                        frames[str(key)] = value
+        except (json.JSONDecodeError, ValueError):
+            continue
     return frames
 
 
@@ -543,7 +550,10 @@ def main():
     parser.add_argument("--augmentation_factor", type=int, default=20, help="Number of variations per scene")
     parser.add_argument("--min_examples_per_scene", type=int, default=15, help="Minimum examples per scene")
     parser.add_argument("--review_samples", type=int, default=50, help="Number of review samples to generate")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     args = parser.parse_args()
+
+    random.seed(args.seed)
     
     print("🎬 De Forum Data Processing Pipeline")
     print("=" * 50)

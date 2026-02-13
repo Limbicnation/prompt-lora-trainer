@@ -13,7 +13,7 @@ max_seq_length: 2048  # Increased for longer cinematic prompts
 # LoRA - Enhanced for domain-specific fine-tuning
 lora_r: 64  # Increased from 16 for better domain adaptation
 lora_alpha: 128  # 2x rank (was 32)
-lora_dropout: 0.05
+lora_dropout: 0.1  # Increased from 0.05: more regularization to combat overfitting
 lora_target_modules:
   - q_proj
   - k_proj
@@ -29,11 +29,11 @@ bnb_4bit_compute_dtype: "bfloat16"
 bnb_4bit_quant_type: "nf4"
 
 # Training - Adjusted for custom dataset
-num_train_epochs: 5  # Increased from 3 (smaller custom dataset)
+num_train_epochs: 3  # Reduced from 5: model converges within epoch 1, extra epochs overfit
 per_device_train_batch_size: 2  # Reduced from 4 (longer sequences)
 gradient_accumulation_steps: 8  # Increased from 4 (effective batch = 16)
-learning_rate: 1.0e-4  # Reduced from 2e-4 (more conservative)
-warmup_ratio: 0.03
+learning_rate: 5.0e-5  # Reduced from 1e-4: slower convergence reduces overfitting
+warmup_ratio: 0.06  # Increased from 0.03: gentler ramp-up with lower LR
 lr_scheduler_type: "cosine"
 
 # Optimization
@@ -64,8 +64,8 @@ load_best_model_at_end: true
 metric_for_best_model: "eval_loss"
 greater_is_better: false
 
-# Early stopping (optional)
-# early_stopping_patience: 3
+# Early stopping
+early_stopping_patience: 3  # Stop if eval_loss doesn't improve for 3 eval rounds
 
 # Data preprocessing
 preprocessing:

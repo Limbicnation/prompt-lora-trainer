@@ -6,7 +6,7 @@ tags:
 - generated_from_trainer
 - trl
 - sft
-licence: license
+license: mit
 ---
 
 # Model Card for qwen3-4b-deforum-prompt-lora
