@@ -298,7 +298,7 @@ def main():
         
         # GROUP 2: Dataset-related
         dataset_text_field="text",  # Use pre-mapped text field
-        max_seq_length=config.max_seq_length,
+        max_length=config.max_seq_length,
         packing=config.packing,
         
         # GROUP 3: Training parameters
