@@ -1,0 +1,80 @@
+# SFT Configuration for Qwen3-4B on De Forum Dataset
+# Optimized for 24GB VRAM with QLoRA
+
+# Model
+model_id: "Qwen/Qwen3-4B-Instruct-2507"
+
+# Dataset - Updated for De Forum
+# Use local path during development, HF Hub path after upload
+dataset_id: "Limbicnation/deforum-prompt-lora-dataset"
+dataset_text_field: "text"  # Pre-formatted chat text
+max_seq_length: 1024  # Reduced from 2048: fits 24GB VRAM with r=32
+
+# LoRA - Enhanced for domain-specific fine-tuning
+lora_r: 32  # Reduced from 64: r=64 is for 70B models, 32 is plenty for 4B
+lora_alpha: 64  # 2x rank
+lora_dropout: 0.1  # Increased from 0.05: more regularization to combat overfitting
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj  # Added MLP layers
+  - up_proj    # Added MLP layers
+  - down_proj  # Added MLP layers
+
+# Quantization (QLoRA)
+use_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+
+# Training - Adjusted for custom dataset
+num_train_epochs: 3  # Reduced from 5: model converges within epoch 1, extra epochs overfit
+per_device_train_batch_size: 2  # Reduced from 4 (longer sequences)
+gradient_accumulation_steps: 8  # Increased from 4 (effective batch = 16)
+learning_rate: 5.0e-5  # Reduced from 1e-4: slower convergence reduces overfitting
+warmup_ratio: 0.06  # Increased from 0.03: gentler ramp-up with lower LR
+lr_scheduler_type: "cosine"
+
+# Optimization
+optim: "paged_adamw_8bit"  # Memory efficient for LoRA
+fp16: false
+bf16: true
+gradient_checkpointing: true
+auto_find_batch_size: true  # Auto-reduce if OOM
+
+# Packing (disabled for longer sequences)
+packing: false  # Disabled: longer sequences need precise boundaries
+
+# Output
+output_dir: "./outputs/qwen3-4b-deforum-prompt-lora"
+logging_steps: 10
+save_steps: 50  # More frequent saves (smaller dataset)
+eval_steps: 50  # Evaluate every N steps
+push_to_hub: true
+hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora"
+
+# Monitoring
+report_to: "wandb"
+run_name: "sft-qwen3-4b-deforum-prompts"
+
+# Evaluation
+eval_strategy: "steps"
+load_best_model_at_end: true
+metric_for_best_model: "eval_loss"
+greater_is_better: false
+
+# Early stopping
+early_stopping_patience: 3  # Stop if eval_loss doesn't improve for 3 eval rounds
+
+# Data preprocessing
+preprocessing:
+  # Truncation settings
+  truncation: true
+  padding: "max_length"
+  
+  # Dataset mixing (if using multiple datasets)
+  dataset_mixing:
+    enabled: false
+    datasets: []
+    weights: []

@@ -206,6 +206,17 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# ===== Raw Inputs & Reference Docs =====
+# Source material lives outside repo; processed dataset on HF Hub
+inputs/
+references/
+data/*.txt
+data/review_samples.json
+
+# ===== Generated Data =====
+# Regenerate with: python scripts/process_deforum_data.py --input_dir ./inputs --output_file ./data/deforum_prompts_processed.json
+data/deforum_prompts_processed.json
+
 # ===== ML/Training Artifacts =====
 # Model outputs (push to HuggingFace Hub instead)
 outputs/
