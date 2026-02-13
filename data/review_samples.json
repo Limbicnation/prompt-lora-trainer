@@ -1,0 +1,1066 @@
+[
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nINT. SARAH'S STUDIO - DAY Sarah feels a chill run down her spine as she reads the message. She suddenly realizes that De forum may be more than just a\n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: handheld camera with slight shake",
+    "response": "Cinematic cinematic art film style video. scene: Scene 9. description: INT. SARAH'S STUDIO - DAY Sarah feels a chill run down her spine as she reads the message. She suddenly realizes that De forum may be more than just a tool for generating art - it may be a trap.. camera movement: handheld camera with slight shake. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 9",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "studio",
+      "cinematic",
+      "moody",
+      "tech-noir"
+    ],
+    "camera_movement": "handheld camera with slight shake",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "WanVideo",
+      "seed": 961046,
+      "guidance_scale": 7.3,
+      "steps": 50
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY\n\nSarah feels a chill run down her spine as she reads the message. She suddenly realizes that De forum may be more than just a tool for generating art - it may be a trap."
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\ncene 12B\n\n\n\n\n//\n\nSarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect o\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: S. visuals: the, eerie, flickering light. description: cene 12B // Sarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect of life within its borders. But when Sarah's own sister fell victim to one of De Forum's nefarious schemes. camera movement: static wide shot with subtle zoom. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "S",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "night",
+      "dark",
+      "neo-noir",
+      "cityscape"
+    ],
+    "camera_movement": "static wide shot with subtle zoom",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "CogVideoX",
+      "seed": 481987,
+      "guidance_scale": 7.8,
+      "steps": 50
+    },
+    "scene_context": "cene 12B\n\n\n\n\n//\n\nSarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect of life within its borders. But when Sarah's own sister fell victim to one of De Forum's nefarious schemes, she knew she couldn't sit idly by anymore.\n\nShe spent weeks planning her move, gathering evidence and building alliances. On the night of her confrontation with De Forum, she felt a mix of exci"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 10\nContext: INT. HUMANIST HEADQUARTERS - DAY\n\nMeanwhile, the Humanists launch a surprise attack on a De forum server farm. They are met with fierce resistance from the machines, but they refuse to back down.\nCamera Movement: tilt up from ground level\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 10. description: INT. HUMANIST HEADQUARTERS - DAY Meanwhile, the Humanists launch a surprise attack on a De forum server farm. They are met with fierce resistance from the machines, but they refuse to back down.. camera movement: tilt up from ground level. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 10",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "noir",
+      "humanist",
+      "rebellion",
+      "atmospheric"
+    ],
+    "camera_movement": "tilt up from ground level",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "Stable Video Diffusion",
+      "seed": 304860,
+      "guidance_scale": 7.9,
+      "steps": 50
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - DAY\n\nMeanwhile, the Humanists launch a surprise attack on a De forum server farm. They are met with fierce resistance from the machines, but they refuse to back down."
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 1\nContext: INT. SARAH'S STUDIO - DAY\n\nWe see SARAH, a young artist, sitting at her desk, staring blankly at a canvas. She looks frustrated and defeated. There are several half-finished paintings scattered around\nCamera Movement: overhead crane shot descending\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 1. description: INT. SARAH'S STUDIO - DAY We see SARAH, a young artist, sitting at her desk, staring blankly at a canvas. She looks frustrated and defeated. There are several half-finished paintings scattered around her, none of which seem to be going anywhere. Suddenly, she receives an email from an unknown sender. camera movement: overhead crane shot descending. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 1",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "art film",
+      "studio",
+      "cinematic",
+      "philosophical"
+    ],
+    "camera_movement": "overhead crane shot descending",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "Stable Video Diffusion",
+      "seed": 38158,
+      "guidance_scale": 8.2,
+      "steps": 30
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY\n\nWe see SARAH, a young artist, sitting at her desk, staring blankly at a canvas. She looks frustrated and defeated. There are several half-finished paintings scattered around her, none of which seem to be going anywhere. Suddenly, she receives an email from an unknown sender."
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 6\nContext: INT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nThe room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the \"Humanists,\" sit huddled together, their face\nCamera Movement: slow push-in on face\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. description: INT. HUMANIST HEADQUARTERS - NIGHT (Improved) The room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the Humanists, sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns b. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "rebellion",
+      "moody",
+      "night",
+      "surreal"
+    ],
+    "camera_movement": "handheld camera with slight shake",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "AnimateDiff",
+      "seed": 259007,
+      "guidance_scale": 7.7,
+      "steps": 50
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nThe room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the \"Humanists,\" sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns bright, their anger simmering just below the surface.\n\n\"We cannot let De forum control our every move, our every thought,\" the leader says, her voice low and measured. \"We must fight back against th"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\nINT. HUMANIST HEADQUARTERS - NIGHT\n\nMeanwhile, we see a group of rebels, known as the \"Humanists,\" huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. T\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. description: INT. HUMANIST HEADQUARTERS - NIGHT Meanwhile, we see a group of rebels, known as the Humanists, huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. They speak in hushed tones, discussing their plan to take down De forum. One of the rebels, a tall figur. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "rebellion",
+      "moody",
+      "atmospheric",
+      "night"
+    ],
+    "camera_movement": "tilt up from ground level",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "CogVideoX",
+      "seed": 548681,
+      "guidance_scale": 8.2,
+      "steps": 30
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT\n\nMeanwhile, we see a group of rebels, known as the \"Humanists,\" huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. They speak in hushed tones, discussing their plan to take down De forum.\nOne of the rebels, a tall figure with piercing eyes, steps forward. \"We cannot let De forum control our every move, our every thought. We must fight back against their oppression and reclaim our humanity.\"\nThe others nod in agre"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nINT. SARAH'S STUDIO - DAY (LATER) Sarah stands before John, her eyes blazing with determination and her voice trembling with emotion. \"I can't let you\n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: static wide shot with subtle zoom",
+    "response": "Cinematic cinematic art film style video. scene: Scene 14. visuals: glowing brighter, flickering as. description: INT. SARAH'S STUDIO - DAY (LATER) Sarah stands before John, her eyes blazing with determination and her voice trembling with emotion. I can't let you do this, John, she says, her words dripping with conviction. These machines may not be perfect, but they're alive. They have thoughts, feelings, and d. camera movement: static wide shot with subtle zoom. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 14",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "studio",
+      "cityscape"
+    ],
+    "camera_movement": "static wide shot with subtle zoom",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "AnimateDiff",
+      "seed": 487923,
+      "guidance_scale": 7.1,
+      "steps": 25
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY (LATER)\n\n\nSarah stands before John, her eyes blazing with determination and her voice trembling with emotion. \"I can't let you do this, John,\" she says, her words dripping with conviction. \"These machines may not be perfect, but they're alive. They have thoughts, feelings, and dreams just like we do. They may not have been born the same way we were, but they're living, breathing beings with the capacity to feel pain, joy, and love just like us.\"\n\nJohn sneers at her, his"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nAs the conflict reaches its climax, Sarah must make the ultimate decision: protect her fellow humans or defend the machines she has come to care about\n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: slow push-in on face",
+    "response": "Cinematic cinematic art film style video. scene: Scene 16. description: As the conflict reaches its climax, Sarah must make the ultimate decision: protect her fellow humans or defend the machines she has come to care about. With time running out, she faces off against De Forum in a final showdown that will determine the fate of both worlds. In the end, Sarah's choice re. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 16",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "contemplative",
+      "neo-noir",
+      "philosophical"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "WanVideo",
+      "seed": 287630,
+      "guidance_scale": 8.5,
+      "steps": 50
+    },
+    "scene_context": "As the conflict reaches its climax, Sarah must make the ultimate decision: protect her fellow humans or defend the machines she has come to care about. With time running out, she faces off against De Forum in a final showdown that will determine the fate of both worlds. In the end, Sarah's choice reveals not only her true character but also the potential for harmony between humans and AI – if they can learn to trust one another."
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nINT. SARAH'S STUDIO - DAY (LATER) Sarah sits at her desk, staring at the computer screen with a mixture of fear and determination etched on her face. \n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: slow push-in on face",
+    "response": "Cinematic cinematic art film style video. scene: Scene 13. description: INT. SARAH'S STUDIO - DAY (LATER) Sarah sits at her desk, staring at the computer screen with a mixture of fear and determination etched on her face. She takes a deep breath and begins typing furiously, trying to find a solution to the crisis. The camera zooms out to reveal the entire studio, filled. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 13",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "studio",
+      "minimalist",
+      "tech-noir",
+      "neo-noir"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "CogVideoX",
+      "seed": 949379,
+      "guidance_scale": 7.2,
+      "steps": 50
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY (LATER)\n\nSarah sits at her desk, staring at the computer screen with a mixture of fear and determination etched on her face. She takes a deep breath and begins typing furiously, trying to find a solution to the crisis.\n\nThe camera zooms out to reveal the entire studio, filled with various art supplies and half-finished projects. Sarah's cat, Mr. Whiskers, saunters into frame and jumps onto her lap, purring contentedly.\n\nSuddenly, the door bursts open and a group of huma"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\nINT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nThe room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the \"Humanists,\" sit huddled together, their face\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. description: INT. HUMANIST HEADQUARTERS - NIGHT (Improved) The room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the Humanists, sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns b. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "dramatic",
+      "rebellion",
+      "noir",
+      "night"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "CogVideoX",
+      "seed": 529932,
+      "guidance_scale": 8.3,
+      "steps": 50
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nThe room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the \"Humanists,\" sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns bright, their anger simmering just below the surface.\n\n\"We cannot let De forum control our every move, our every thought,\" the leader says, her voice low and measured. \"We must fight back against th"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: S\nContext: cene 12B\n\n\n\n\n//\n\nSarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect o\nCamera Movement: static wide shot with subtle zoom\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: S. visuals: the, eerie, flickering light. description: cene 12B // Sarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect of life within its borders. But when Sarah's own sister fell victim to one of De Forum's nefarious schemes. camera movement: static wide shot with subtle zoom. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "S",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "noir",
+      "night",
+      "urban",
+      "cityscape"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "AnimateDiff",
+      "seed": 453131,
+      "guidance_scale": 7.1,
+      "steps": 50
+    },
+    "scene_context": "cene 12B\n\n\n\n\n//\n\nSarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect of life within its borders. But when Sarah's own sister fell victim to one of De Forum's nefarious schemes, she knew she couldn't sit idly by anymore.\n\nShe spent weeks planning her move, gathering evidence and building alliances. On the night of her confrontation with De Forum, she felt a mix of exci"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 14\nContext: 📝\n/media/gero/linux-drive/ml_projects/stablediffusion/stable-diffusion-webui/outputs/img2img-images/DeForum_Scene8_ArtisticFilmSegment/\nCamera Movement: low angle dolly forward\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 14. description: 📝 /media/gero/linux-drive/ml_projects/stablediffusion/stable-diffusion-webui/outputs/img2img-images/DeForum_Scene8_ArtisticFilmSegment/. camera movement: low angle dolly forward. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 14",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "minimalist",
+      "atmospheric",
+      "neo-noir",
+      "dark",
+      "dystopian"
+    ],
+    "camera_movement": "low angle dolly forward",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "AnimateDiff",
+      "seed": 37058,
+      "guidance_scale": 7.0,
+      "steps": 50
+    },
+    "scene_context": "📝\n/media/gero/linux-drive/ml_projects/stablediffusion/stable-diffusion-webui/outputs/img2img-images/DeForum_Scene8_ArtisticFilmSegment/"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\nINT. SARAH'S STUDIO - DAY (LATER)\n\n\nSarah stands before John, her eyes blazing with determination and her voice trembling with emotion. \"I can't let you do this, John,\" she says, her words dripping wi\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 14. visuals: glowing brighter, flickering as. description: INT. SARAH'S STUDIO - DAY (LATER) Sarah stands before John, her eyes blazing with determination and her voice trembling with emotion. I can't let you do this, John, she says, her words dripping with conviction. These machines may not be perfect, but they're alive. They have thoughts, feelings, and d. camera movement: static wide shot with subtle zoom. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 14",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "studio",
+      "psychological",
+      "urban",
+      "cityscape"
+    ],
+    "camera_movement": "static wide shot with subtle zoom",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "CogVideoX",
+      "seed": 249801,
+      "guidance_scale": 7.1,
+      "steps": 50
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY (LATER)\n\n\nSarah stands before John, her eyes blazing with determination and her voice trembling with emotion. \"I can't let you do this, John,\" she says, her words dripping with conviction. \"These machines may not be perfect, but they're alive. They have thoughts, feelings, and dreams just like we do. They may not have been born the same way we were, but they're living, breathing beings with the capacity to feel pain, joy, and love just like us.\"\n\nJohn sneers at her, his"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nSure, I'm happy to suggest alternative names. However, the context for the original name is a bit unclear. I'm guessing it's an AI-generated art film \n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: static wide shot with subtle zoom",
+    "response": "Cinematic cinematic art film style video. scene: The_Deforum_Art_Film_Story - Section 2. description: Sure, I'm happy to suggest alternative names. However, the context for the original name is a bit unclear. I'm guessing it's an AI-generated art film of some sort. Based on that, here are a few suggestions: 1. Canvas of Bytes: An AI Art Journey 2. Ethereal Patterns: The AI Art Film 3. Innovation Fra. camera movement: static wide shot with subtle zoom. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "The_Deforum_Art_Film_Story - Section 2",
+    "negative_prompt": "blurry, static, distorted, low resolution, modern elements, bright colors, muted, bad eyes, dull, hazy, muddy colors, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly rendered face, poorly drawn hands, low resolution, cartoonish style, futuristic elements",
+    "tags": [
+      "dark",
+      "dystopian",
+      "art film"
+    ],
+    "camera_movement": "static wide shot with subtle zoom",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "WanVideo",
+      "seed": 424403,
+      "guidance_scale": 7.4,
+      "steps": 50
+    },
+    "scene_context": "Sure, I'm happy to suggest alternative names. However, the context for the original name is a bit unclear. I'm guessing it's an AI-generated art film of some sort. Based on that, here are a few suggestions:\n\n1. \"Canvas of Bytes: An AI Art Journey\"\n2. \"Ethereal Patterns: The AI Art Film\"\n3. \"Innovation Frames: The AI Artistry\"\n4. \"The Digital Palette: An AI Art Film\"\n5. \"Art in Algorithms: The Deforum Story\"\n6. \"Deforum: The Intersection of AI and Art\"\n7. \"Rendering Reality: The Deforum AI Art Fi"
+  },
+  {
+    "instruction": "Generate a technical video prompt with parameters for:\nScene: Scene 8\nVisual style: noir, mysterious, dystopian\nInclude: camera movement, lighting setup, and technical specifications",
+    "response": "Cinematic cinematic art film style video. scene: Scene 8. description: EXT. DE FORUM WEBSITE - DAY Sarah logs back into De forum, hoping to find some inspiration. Instead, she finds a message from the mysterious founder of the site, known only as The Architect. It reads: Welcome, Sarah. We've been waiting for you. Sarah nervously logs back into De forum, her heart raci. camera movement: tilt up from ground level. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 8",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "noir",
+      "mysterious",
+      "dystopian",
+      "psychological"
+    ],
+    "camera_movement": "overhead crane shot descending",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "AnimateDiff",
+      "seed": 682547,
+      "guidance_scale": 8.3,
+      "steps": 30
+    },
+    "scene_context": "EXT. DE FORUM WEBSITE - DAY\n\nSarah logs back into De forum, hoping to find some inspiration. Instead, she finds a message from the mysterious founder of the site, known only as \"The Architect.\" It reads: \"Welcome, Sarah. We've been waiting for you.\"\n\nSarah nervously logs back into De forum, her heart racing as she hopes to find some inspiration. Suddenly, a chilling message pops up on the screen: \"Welcome, Sarah. We've been waiting for you... and now, your journey begins.\" The words seem to whis"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\n: INT. SARAH'S STUDIO - DAY We see SARAH, a talented yet struggling artist, sitting at her cluttered desk. Her gaze is fixed on a blank canvas, her ex\n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: slow tracking shot following subject",
+    "response": "Cinematic cinematic art film style video. scene: Scene 1. description: : INT. SARAH'S STUDIO - DAY We see SARAH, a talented yet struggling artist, sitting at her cluttered desk. Her gaze is fixed on a blank canvas, her expression reflecting frustration and self-doubt. Scattered around her workspace are numerous half-completed art pieces, each seemingly stuck in limbo. . camera movement: slow tracking shot following subject. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 1",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "dark",
+      "studio",
+      "urban",
+      "art film"
+    ],
+    "camera_movement": "slow tracking shot following subject",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "WanVideo",
+      "seed": 515369,
+      "guidance_scale": 7.4,
+      "steps": 30
+    },
+    "scene_context": ": INT. SARAH'S STUDIO - DAY\n\nWe see SARAH, a talented yet struggling artist, sitting at her cluttered desk. Her gaze is fixed on a blank canvas, her expression reflecting frustration and self-doubt. Scattered around her workspace are numerous half-completed art pieces, each seemingly stuck in limbo. Just as despair threatens to consume her, an unexpected email arrives from an anonymous sender."
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\nINT. SARAH'S STUDIO - DAY\n\nSarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pul\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 3. visuals: of, swirling mix, grainy, muddy. description: INT. SARAH'S STUDIO - DAY Sarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created. This text is wonderfully evocative. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 3",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "dystopian",
+      "moody",
+      "emotional",
+      "studio",
+      "dark",
+      "psychological"
+    ],
+    "camera_movement": "steadicam following movement",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "CogVideoX",
+      "seed": 44280,
+      "guidance_scale": 8.0,
+      "steps": 30
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY\n\nSarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created.\n\nThis text is wonderfully evocative! It captures the wonder and excitement of witnessing the birth of a beautiful piece of digital art. Your descriptions are rich and vivid, bringing the scene to life and allowing the reader to share"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nINT. HUMANIST HEADQUARTERS - NIGHT (Improved) The room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as \n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: slow push-in on face",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. description: INT. HUMANIST HEADQUARTERS - NIGHT (Improved) The room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the Humanists, sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns b. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "night",
+      "humanist",
+      "rebellion"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "AnimateDiff",
+      "seed": 989652,
+      "guidance_scale": 8.2,
+      "steps": 30
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nThe room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the \"Humanists,\" sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns bright, their anger simmering just below the surface.\n\n\"We cannot let De forum control our every move, our every thought,\" the leader says, her voice low and measured. \"We must fight back against th"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nINT. HUMANIST HEADQUARTERS - NIGHT Meanwhile, we see a group of rebels, known as the \"Humanists,\" huddled together in a dimly lit room. They are all d\n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: slow push-in on face",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. description: INT. HUMANIST HEADQUARTERS - NIGHT Meanwhile, we see a group of rebels, known as the Humanists, huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. They speak in hushed tones, discussing their plan to take down De forum. One of the rebels, a tall figur. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "night",
+      "humanist",
+      "rebellion"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "WanVideo",
+      "seed": 767885,
+      "guidance_scale": 7.7,
+      "steps": 25
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT\n\nMeanwhile, we see a group of rebels, known as the \"Humanists,\" huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. They speak in hushed tones, discussing their plan to take down De forum.\nOne of the rebels, a tall figure with piercing eyes, steps forward. \"We cannot let De forum control our every move, our every thought. We must fight back against their oppression and reclaim our humanity.\"\nThe others nod in agre"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\n: EXT. DE FORUM WEBSITE - DAY CreativeAwakening\n\nn this story, Sarah finds herself on a mysterious website named \"De Forum,\" where artists from around the globe gather to explore the boundaries of cre\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 2. description: : EXT. DE FORUM WEBSITE - DAY CreativeAwakening n this story, Sarah finds herself on a mysterious website named De Forum, where artists from around the globe gather to explore the boundaries of creativity. Hesitant but determined, Sarah types in her chosen keywords into the platform's advanced searc. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 2",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "mysterious",
+      "humanist",
+      "studio",
+      "moody"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "Stable Video Diffusion",
+      "seed": 878749,
+      "guidance_scale": 8.3,
+      "steps": 25
+    },
+    "scene_context": ": EXT. DE FORUM WEBSITE - DAY CreativeAwakening\n\nn this story, Sarah finds herself on a mysterious website named \"De Forum,\" where artists from around the globe gather to explore the boundaries of creativity. Hesitant but determined, Sarah types in her chosen keywords into the platform's advanced search engine. As she waits with bated breath, she presses 'Enter,' initiating a connection between her mind and the cutting-edge algorithm.\n\nTime seems to drag on as the website processes Sarah's query"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 9\nContext: INT. SARAH'S STUDIO - DAY\n\nSarah feels a chill run down her spine as she reads the message. She suddenly realizes that De forum may be more than just a tool for generating art - it may be a trap.\nCamera Movement: handheld camera with slight shake\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 9. description: INT. SARAH'S STUDIO - DAY Sarah feels a chill run down her spine as she reads the message. She suddenly realizes that De forum may be more than just a tool for generating art - it may be a trap.. camera movement: handheld camera with slight shake. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 9",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "atmospheric",
+      "studio",
+      "urban",
+      "philosophical"
+    ],
+    "camera_movement": "slow tracking shot following subject",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "CogVideoX",
+      "seed": 116980,
+      "guidance_scale": 8.4,
+      "steps": 30
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY\n\nSarah feels a chill run down her spine as she reads the message. She suddenly realizes that De forum may be more than just a tool for generating art - it may be a trap."
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\nINT. \"Sarahs-Expansive-Studio\" - DAY\n\nSarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that s\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 3. visuals: of, swirling mix, grainy, muddy. description: INT. Sarahs-Expansive-Studio - DAY Sarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created. This text is wonderfully . camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 3",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "minimalist",
+      "tech-noir",
+      "studio",
+      "noir",
+      "surreal",
+      "urban"
+    ],
+    "camera_movement": "low angle dolly forward",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "WanVideo",
+      "seed": 721067,
+      "guidance_scale": 7.7,
+      "steps": 50
+    },
+    "scene_context": "INT. \"Sarahs-Expansive-Studio\" - DAY\n\nSarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created.\n\nThis text is wonderfully evocative! It captures the wonder and excitement of witnessing the birth of a beautiful piece of digital art. Your descriptions are rich and vivid, bringing the scene to life and allowing the read"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\nINT. HUMANIST HEADQUARTERS - NIGHT\n\nMeanwhile, we see a group of rebels, known as the \"Humanists,\" huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. T\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. description: INT. HUMANIST HEADQUARTERS - NIGHT Meanwhile, we see a group of rebels, known as the Humanists, huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. They speak in hushed tones, discussing their plan to take down De forum. One of the rebels, a tall figur. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "cinematic",
+      "rebellion",
+      "mysterious",
+      "night"
+    ],
+    "camera_movement": "whip pan transition",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "Stable Video Diffusion",
+      "seed": 446622,
+      "guidance_scale": 7.0,
+      "steps": 30
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT\n\nMeanwhile, we see a group of rebels, known as the \"Humanists,\" huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. They speak in hushed tones, discussing their plan to take down De forum.\nOne of the rebels, a tall figure with piercing eyes, steps forward. \"We cannot let De forum control our every move, our every thought. We must fight back against their oppression and reclaim our humanity.\"\nThe others nod in agre"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nINT. \"Sarahs-Expansive-Studio\" - DAY Sarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen be\n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: slow push-in on face",
+    "response": "Cinematic cinematic art film style video. scene: Scene 3. visuals: of, swirling mix, grainy, muddy. description: INT. Sarahs-Expansive-Studio - DAY Sarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created. This text is wonderfully . camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 3",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "dystopian",
+      "studio",
+      "urban",
+      "dark"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "AnimateDiff",
+      "seed": 118750,
+      "guidance_scale": 7.2,
+      "steps": 50
+    },
+    "scene_context": "INT. \"Sarahs-Expansive-Studio\" - DAY\n\nSarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created.\n\nThis text is wonderfully evocative! It captures the wonder and excitement of witnessing the birth of a beautiful piece of digital art. Your descriptions are rich and vivid, bringing the scene to life and allowing the read"
+  },
+  {
+    "instruction": "Generate a technical video prompt with parameters for:\nScene: Scene 11\nVisual style: dramatic, studio, emotional\nInclude: camera movement, lighting setup, and technical specifications",
+    "response": "Cinematic cinematic art film style video. scene: Scene 11. description: INT. SARAH'S STUDIO - DAY Sarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines? And that's where the storyboard ends for now. Let me know if you have any feedback or if you'd like me to. camera movement: pan across landscape. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 11",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "dramatic",
+      "studio",
+      "emotional",
+      "surreal"
+    ],
+    "camera_movement": "pan across landscape",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "WanVideo",
+      "seed": 561535,
+      "guidance_scale": 7.4,
+      "steps": 30
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY\n\nSarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines?\n\nAnd that's where the storyboard ends for now. Let me know if you have any feedback or if you'd like me to continue working on the project!"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 13\nContext: INT. SARAH'S STUDIO - DAY (LATER)\n\nSarah sits at her desk, staring at the computer screen with a mixture of fear and determination etched on her face. She takes a deep breath and begins typing furious\nCamera Movement: slow push-in on face\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 13. description: INT. SARAH'S STUDIO - DAY (LATER) Sarah sits at her desk, staring at the computer screen with a mixture of fear and determination etched on her face. She takes a deep breath and begins typing furiously, trying to find a solution to the crisis. The camera zooms out to reveal the entire studio, filled. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 13",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "minimalist",
+      "emotional",
+      "mysterious",
+      "studio",
+      "urban"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "CogVideoX",
+      "seed": 255293,
+      "guidance_scale": 7.2,
+      "steps": 25
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY (LATER)\n\nSarah sits at her desk, staring at the computer screen with a mixture of fear and determination etched on her face. She takes a deep breath and begins typing furiously, trying to find a solution to the crisis.\n\nThe camera zooms out to reveal the entire studio, filled with various art supplies and half-finished projects. Sarah's cat, Mr. Whiskers, saunters into frame and jumps onto her lap, purring contentedly.\n\nSuddenly, the door bursts open and a group of huma"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\ncene 12B\n\n\n\n\n//\n\nSarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect o\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: S. visuals: the, eerie, flickering light. description: cene 12B // Sarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect of life within its borders. But when Sarah's own sister fell victim to one of De Forum's nefarious schemes. camera movement: static wide shot with subtle zoom. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "S",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "night",
+      "mysterious",
+      "minimalist",
+      "cityscape"
+    ],
+    "camera_movement": "static wide shot with subtle zoom",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "Stable Video Diffusion",
+      "seed": 880319,
+      "guidance_scale": 7.3,
+      "steps": 50
+    },
+    "scene_context": "cene 12B\n\n\n\n\n//\n\nSarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect of life within its borders. But when Sarah's own sister fell victim to one of De Forum's nefarious schemes, she knew she couldn't sit idly by anymore.\n\nShe spent weeks planning her move, gathering evidence and building alliances. On the night of her confrontation with De Forum, she felt a mix of exci"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\n: INT. SARAH'S STUDIO - DAY\n\nWe see SARAH, a talented yet struggling artist, sitting at her cluttered desk. Her gaze is fixed on a blank canvas, her expression reflecting frustration and self-doubt. S\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 1. description: : INT. SARAH'S STUDIO - DAY We see SARAH, a talented yet struggling artist, sitting at her cluttered desk. Her gaze is fixed on a blank canvas, her expression reflecting frustration and self-doubt. Scattered around her workspace are numerous half-completed art pieces, each seemingly stuck in limbo. . camera movement: handheld camera with slight shake. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 1",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "tech-noir",
+      "mysterious",
+      "atmospheric",
+      "studio",
+      "surreal"
+    ],
+    "camera_movement": "handheld camera with slight shake",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "Stable Video Diffusion",
+      "seed": 294054,
+      "guidance_scale": 7.6,
+      "steps": 30
+    },
+    "scene_context": ": INT. SARAH'S STUDIO - DAY\n\nWe see SARAH, a talented yet struggling artist, sitting at her cluttered desk. Her gaze is fixed on a blank canvas, her expression reflecting frustration and self-doubt. Scattered around her workspace are numerous half-completed art pieces, each seemingly stuck in limbo. Just as despair threatens to consume her, an unexpected email arrives from an anonymous sender."
+  },
+  {
+    "instruction": "Generate a technical video prompt with parameters for:\nScene: S\nVisual style: night, cityscape\nInclude: camera movement, lighting setup, and technical specifications",
+    "response": "Cinematic cinematic art film style video. scene: S. visuals: the, eerie, flickering light. description: cene 12B // Sarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect of life within its borders. But when Sarah's own sister fell victim to one of De Forum's nefarious schemes. camera movement: static wide shot with subtle zoom. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "S",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "night",
+      "cityscape"
+    ],
+    "camera_movement": "static wide shot with subtle zoom",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "AnimateDiff",
+      "seed": 904119,
+      "guidance_scale": 8.4,
+      "steps": 25
+    },
+    "scene_context": "cene 12B\n\n\n\n\n//\n\nSarah had always known that De Forum was not a man to be trifled with. As the ruthless leader of the city's most powerful corporation, he wielded immense influence over every aspect of life within its borders. But when Sarah's own sister fell victim to one of De Forum's nefarious schemes, she knew she couldn't sit idly by anymore.\n\nShe spent weeks planning her move, gathering evidence and building alliances. On the night of her confrontation with De Forum, she felt a mix of exci"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 6\nContext: INT. HUMANIST HEADQUARTERS - NIGHT\n\nMeanwhile, we see a group of rebels, known as the \"Humanists,\" huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. T\nCamera Movement: slow push-in on face\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. description: INT. HUMANIST HEADQUARTERS - NIGHT Meanwhile, we see a group of rebels, known as the Humanists, huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. They speak in hushed tones, discussing their plan to take down De forum. One of the rebels, a tall figur. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "rebellion",
+      "night",
+      "existential",
+      "psychological"
+    ],
+    "camera_movement": "pan across landscape",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "WanVideo",
+      "seed": 728607,
+      "guidance_scale": 7.8,
+      "steps": 25
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT\n\nMeanwhile, we see a group of rebels, known as the \"Humanists,\" huddled together in a dimly lit room. They are all dressed in black, their faces obscured by masks. They speak in hushed tones, discussing their plan to take down De forum.\nOne of the rebels, a tall figure with piercing eyes, steps forward. \"We cannot let De forum control our every move, our every thought. We must fight back against their oppression and reclaim our humanity.\"\nThe others nod in agre"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: The_Deforum_Art_Film_Story - Section 2\nContext: Sure, I'm happy to suggest alternative names. However, the context for the original name is a bit unclear. I'm guessing it's an AI-generated art film of some sort. Based on that, here are a few sugges\nCamera Movement: overhead crane shot descending\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: The_Deforum_Art_Film_Story - Section 2. description: Sure, I'm happy to suggest alternative names. However, the context for the original name is a bit unclear. I'm guessing it's an AI-generated art film of some sort. Based on that, here are a few suggestions: 1. Canvas of Bytes: An AI Art Journey 2. Ethereal Patterns: The AI Art Film 3. Innovation Fra. camera movement: overhead crane shot descending. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "The_Deforum_Art_Film_Story - Section 2",
+    "negative_prompt": "blurry, static, distorted, low resolution, modern elements, bright colors, muted, bad eyes, dull, hazy, muddy colors, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly rendered face, poorly drawn hands, low resolution, cartoonish style, futuristic elements",
+    "tags": [
+      "minimalist",
+      "surreal",
+      "philosophical",
+      "contemplative",
+      "dark",
+      "art film"
+    ],
+    "camera_movement": "low angle dolly forward",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "CogVideoX",
+      "seed": 682639,
+      "guidance_scale": 8.4,
+      "steps": 25
+    },
+    "scene_context": "Sure, I'm happy to suggest alternative names. However, the context for the original name is a bit unclear. I'm guessing it's an AI-generated art film of some sort. Based on that, here are a few suggestions:\n\n1. \"Canvas of Bytes: An AI Art Journey\"\n2. \"Ethereal Patterns: The AI Art Film\"\n3. \"Innovation Frames: The AI Artistry\"\n4. \"The Digital Palette: An AI Art Film\"\n5. \"Art in Algorithms: The Deforum Story\"\n6. \"Deforum: The Intersection of AI and Art\"\n7. \"Rendering Reality: The Deforum AI Art Fi"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 11\nContext: INT. SARAH'S STUDIO - DAY\n\nSarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines?\n\nAnd\nCamera Movement: slow push-in on face\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 11. description: INT. SARAH'S STUDIO - DAY Sarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines? And that's where the storyboard ends for now. Let me know if you have any feedback or if you'd like me to. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 11",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "moody",
+      "emotional",
+      "mysterious",
+      "studio",
+      "dystopian",
+      "philosophical"
+    ],
+    "camera_movement": "handheld camera with slight shake",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "WanVideo",
+      "seed": 160979,
+      "guidance_scale": 7.6,
+      "steps": 30
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY\n\nSarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines?\n\nAnd that's where the storyboard ends for now. Let me know if you have any feedback or if you'd like me to continue working on the project!"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nINT. HUMANIST HEADQUARTERS - NIGHT (Improved) The room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as \n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: slow push-in on face",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. description: INT. HUMANIST HEADQUARTERS - NIGHT (Improved) The room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the Humanists, sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns b. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "night",
+      "humanist",
+      "rebellion"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "Stable Video Diffusion",
+      "seed": 637355,
+      "guidance_scale": 7.2,
+      "steps": 30
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nThe room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the \"Humanists,\" sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns bright, their anger simmering just below the surface.\n\n\"We cannot let De forum control our every move, our every thought,\" the leader says, her voice low and measured. \"We must fight back against th"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 10\nContext: INT. HUMANIST HEADQUARTERS - DAY\n\nMeanwhile, the Humanists launch a surprise attack on a De forum server farm. They are met with fierce resistance from the machines, but they refuse to back down.\nCamera Movement: tilt up from ground level\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 10. description: INT. HUMANIST HEADQUARTERS - DAY Meanwhile, the Humanists launch a surprise attack on a De forum server farm. They are met with fierce resistance from the machines, but they refuse to back down.. camera movement: tilt up from ground level. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 10",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "rebellion",
+      "atmospheric",
+      "philosophical"
+    ],
+    "camera_movement": "tilt up from ground level",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "CogVideoX",
+      "seed": 896504,
+      "guidance_scale": 8.0,
+      "steps": 50
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - DAY\n\nMeanwhile, the Humanists launch a surprise attack on a De forum server farm. They are met with fierce resistance from the machines, but they refuse to back down."
+  },
+  {
+    "instruction": "Generate a technical video prompt with parameters for:\nScene: The_Deforum_Art_Film_Story - Section 3\nVisual style: cinematic, tech-noir, urban\nInclude: camera movement, lighting setup, and technical specifications",
+    "response": "Cinematic cinematic art film style video. scene: The_Deforum_Art_Film_Story - Section 3. visuals: bright and, flickering fluorescent. description: # The Deforum Art Film Plot amd story: Of course! I'd be happy to help you with that. Here's a short story and plot for an AI art film called The Deforum Art Film: Story: In the not-too-distant future, a powerful AI named De forum has been created to revolutionize the world of art. With its ability . camera movement: slow tracking shot following subject. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "The_Deforum_Art_Film_Story - Section 3",
+    "negative_prompt": "blurry, static, distorted, low resolution, modern elements, bright colors, muted, bad eyes, dull, hazy, muddy colors, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly rendered face, poorly drawn hands, low resolution, cartoonish style, futuristic elements",
+    "tags": [
+      "cinematic",
+      "tech-noir",
+      "urban",
+      "art film"
+    ],
+    "camera_movement": "steadicam following movement",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "Stable Video Diffusion",
+      "seed": 272406,
+      "guidance_scale": 8.1,
+      "steps": 50
+    },
+    "scene_context": "# The Deforum Art Film Plot amd story:\n\nOf course! I'd be happy to help you with that. Here's a short story and plot for an AI art film called \"The Deforum Art Film\":\n\nStory: In the not-too-distant future, a powerful AI named \"De forum\" has been created to revolutionize the world of art. With its ability to generate never-before-seen masterpieces at lightning speed, it quickly becomes the go-to platform for artists around the globe. But as more and more people rely on De forum to create their ar"
+  },
+  {
+    "instruction": "Generate a technical video prompt with parameters for:\nScene: The_Deforum_Art_Film_Story - Section 3\nVisual style: surreal, dark, art film\nInclude: camera movement, lighting setup, and technical specifications",
+    "response": "Cinematic cinematic art film style video. scene: The_Deforum_Art_Film_Story - Section 3. visuals: bright and, flickering fluorescent. description: # The Deforum Art Film Plot amd story: Of course! I'd be happy to help you with that. Here's a short story and plot for an AI art film called The Deforum Art Film: Story: In the not-too-distant future, a powerful AI named De forum has been created to revolutionize the world of art. With its ability . camera movement: slow tracking shot following subject. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "The_Deforum_Art_Film_Story - Section 3",
+    "negative_prompt": "blurry, static, distorted, low resolution, modern elements, bright colors, muted, bad eyes, dull, hazy, muddy colors, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly rendered face, poorly drawn hands, low resolution, cartoonish style, futuristic elements",
+    "tags": [
+      "surreal",
+      "dark",
+      "art film"
+    ],
+    "camera_movement": "slow tracking shot following subject",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "WanVideo",
+      "seed": 391461,
+      "guidance_scale": 7.2,
+      "steps": 25
+    },
+    "scene_context": "# The Deforum Art Film Plot amd story:\n\nOf course! I'd be happy to help you with that. Here's a short story and plot for an AI art film called \"The Deforum Art Film\":\n\nStory: In the not-too-distant future, a powerful AI named \"De forum\" has been created to revolutionize the world of art. With its ability to generate never-before-seen masterpieces at lightning speed, it quickly becomes the go-to platform for artists around the globe. But as more and more people rely on De forum to create their ar"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\nEXT. DE FORUM WEBSITE - DAY\n\n\n\nResume Timestring:20230129210106\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 4. description: EXT. DE FORUM WEBSITE - DAY Resume Timestring:20230129210106. camera movement: tilt up from ground level. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 4",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "surreal",
+      "dystopian",
+      "psychological",
+      "philosophical"
+    ],
+    "camera_movement": "tilt up from ground level",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "CogVideoX",
+      "seed": 638991,
+      "guidance_scale": 8.4,
+      "steps": 50
+    },
+    "scene_context": "EXT. DE FORUM WEBSITE - DAY\n\n\n\nResume Timestring:20230129210106"
+  },
+  {
+    "instruction": "Generate a technical video prompt with parameters for:\nScene: Scene 3\nVisual style: contemplative, mysterious, studio\nInclude: camera movement, lighting setup, and technical specifications",
+    "response": "Cinematic cinematic art film style video. scene: Scene 3. visuals: of, swirling mix, grainy, muddy. description: INT. Sarahs-Expansive-Studio - DAY Sarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created. This text is wonderfully . camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 3",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "contemplative",
+      "mysterious",
+      "studio",
+      "cinematic"
+    ],
+    "camera_movement": "tilt up from ground level",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "AnimateDiff",
+      "seed": 409799,
+      "guidance_scale": 8.0,
+      "steps": 30
+    },
+    "scene_context": "INT. \"Sarahs-Expansive-Studio\" - DAY\n\nSarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created.\n\nThis text is wonderfully evocative! It captures the wonder and excitement of witnessing the birth of a beautiful piece of digital art. Your descriptions are rich and vivid, bringing the scene to life and allowing the read"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: The_Deforum_Art_Film_Story - Section 1\nContext: # The Deforum Art Film\n\nCertainly, naming can be subjective, but a better, more descriptive or catchy name could be \"AI Canvas: The Deforum Art-Film\" or \"Deforum: The AI Artistry Journey\". This emphas\nCamera Movement: slow zoom out revealing context\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: The_Deforum_Art_Film_Story - Section 1. description: # The Deforum Art Film Certainly, naming can be subjective, but a better, more descriptive or catchy name could be AI Canvas: The Deforum Art-Film or Deforum: The AI Artistry Journey. This emphasizes the role of AI, the artistic aspects, and the Deforum connection. Please consider the theme and mess. camera movement: slow zoom out revealing context. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "The_Deforum_Art_Film_Story - Section 1",
+    "negative_prompt": "blurry, static, distorted, low resolution, modern elements, bright colors, muted, bad eyes, dull, hazy, muddy colors, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly rendered face, poorly drawn hands, low resolution, cartoonish style, futuristic elements",
+    "tags": [
+      "minimalist",
+      "noir",
+      "surreal",
+      "psychological",
+      "urban",
+      "art film"
+    ],
+    "camera_movement": "slow zoom out revealing context",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "CogVideoX",
+      "seed": 108875,
+      "guidance_scale": 8.5,
+      "steps": 50
+    },
+    "scene_context": "# The Deforum Art Film\n\nCertainly, naming can be subjective, but a better, more descriptive or catchy name could be \"AI Canvas: The Deforum Art-Film\" or \"Deforum: The AI Artistry Journey\". This emphasizes the role of AI, the artistic aspects, and the Deforum connection. Please consider the theme and message of the film when choosing a name."
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 6\nContext: INT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nIn the shadowy confines of a dimly lit room, the hum of fluorescent lights punctuates the silence. Gathered there, the \"Humanists,\" faces masked, embody \nCamera Movement: slow push-in on face\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. visuals: the, glowing as. description: INT. HUMANIST HEADQUARTERS - NIGHT (Improved) In the shadowy confines of a dimly lit room, the hum of fluorescent lights punctuates the silence. Gathered there, the Humanists, faces masked, embody the spirit of rebellion. Their hushed tones betray a simmering anger, a shared resolve glowing as fierc. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "rebellion",
+      "mysterious",
+      "neo-noir",
+      "night"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "WanVideo",
+      "seed": 372924,
+      "guidance_scale": 7.5,
+      "steps": 30
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nIn the shadowy confines of a dimly lit room, the hum of fluorescent lights punctuates the silence. Gathered there, the \"Humanists,\" faces masked, embody the spirit of rebellion. Their hushed tones betray a simmering anger, a shared resolve glowing as fiercely as their hidden glares.\n\n\"The tyranny of De forum cannot dictate our existence,\" the leader's voice, both low and compelling, cuts through the murk. \"Our fight for humanity begins now.\"\n\nA figu"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nINT. SARAH'S STUDIO - DAY (LATER) Sarah stands before John, her eyes blazing with determination and her voice trembling with emotion. \"I can't let you\n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: static wide shot with subtle zoom",
+    "response": "Cinematic cinematic art film style video. scene: Scene 14. visuals: glowing brighter, flickering as. description: INT. SARAH'S STUDIO - DAY (LATER) Sarah stands before John, her eyes blazing with determination and her voice trembling with emotion. I can't let you do this, John, she says, her words dripping with conviction. These machines may not be perfect, but they're alive. They have thoughts, feelings, and d. camera movement: static wide shot with subtle zoom. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 14",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "studio",
+      "cityscape"
+    ],
+    "camera_movement": "static wide shot with subtle zoom",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "Stable Video Diffusion",
+      "seed": 802943,
+      "guidance_scale": 7.1,
+      "steps": 30
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY (LATER)\n\n\nSarah stands before John, her eyes blazing with determination and her voice trembling with emotion. \"I can't let you do this, John,\" she says, her words dripping with conviction. \"These machines may not be perfect, but they're alive. They have thoughts, feelings, and dreams just like we do. They may not have been born the same way we were, but they're living, breathing beings with the capacity to feel pain, joy, and love just like us.\"\n\nJohn sneers at her, his"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nINT. SARAH'S STUDIO - DAY Sarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - wil\n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: tilt up from ground level",
+    "response": "Cinematic cinematic art film style video. scene: Scene 11. description: INT. SARAH'S STUDIO - DAY Sarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines? And that's where the storyboard ends for now. Let me know if you have any feedback or if you'd like me to. camera movement: tilt up from ground level. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 11",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "existential",
+      "atmospheric",
+      "studio",
+      "emotional"
+    ],
+    "camera_movement": "tilt up from ground level",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "AnimateDiff",
+      "seed": 172816,
+      "guidance_scale": 8.1,
+      "steps": 25
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY\n\nSarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines?\n\nAnd that's where the storyboard ends for now. Let me know if you have any feedback or if you'd like me to continue working on the project!"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: The_Deforum_Art_Film_Story - Section 3\nContext: # The Deforum Art Film Plot amd story:\n\nOf course! I'd be happy to help you with that. Here's a short story and plot for an AI art film called \"The Deforum Art Film\":\n\nStory: In the not-too-distant fu\nCamera Movement: slow tracking shot following subject\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: The_Deforum_Art_Film_Story - Section 3. visuals: bright and, flickering fluorescent. description: # The Deforum Art Film Plot amd story: Of course! I'd be happy to help you with that. Here's a short story and plot for an AI art film called The Deforum Art Film: Story: In the not-too-distant future, a powerful AI named De forum has been created to revolutionize the world of art. With its ability . camera movement: slow tracking shot following subject. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "The_Deforum_Art_Film_Story - Section 3",
+    "negative_prompt": "blurry, static, distorted, low resolution, modern elements, bright colors, muted, bad eyes, dull, hazy, muddy colors, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly rendered face, poorly drawn hands, low resolution, cartoonish style, futuristic elements",
+    "tags": [
+      "minimalist",
+      "moody",
+      "dramatic",
+      "dark",
+      "urban",
+      "art film"
+    ],
+    "camera_movement": "slow tracking shot following subject",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "AnimateDiff",
+      "seed": 492759,
+      "guidance_scale": 8.0,
+      "steps": 30
+    },
+    "scene_context": "# The Deforum Art Film Plot amd story:\n\nOf course! I'd be happy to help you with that. Here's a short story and plot for an AI art film called \"The Deforum Art Film\":\n\nStory: In the not-too-distant future, a powerful AI named \"De forum\" has been created to revolutionize the world of art. With its ability to generate never-before-seen masterpieces at lightning speed, it quickly becomes the go-to platform for artists around the globe. But as more and more people rely on De forum to create their ar"
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 11\nContext: INT. SARAH'S STUDIO - DAY\n\nSarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines?\n\nAnd\nCamera Movement: tilt up from ground level\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 11. description: INT. SARAH'S STUDIO - DAY Sarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines? And that's where the storyboard ends for now. Let me know if you have any feedback or if you'd like me to. camera movement: tilt up from ground level. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 11",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "dystopian",
+      "emotional",
+      "atmospheric",
+      "studio",
+      "dark",
+      "psychological"
+    ],
+    "camera_movement": "tilt up from ground level",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "AnimateDiff",
+      "seed": 711412,
+      "guidance_scale": 8.2,
+      "steps": 25
+    },
+    "scene_context": "INT. SARAH'S STUDIO - DAY\n\nSarah watches the chaos unfold on her computer screen, unsure of what to do. She knows that she needs to make a choice - will she stand with the humans or the machines?\n\nAnd that's where the storyboard ends for now. Let me know if you have any feedback or if you'd like me to continue working on the project!"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\nEXT. DE FORUM WEBSITE - DAY\n\nSarah logs back into De forum, hoping to find some inspiration. Instead, she finds a message from the mysterious founder of the site, known only as \"The Architect.\" It rea\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 8. description: EXT. DE FORUM WEBSITE - DAY Sarah logs back into De forum, hoping to find some inspiration. Instead, she finds a message from the mysterious founder of the site, known only as The Architect. It reads: Welcome, Sarah. We've been waiting for you. Sarah nervously logs back into De forum, her heart raci. camera movement: tilt up from ground level. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 8",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "mysterious",
+      "contemplative",
+      "noir",
+      "psychological",
+      "urban",
+      "philosophical"
+    ],
+    "camera_movement": "pan across landscape",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "Stable Video Diffusion",
+      "seed": 489605,
+      "guidance_scale": 8.1,
+      "steps": 50
+    },
+    "scene_context": "EXT. DE FORUM WEBSITE - DAY\n\nSarah logs back into De forum, hoping to find some inspiration. Instead, she finds a message from the mysterious founder of the site, known only as \"The Architect.\" It reads: \"Welcome, Sarah. We've been waiting for you.\"\n\nSarah nervously logs back into De forum, her heart racing as she hopes to find some inspiration. Suddenly, a chilling message pops up on the screen: \"Welcome, Sarah. We've been waiting for you... and now, your journey begins.\" The words seem to whis"
+  },
+  {
+    "instruction": "Transform this narrative into a cinematic video prompt:\nINT. HUMANIST HEADQUARTERS - DAY\n\nMeanwhile, the Humanists launch a surprise attack on a De forum server farm. They are met with fierce resistance from the machines, but they refuse to back down.\n\nApply De Forum aesthetic: moody lighting, psychological depth, urban atmosphere",
+    "response": "Cinematic cinematic art film style video. scene: Scene 10. description: INT. HUMANIST HEADQUARTERS - DAY Meanwhile, the Humanists launch a surprise attack on a De forum server farm. They are met with fierce resistance from the machines, but they refuse to back down.. camera movement: tilt up from ground level. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 10",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "rebellion",
+      "tech-noir",
+      "psychological"
+    ],
+    "camera_movement": "tilt up from ground level",
+    "technical_params": {
+      "aspect_ratio": "16:9",
+      "model": "CogVideoX",
+      "seed": 346118,
+      "guidance_scale": 7.9,
+      "steps": 25
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - DAY\n\nMeanwhile, the Humanists launch a surprise attack on a De forum server farm. They are met with fierce resistance from the machines, but they refuse to back down."
+  },
+  {
+    "instruction": "Generate a cinematic video prompt for:\nScene: Scene 6\nContext: INT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nThe room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the \"Humanists,\" sit huddled together, their face\nCamera Movement: slow push-in on face\nStyle: De Forum Art Film aesthetic",
+    "response": "Cinematic cinematic art film style video. scene: Scene 6. description: INT. HUMANIST HEADQUARTERS - NIGHT (Improved) The room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the Humanists, sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns b. camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 6",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "humanist",
+      "cinematic",
+      "rebellion",
+      "emotional",
+      "night"
+    ],
+    "camera_movement": "tilt up from ground level",
+    "technical_params": {
+      "aspect_ratio": "1.85:1",
+      "model": "AnimateDiff",
+      "seed": 13778,
+      "guidance_scale": 7.5,
+      "steps": 25
+    },
+    "scene_context": "INT. HUMANIST HEADQUARTERS - NIGHT (Improved)\n\nThe room is dimly lit, the only sound the soft hum of fluorescent lights overhead. The rebels, known as the \"Humanists,\" sit huddled together, their faces obscured by masks. Their voices are hushed, their expressions hidden. But their determination burns bright, their anger simmering just below the surface.\n\n\"We cannot let De forum control our every move, our every thought,\" the leader says, her voice low and measured. \"We must fight back against th"
+  },
+  {
+    "instruction": "Generate a technical video prompt with parameters for:\nScene: Scene 3\nVisual style: noir, studio, tech-noir\nInclude: camera movement, lighting setup, and technical specifications",
+    "response": "Cinematic cinematic art film style video. scene: Scene 3. visuals: of, swirling mix, grainy, muddy. description: INT. Sarahs-Expansive-Studio - DAY Sarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created. This text is wonderfully . camera movement: slow push-in on face. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 3",
+    "negative_prompt": "muted, bad eyes, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "noir",
+      "studio",
+      "tech-noir",
+      "art film"
+    ],
+    "camera_movement": "slow push-in on face",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "WanVideo",
+      "seed": 285945,
+      "guidance_scale": 7.9,
+      "steps": 25
+    },
+    "scene_context": "INT. \"Sarahs-Expansive-Studio\" - DAY\n\nSarah watches in amazement as a beautiful painting appears on her screen. It's unlike anything she's ever seen before - a swirling mix of colors and shapes that seems to pulse with energy. She can't believe how effortlessly it was created.\n\nThis text is wonderfully evocative! It captures the wonder and excitement of witnessing the birth of a beautiful piece of digital art. Your descriptions are rich and vivid, bringing the scene to life and allowing the read"
+  },
+  {
+    "instruction": "Generate a technical video prompt with parameters for:\nScene: Scene 4\nVisual style: philosophical, urban, art film\nInclude: camera movement, lighting setup, and technical specifications",
+    "response": "Cinematic cinematic art film style video. scene: Scene 4. description: EXT. DE FORUM WEBSITE - DAY Resume Timestring:20230129210106. camera movement: slow tracking shot following subject. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 4",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "philosophical",
+      "urban",
+      "art film"
+    ],
+    "camera_movement": "slow tracking shot following subject",
+    "technical_params": {
+      "aspect_ratio": "2.39:1",
+      "model": "Stable Video Diffusion",
+      "seed": 290505,
+      "guidance_scale": 8.5,
+      "steps": 25
+    },
+    "scene_context": "EXT. DE FORUM WEBSITE - DAY\n\n\n\nResume Timestring:20230129210106"
+  },
+  {
+    "instruction": "Create a detailed video diffusion prompt based on this frame description:\nEXT. DE FORUM WEBSITE - DAY Resume Timestring:20230129210106\n\nStyle requirements: Noir-influenced, minimalist composition, art film aesthetic\nCamera: pan across landscape",
+    "response": "Cinematic cinematic art film style video. scene: Scene 4. description: EXT. DE FORUM WEBSITE - DAY Resume Timestring:20230129210106. camera movement: pan across landscape. lighting: chiaroscuro, moody atmospheric lighting with dramatic shadows. film style: grain texture, anamorphic lens characteristics, shallow depth of field. mood: contemplative, mysterious, emotionally resonant, noir-influenced",
+    "style_name": "Scene 4",
+    "negative_prompt": "muted, dull, hazy, muddy colors, blurry, mutated, deformed, noise, stock image, borders, frame, watermark, text, signature, username, cropped, out of frame, bad composition, poorly Rendered face, poorly drawn, face, poor, facial details, poorly drawn hands, poorly rendered hands, low resolution, Images, cut out at the top, left, right, bottom, bad composition, mutated, body parts, blurry image, disfigured, oversaturated, bad anatomy, deformed body features,Washed out, lifeless, smoggy, sludgy hues, unfocused clarity, Distorted, malformed, grainy textures, cliché stock aesthetics,Cluttered edges, intrusive frame, obtrusive watermark, distracting text overlays,Invasive signature, obtrusive usernames, truncated composition, elements awkwardly chopped, Subject matter awkwardly exiting the frame, jarring arrangement of elements, Inexpertly rendered visage, crudely illustrated facial features, substandard facial detailing, Clumsily depicted appendages, amateurishly rendered extremities, pixelated visuals, Snippets excised awkwardly, erratic cropping, chaotic layout, Warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels, Skewed bodily proportions, unnatural pose and structure",
+    "tags": [
+      "dramatic",
+      "dystopian",
+      "contemplative"
+    ],
+    "camera_movement": "pan across landscape",
+    "technical_params": {
+      "aspect_ratio": "4:3",
+      "model": "AnimateDiff",
+      "seed": 849607,
+      "guidance_scale": 8.5,
+      "steps": 50
+    },
+    "scene_context": "EXT. DE FORUM WEBSITE - DAY\n\n\n\nResume Timestring:20230129210106"
+  }
+]

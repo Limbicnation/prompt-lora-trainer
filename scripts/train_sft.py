@@ -83,6 +83,16 @@ class TrainingConfig:
     # Monitoring
     report_to: str = "wandb"
     run_name: Optional[str] = None
+    
+    # Evaluation (optional)
+    eval_steps: Optional[int] = None
+    eval_strategy: Optional[str] = None
+    load_best_model_at_end: bool = False
+    metric_for_best_model: Optional[str] = None
+    greater_is_better: Optional[bool] = None
+    
+    # Preprocessing (optional, for config compatibility)
+    preprocessing: Optional[dict] = None
 
 
 def load_config(config_path: str) -> TrainingConfig:
@@ -93,15 +103,48 @@ def load_config(config_path: str) -> TrainingConfig:
 
 
 def format_prompt(example: dict) -> str:
-    """Format dataset row into training prompt."""
-    # Create instruction-style format for the LoRA
-    instruction = "Generate a high-quality video prompt based on the following style."
-    style_name = example.get("style_name", "Cinematic")
-    prompt_text = example.get("prompt_text", "")
-    negative = example.get("negative_prompt", "")
-    tags = ", ".join(example.get("tags", [])) if isinstance(example.get("tags"), list) else ""
+    """Format dataset row into training prompt with schema auto-detection."""
+    # Schema detection
+    is_deforum = "instruction" in example and "response" in example
     
-    return f"""### Instruction:
+    if is_deforum:
+        instruction = example.get("instruction", "Generate a cinematic video prompt.")
+        response = example.get("response", "")
+        style_name = example.get("style_name", "")
+        negative = example.get("negative_prompt", "")
+        camera = example.get("camera_movement", "")
+        tags = ", ".join(example.get("tags", [])) if isinstance(example.get("tags"), list) else ""
+        scene = example.get("scene_context", "")
+        
+        return f"""### Instruction:
+{instruction}
+
+### Style:
+{style_name}
+
+### Response:
+{response}
+
+### Negative Prompt:
+{negative}
+
+### Camera:
+{camera}
+
+### Tags:
+{tags}
+
+### Context:
+{scene}""".strip()
+    else:
+        # Original Video-Diffusion-Prompt-Style format
+        instruction = "Generate a high-quality video prompt based on the following style."
+        style_name = example.get("style_name", "Cinematic")
+        prompt_text = example.get("prompt_text", "")
+        negative = example.get("negative_prompt", "")
+        tags = ", ".join(example.get("tags", [])) if isinstance(example.get("tags"), list) else ""
+        
+        return f"""### Instruction:
 {instruction}
 
 ### Style:
@@ -114,7 +157,7 @@ def format_prompt(example: dict) -> str:
 {negative}
 
 ### Tags:
-{tags}"""
+{tags}""".strip()
 
 
 def main():
@@ -123,7 +166,7 @@ def main():
     parser.add_argument("--model", type=str, help="Model ID (overrides config)")
     parser.add_argument("--dataset", type=str, help="Dataset ID (overrides config)")
     parser.add_argument("--output-dir", type=str, help="Output directory (overrides config)")
-    parser.add_argument("--dry-run", action="store_true", help="Validate setup without training")
+    parser.add_argument("--dry-run", "--dry_run", action="store_true", help="Validate setup without training")
     args = parser.parse_args()
     
     # Load config
@@ -152,19 +195,39 @@ def main():
         raise ValueError("HF_TOKEN not set. Run: export HF_TOKEN=your_token")
     
     # Load dataset
-    print("📊 Loading dataset...")
-    dataset = load_dataset(config.dataset_id, split="train", token=token)
+    print(f"📊 Loading dataset: {config.dataset_id}...")
+    try:
+        if os.path.exists(config.dataset_id) and config.dataset_id.endswith(".json"):
+            dataset = load_dataset("json", data_files=config.dataset_id, split="train")
+        else:
+            dataset = load_dataset(config.dataset_id, split="train", token=token)
+    except Exception as e:
+        print(f"⚠️ Hub loading failed: {e}")
+        # Try local fallback if not already tried
+        local_path = "./data/deforum_prompts_processed.json"
+        if os.path.exists(local_path):
+            print(f"📂 Falling back to local data: {local_path}")
+            dataset = load_dataset("json", data_files=local_path, split="train")
+        else:
+            raise e
+            
     print(f"   Rows: {len(dataset)}")
     
-    # Format dataset and remove all original columns (including 'prompt' which triggers TRL's prompt+completion logic)
-    dataset = dataset.map(lambda x: {"text": format_prompt(x)}, remove_columns=dataset.column_names)
+    # Format dataset: Use existing 'text' or run format_prompt
+    if "text" in dataset.column_names:
+        print("📝 Using existing 'text' column from dataset.")
+        # Ensure we only keep the 'text' column for SFTTrainer
+        dataset = dataset.map(lambda x: {"text": x["text"]}, remove_columns=dataset.column_names)
+    else:
+        print("🔄 Formatting prompts using detected schema...")
+        dataset = dataset.map(lambda x: {"text": format_prompt(x)}, remove_columns=dataset.column_names)
     
     if args.dry_run:
         print("\n[DRY RUN] Sample formatted prompt:")
         print("-" * 50)
         print(dataset[0]["text"][:500])
         print("-" * 50)
-        print("\n✅ Dry run complete. Config validated.")
+        print(f"\n✅ Dry run complete. Max Seq Length target: {config.max_seq_length}")
         return
     
     # Quantization config (QLoRA)
@@ -226,6 +289,7 @@ def main():
         
         # GROUP 2: Dataset-related
         dataset_text_field="text",  # Use pre-mapped text field
+        max_length=config.max_seq_length,
         packing=False,  # Disabled: requires flash attention for reliable behavior
         
         # GROUP 3: Training parameters

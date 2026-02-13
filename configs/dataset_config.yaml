@@ -1,0 +1,164 @@
+# Dataset Processing Configuration for De Forum Art Film
+
+# Input/Output paths
+input_dir: "./inputs"
+output_file: "./data/deforum_prompts_processed.json"
+output_dir: "./data"
+
+# Augmentation settings
+augmentation_factor: 20
+min_examples_per_scene: 15
+review_samples: 50
+
+# Validation thresholds
+validation:
+  min_instruction_words: 20
+  max_instruction_words: 200
+  min_response_words: 30
+  max_response_words: 400
+  min_tags: 2
+  required_technical_params:
+    - aspect_ratio
+    - model
+    - seed
+    - guidance_scale
+
+# Aesthetic configuration
+defforum_aesthetic:
+  # Cinematic terms to include in prompts
+  cinematic_terms:
+    - tracking shot
+    - dolly zoom
+    - Dutch angle
+    - low angle
+    - high angle
+    - over-the-shoulder
+    - wide shot
+    - close-up
+    - extreme close-up
+    - chiaroscuro lighting
+    - rim lighting
+    - silhouette
+    - backlit
+    - film grain
+    - anamorphic
+    - shallow depth of field
+    - bokeh
+    - slow motion
+    - time-lapse
+    - match cut
+    - whip pan
+
+  # Tags for categorization
+  tags:
+    - noir
+    - minimalist
+    - urban
+    - psychological
+    - cinematic
+    - art film
+    - surreal
+    - dystopian
+    - tech-noir
+    - emotional
+    - dramatic
+    - moody
+    - atmospheric
+    - contemplative
+    - mysterious
+    - dark
+    - neo-noir
+    - existential
+    - philosophical
+    - humanist
+
+  # Camera movement options
+  camera_movements:
+    - slow tracking shot following subject
+    - static wide shot with subtle zoom
+    - handheld camera with slight shake
+    - low angle dolly forward
+    - overhead crane shot descending
+    - 360-degree orbit around subject
+    - slow push-in on face
+    - pan across landscape
+    - tilt up from ground level
+    - whip pan transition
+    - slow zoom out revealing context
+    - steadicam following movement
+
+  # Technical parameters
+  aspect_ratios:
+    - "16:9"
+    - "2.39:1"
+    - "1.85:1"
+    - "4:3"
+
+  models:
+    - WanVideo
+    - CogVideoX
+    - AnimateDiff
+    - Stable Video Diffusion
+
+  guidance_scale_range:
+    min: 7.0
+    max: 8.5
+
+  seed_range:
+    min: 1000
+    max: 999999
+
+  steps_options:
+    - 25
+    - 30
+    - 50
+
+# Default negative prompt
+default_negative_prompt: >
+  blurry, static, distorted, low resolution, modern elements, bright colors,
+  muted, bad eyes, dull, hazy, muddy colors, mutated, deformed, noise,
+  stock image, borders, frame, watermark, text, signature, username,
+  cropped, out of frame, bad composition, poorly rendered face,
+  poorly drawn hands, low resolution, cartoonish style, futuristic elements,
+  NSFW, nude, disfigured, oversaturated, bad anatomy, deformed body features,
+  washed out, lifeless, smoggy, sludgy hues, unfocused clarity, malformed,
+  grainy textures, cliché stock aesthetics, cluttered edges, intrusive frame,
+  obtrusive watermark, distracting text overlays, invasive signature,
+  obtrusive usernames, truncated composition, elements awkwardly chopped,
+  subject matter awkwardly exiting the frame, jarring arrangement of elements,
+  inexpertly rendered visage, crudely illustrated facial features,
+  substandard facial detailing, clumsily depicted appendages,
+  amateurishly rendered extremities, pixelated visuals,
+  snippets excised awkwardly, erratic cropping, chaotic layout,
+  warped limbs, fuzzy outlines, contorted anatomy, exaggerated saturation levels,
+  skewed bodily proportions, unnatural pose and structure
+
+# Input file patterns
+input_patterns:
+  - "*.txt"
+  - "*.md"
+
+# Processing options
+processing:
+  # Maximum sections to extract per file (for files without explicit scenes)
+  max_sections_per_file: 5
+  
+  # Minimum section length in characters
+  min_section_length: 100
+  
+  # Maximum narrative length to store
+  max_narrative_length: 1000
+  
+  # Maximum scene context length
+  max_context_length: 500
+
+# Chat template configuration
+chat_template:
+  # Template type: qwen3, alpaca, llama2, etc.
+  type: qwen3
+  
+  # Qwen3 specific tokens
+  im_start: "<|im_start|>"
+  im_end: "<|im_end|>"
+  user_role: "user"
+  assistant_role: "assistant"
