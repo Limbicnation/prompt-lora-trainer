@@ -31,7 +31,7 @@ fi
 # Step 1: Merge LoRA
 echo ""
 echo "Step 1: Merging LoRA adapter..."
-python << 'PYTHON'
+python << PYTHON
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 import torch
