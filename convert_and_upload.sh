@@ -2,6 +2,19 @@
 # Convert trained LoRA to Ollama format and upload to Hugging Face
 
 set -e
+
+# --- Configuration ---
+OUTPUT_DIR="./outputs"
+MODEL_BASENAME="qwen3-4b-deforum" # Base name for outputs
+
+BASE_MODEL_ID="Qwen/Qwen3-4B-Instruct-2507"
+LORA_ADAPTER_DIR="$OUTPUT_DIR/${MODEL_BASENAME}-prompt-lora"
+MERGED_MODEL_DIR="$OUTPUT_DIR/${MODEL_BASENAME}-merged"
+GGUF_OUTPUT_FILE="$OUTPUT_DIR/${MODEL_BASENAME}-q8.gguf"
+GGUF_TYPE="q8_0"
+OLLAMA_MODEL_NAME="${MODEL_BASENAME}-prompt"
+HF_REPO_ID="Limbicnation/${MODEL_BASENAME}-prompt-lora"
+# --- End Configuration ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
