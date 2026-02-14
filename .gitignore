@@ -231,3 +231,6 @@ wandb/
 
 # HuggingFace cache
 .cache/
+
+# llama.cpp (cloned for GGUF conversion, not a submodule)
+llama.cpp/
