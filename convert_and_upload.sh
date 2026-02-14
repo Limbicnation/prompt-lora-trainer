@@ -69,7 +69,7 @@ echo "Step 2: Converting to GGUF..."
 if [ ! -d "./llama.cpp" ]; then
     git clone --depth 1 https://github.com/ggerganov/llama.cpp.git
 fi
-pip install -q -r llama.cpp/requirements.txt 2>/dev/null || true
+pip install -q -r llama.cpp/requirements.txt
 
 python llama.cpp/convert_hf_to_gguf.py \
     ./outputs/qwen3-4b-deforum-merged \
