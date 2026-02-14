@@ -2,8 +2,8 @@
 # Convert trained LoRA to Ollama format and upload to Hugging Face
 
 set -e
-cd /home/gero/GitHub/DeepLearning_Lab/prompt-lora-trainer
-source /home/gero/anaconda3/bin/activate prompt-lora-trainer
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 
 echo "🦙 Converting and Uploading Model"
 echo "=================================="
@@ -79,9 +79,7 @@ PARAMETER num_ctx 2048
 PARAMETER stop <|im_end|>
 EOF
 
-cd ./outputs
-ollama create qwen3-4b-deforum-prompt -f Modelfile 2>/dev/null || echo "⚠️  Ollama not available, skipping"
-cd ..
+(cd ./outputs && ollama create qwen3-4b-deforum-prompt -f Modelfile) 2>/dev/null || echo "⚠️  Ollama not available, skipping"
 
 # Step 4: Upload to HF
 echo ""
@@ -97,11 +95,12 @@ repo_id = "Limbicnation/qwen3-4b-deforum-prompt-lora"
 # Create repo
 create_repo(repo_id=repo_id, repo_type="model", exist_ok=True, token=token)
 
-# Upload LoRA adapter
+# Upload LoRA adapter (exclude training checkpoints - only final adapter needed)
 api.upload_folder(
     folder_path="./outputs/qwen3-4b-deforum-prompt-lora",
     repo_id=repo_id,
-    token=token
+    token=token,
+    ignore_patterns=["checkpoint-*/**", "checkpoint-*"],
 )
 print("✅ LoRA adapter uploaded")
 
