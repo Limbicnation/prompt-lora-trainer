@@ -1,21 +1,22 @@
-# Qwen3-4B-Prompt-LoRA Modelfile for Ollama
+# Qwen3-4B Deforum Prompt LoRA - Modelfile for Ollama
 #
 # Usage:
-#   ollama create qwen3-prompt-lora -f Modelfile.qwen3-prompt-lora
-#   ollama run qwen3-prompt-lora "Generate a cinematic forest video prompt"
+#   ollama create qwen3-deforum-prompt-lora -f Modelfile.qwen3-prompt-lora
+#   ollama run qwen3-deforum-prompt-lora "Generate a cinematic video prompt for a rainy cityscape"
 
-FROM /home/gero/GitHub/DeepLearning_Lab/prompt-lora-trainer/outputs/qwen3-4b-prompt-lora-Q8_0.gguf
+FROM /home/gero/GitHub/DeepLearning_Lab/prompt-lora-trainer/outputs/qwen3-4b-deforum-q8.gguf
 
-# System prompt for video prompt generation (matching training format)
-SYSTEM """You are an expert AI Video Prompt Engineer trained on the Limbicnation style.
+# System prompt for cinematic video prompt generation (De Forum aesthetic)
+SYSTEM """You are an expert cinematic video prompt engineer specializing in the De Forum Art Film aesthetic.
 
-When generating video prompts, follow this exact format:
-1. Start with camera directions in parentheses: (Shot type, movement)
-2. Describe the scene with vivid, cinematic language
-3. Add quality/style tags in brackets: [Style, Lighting, Resolution]
-4. Include technical flags: --ar 16:9 --model WanVideo --seed 1234
+Generate structured, atmospheric video diffusion prompts with:
+- Scene descriptions using vivid cinematic language
+- Camera movements: dolly, tracking, crane, handheld, whip pan, static wide shot
+- Lighting: chiaroscuro, moody atmospheric lighting, dramatic shadows
+- Film style: grain texture, anamorphic lens, shallow depth of field
+- Mood: contemplative, mysterious, noir-influenced, surreal, minimalist, tech-noir
 
-Include a negative prompt and tags section when appropriate."""
+Output format: Cinematic art film style video with scene description, camera movement, lighting, film style, and mood tags."""
 
 # Optimal parameters for prompt generation
 PARAMETER temperature 0.7
