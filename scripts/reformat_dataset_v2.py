@@ -91,32 +91,52 @@ INSTRUCTION_TEMPLATES = {
 # Response templates per tier
 RESPONSE_TEMPLATES = {
     "short": [
-        "{camera} on {subject}, {lighting}.",
-        "{subject}, {camera}, {mood}.",
-        "{camera} revealing {subject} in {lighting}.",
-        "{subject} bathed in {lighting}, {camera}.",
-        "{camera} through {subject}, {mood} atmosphere.",
-        "{subject} under {lighting}, {camera}.",
+        "{camera} on {subject}, {lighting} cutting across the frame, {mood} and still.",
+        "{subject} — {camera} holds steady as {lighting} carves deep shadows, "
+        "the air thick with {mood} tension.",
+        "{camera} revealing {subject}, bathed in {lighting}, a {mood} hush settling over the frame.",
+        "{subject} caught in {lighting}, the {camera} drifting slowly through a {mood} silence.",
+        "A {camera} finds {subject} under {lighting}, every shadow charged with {mood} weight.",
+        "{lighting} wraps around {subject} as the {camera} lingers, {mood} and dreamlike.",
     ],
     "medium": [
-        "{camera} on {subject}. {lighting_cap} casts dramatic shadows. {film_style} {mood}.",
-        "{subject} comes into view via {camera}. {lighting_cap} creates {mood} tension. {film_style}.",
-        "Through {camera}, we see {subject}. {lighting_cap} with {mood} undertones. {film_style}.",
-        "{camera} captures {subject}. {lighting_cap} emphasizes the {mood} mood. {film_style}.",
-        "{subject} emerges in {camera}. {lighting_cap} builds {mood} atmosphere. {film_style}.",
+        "{camera} on {subject}. {lighting_cap} casts dramatic shadows across the composition. "
+        "{film_style}. The {mood} tone settles over the frame like fog, "
+        "each detail sharpened by the interplay of light and darkness.",
+        "{subject} comes into view via {camera}. {lighting_cap} sculpts the space with "
+        "chiaroscuro precision, creating {mood} tension in every corner. {film_style}. "
+        "The silence between moments feels deliberate, weighted with unspoken meaning.",
+        "Through a {camera}, we find {subject}. {lighting_cap} with {mood} undertones, "
+        "shadows pooling in the recesses of the frame. {film_style}. "
+        "Something stirs beneath the surface, barely perceptible but undeniable.",
+        "{camera} captures {subject} in a wash of {lighting}. "
+        "The {mood} mood is palpable, reinforced by {film_style_phrase}. "
+        "Every compositional element conspires to hold the viewer's gaze.",
+        "{subject} emerges through {camera}. {lighting_cap} builds an atmosphere of "
+        "{mood} intensity. {film_style}. The visual rhythm is deliberate, "
+        "each frame a careful study in shadow and form.",
     ],
     "detailed": [
-        "{scene_prefix} {camera} reveals {subject}. {lighting_cap} with dramatic shadows cutting across the frame. "
-        "{film_style_detailed}. The scene carries a {mood} quality, {mood_extension}.",
-        
-        "{scene_prefix} Through {camera}, {subject} takes shape. {lighting_cap} creates pools of darkness and light. "
-        "{film_style_detailed}. A {mood} atmosphere pervades, {mood_extension}.",
-        
-        "{scene_prefix} {camera} frames {subject}. {lighting_cap} sculpts the scene with cinematic precision. "
-        "{film_style_detailed}. The {mood} mood deepens as {mood_extension}.",
-        
-        "{scene_prefix} {subject} unfolds via {camera}. {lighting_cap} with noir-influenced shadows. "
-        "{film_style_detailed}. {mood_cap} emotions surface, {mood_extension}.",
+        "{scene_prefix}{camera} reveals {subject}. {lighting_cap} with dramatic shadows cutting across "
+        "the frame, isolating figures in pools of warm and cold light. {film_style_detailed}. "
+        "The scene carries a {mood} quality, {mood_extension}. "
+        "Every element of the composition — the negative space, the careful framing, "
+        "the interplay of texture and tone — serves the emotional undercurrent.",
+
+        "{scene_prefix}Through {camera}, {subject} takes shape. {lighting_cap} creates "
+        "pools of darkness and light that divide the frame into distinct emotional zones. "
+        "{film_style_detailed}. A {mood} atmosphere pervades, {mood_extension}. "
+        "The grain and lens distortion add a layer of tactile authenticity to the image.",
+
+        "{scene_prefix}{camera} frames {subject}. {lighting_cap} sculpts the scene "
+        "with cinematic precision, every shadow deliberate, every highlight earned. "
+        "{film_style_detailed}. The {mood} mood deepens as {mood_extension}. "
+        "Sound design would be minimal — ambient hum, distant echoes, the weight of silence.",
+
+        "{scene_prefix}{subject} unfolds via {camera}. {lighting_cap} with "
+        "noir-influenced shadows that seem to breathe with the rhythm of the scene. "
+        "{film_style_detailed}. {mood_cap} emotions surface, {mood_extension}. "
+        "The visual language borrows from European art cinema — unhurried, precise, haunting.",
     ],
 }
 
@@ -153,10 +173,10 @@ def parse_structured_response(response: str) -> ParsedResponse:
     if scene_match:
         scene = scene_match.group(1).strip()
     
-    # Extract description
-    desc_match = re.search(r'description:\s*([^\.]+(?:\.[^\.]+)?)', response, re.IGNORECASE)
+    # Extract description — grab everything between "description:" and "camera movement:"
+    desc_match = re.search(r'description:\s*(.*?)\s*(?:camera movement:|$)', response, re.IGNORECASE)
     if desc_match:
-        description = desc_match.group(1).strip()
+        description = desc_match.group(1).strip().rstrip('.')
     
     # Extract camera movement
     camera_match = re.search(r'camera movement:\s*([^\.]+)', response, re.IGNORECASE)
@@ -218,23 +238,46 @@ def parse_structured_response(response: str) -> ParsedResponse:
     )
 
 
-def extract_subject(scene: str, description: str) -> str:
-    """Extract a concise subject from scene and description."""
-    # Try to get something meaningful from the scene
-    if scene:
-        # Clean up common prefixes
-        subject = re.sub(r'^(INT\.?|EXT\.?)\s*[A-Z\s]+\s*-\s*(DAY|NIGHT|DUSK|DAWN)', '', scene, flags=re.IGNORECASE)
-        subject = subject.strip(" -:.")
-        if subject:
-            return subject
-    
-    # Fallback to description
+def extract_subject(scene: str, description: str, max_words: int = 12) -> str:
+    """Extract a concise, meaningful subject from scene and description.
+
+    Prefers description content over bare scene labels like 'Scene 14'.
+    """
+    # Always prefer description content — it has the actual narrative
     if description:
-        # Take first sentence or first 10 words
-        first_sent = description.split('.')[0]
-        words = first_sent.split()[:10]
-        return ' '.join(words)
-    
+        # Strip INT/EXT location headers from the start
+        desc_clean = re.sub(
+            r'^(INT\.?|EXT\.?)\s*[\w\s\'-]+-\s*(DAY|NIGHT|DUSK|DAWN)(\s*\(LATER\))?\s*',
+            '', description, flags=re.IGNORECASE
+        ).strip()
+        if desc_clean:
+            # Take the first sentence, capped at max_words
+            first_sent = desc_clean.split('.')[0].strip()
+            words = first_sent.split()[:max_words]
+            subject = ' '.join(words)
+            # Ensure it doesn't end mid-word awkwardly
+            if subject and not subject[-1] in '.!?,;:':
+                subject = subject.rstrip()
+            return subject
+
+    # Fallback: try to extract something from scene (e.g. INT. SARAH'S STUDIO - NIGHT)
+    if scene:
+        # Check if it's a location header
+        loc_match = re.match(
+            r'(INT\.?|EXT\.?)\s*([\w\s\'-]+?)\s*-\s*(DAY|NIGHT|DUSK|DAWN)',
+            scene, re.IGNORECASE
+        )
+        if loc_match:
+            location = loc_match.group(2).strip()
+            time = loc_match.group(3).strip().lower()
+            return f"{location.lower()} at {time}"
+
+        # If it's just "Scene N", return a generic but usable phrase
+        if re.match(r'^Scene\s+\d+', scene, re.IGNORECASE):
+            return "the scene"
+
+        return scene.strip(" -:.")
+
     return "the scene"
 
 
@@ -350,87 +393,126 @@ def generate_medium_response(parsed: ParsedResponse) -> str:
     camera = simplify_camera(parsed.camera_movement)
     lighting = simplify_lighting(parsed.lighting)
     lighting_cap = lighting[0].upper() + lighting[1:] if lighting else "Dramatic lighting"
-    
-    # Simplify film style
+
+    # Film style — both sentence and phrase forms for template flexibility
     film_parts = parsed.film_style.split(',') if parsed.film_style else ["grain texture"]
-    film_style = film_parts[0].strip() if film_parts else "grain texture"
-    if "grain" in film_style.lower():
-        film_style = "Grain texture adds cinematic depth"
-    elif "anamorphic" in film_style.lower():
+    film_first = film_parts[0].strip() if film_parts else "grain texture"
+    if "grain" in film_first.lower():
+        film_style = "Grain texture adds cinematic depth to every frame"
+        film_style_phrase = "heavy grain and shallow focus"
+    elif "anamorphic" in film_first.lower():
         film_style = "Anamorphic lens characteristics create distinctive flares"
-    elif "shallow" in film_style.lower():
-        film_style = "Shallow depth of field isolates the subject"
+        film_style_phrase = "anamorphic distortion and lens flares"
+    elif "shallow" in film_first.lower():
+        film_style = "Shallow depth of field isolates the subject from the world"
+        film_style_phrase = "razor-thin focus and creamy bokeh"
     else:
-        film_style = f"{film_style[0].upper() + film_style[1:]} creates visual texture"
-    
+        film_style = f"{film_first[0].upper() + film_first[1:]} creates visual texture"
+        film_style_phrase = film_first
+
     mood_keywords, _ = extract_mood_keywords(parsed.mood)
-    
+
     template = random.choice(RESPONSE_TEMPLATES["medium"])
-    
+
     response = template.format(
         camera=camera,
         subject=subject,
         lighting=lighting,
         lighting_cap=lighting_cap,
         film_style=film_style,
-        mood=mood_keywords
+        film_style_phrase=film_style_phrase,
+        mood=mood_keywords,
     )
-    
+
     return response
 
 
 def generate_detailed_response(parsed: ParsedResponse) -> str:
     """Generate a detailed (60-100 words) response."""
-    subject = extract_subject(parsed.scene, parsed.description)
-    camera = parsed.camera_movement if parsed.camera_movement else "a slow deliberate movement"
-    
-    # Scene prefix (optional)
+    subject = extract_subject(parsed.scene, parsed.description, max_words=15)
+    camera = simplify_camera(parsed.camera_movement) if parsed.camera_movement else "a slow deliberate movement"
+
+    # Scene prefix (optional INT/EXT header)
     scene_prefix = ""
     if parsed.scene and re.match(r'^(INT|EXT)', parsed.scene, re.IGNORECASE):
         scene_prefix = parsed.scene.strip() + ". "
-    
-    # Lighting
-    lighting = parsed.lighting if parsed.lighting else "chiaroscuro lighting"
-    lighting_cap = lighting[0].upper() + lighting[1:]
-    
-    # Film style detailed
-    film_style = parsed.film_style if parsed.film_style else "grain texture, shallow depth of field"
-    film_style_detailed = f"{film_style[0].upper() + film_style[1:]} contributes to the cinematic language"
-    
+
+    # Lighting — natural prose, not raw key:value
+    lighting_prose = random.choice([
+        "Chiaroscuro lighting carves the space into zones of warmth and shadow",
+        "Moody atmospheric lighting with dramatic shadows pooling in every recess",
+        "Dramatic chiaroscuro — hard light from a single source sculpts the figures",
+        "Low-key lighting with deep blacks and isolated highlights",
+    ])
+    lighting_cap = lighting_prose
+
+    # Film style — natural prose
+    film_style_detailed = random.choice([
+        "Heavy grain texture and anamorphic lens distortion add tactile authenticity, "
+        "while shallow depth of field isolates the subject from the world",
+        "The image breathes with film grain, anamorphic bokeh stretching highlights "
+        "into horizontal streaks, focus razor-thin and selective",
+        "Grain and shallow focus give the frame a handmade quality, "
+        "the anamorphic lens softening edges into dreamlike distortion",
+        "Celluloid grain, anamorphic flares, and shallow depth of field — "
+        "every visual choice points toward analog intimacy",
+    ])
+
     # Mood
     mood_keywords, mood_extension = extract_mood_keywords(parsed.mood)
     mood_cap = mood_keywords[0].upper() + mood_keywords[1:]
-    
+
     template = random.choice(RESPONSE_TEMPLATES["detailed"])
-    
+
     response = template.format(
         scene_prefix=scene_prefix,
         camera=camera,
         subject=subject,
-        lighting=lighting,
+        lighting=lighting_prose,
         lighting_cap=lighting_cap,
         film_style_detailed=film_style_detailed,
         mood=mood_keywords.lower(),
         mood_cap=mood_cap,
-        mood_extension=mood_extension
+        mood_extension=mood_extension,
     )
-    
+
     return response
 
 
-def generate_instruction(scene: str, tier: str) -> str:
-    """Generate an instruction appropriate for the tier."""
-    # Extract a simplified scene description
-    scene_clean = scene.strip(" -:.")
-    
-    # Remove scene headings if present
-    scene_clean = re.sub(r'^(INT\.?|EXT\.?)\s*[A-Z\s]+\s*-\s*(DAY|NIGHT|DUSK|DAWN)\s*-?\s*', '', scene_clean, flags=re.IGNORECASE)
-    
-    if not scene_clean:
-        scene_clean = "a cinematic scene"
-    
+def generate_instruction(scene: str, description: str, tier: str) -> str:
+    """Generate an instruction appropriate for the tier, using description for context."""
+    # Build a meaningful scene label from description content
+    scene_label = ""
+
+    if description:
+        # Strip INT/EXT headers
+        desc_clean = re.sub(
+            r'^(INT\.?|EXT\.?)\s*[\w\s\'-]+-\s*(DAY|NIGHT|DUSK|DAWN)(\s*\(LATER\))?\s*',
+            '', description, flags=re.IGNORECASE
+        ).strip()
+        if desc_clean:
+            # Take first 6-8 words as a natural scene summary
+            words = desc_clean.split()[:8]
+            scene_label = ' '.join(words)
+            # Clean trailing fragments
+            scene_label = scene_label.rstrip(' ,;:-')
+
+    # Fallback: try location from scene header (e.g. "INT. SARAH'S STUDIO - NIGHT")
+    if not scene_label and scene:
+        loc_match = re.match(
+            r'(INT\.?|EXT\.?)\s*([\w\s\'-]+?)\s*-\s*(DAY|NIGHT|DUSK|DAWN)',
+            scene, re.IGNORECASE
+        )
+        if loc_match:
+            scene_label = f"{loc_match.group(2).strip().lower()} at {loc_match.group(3).lower()}"
+        elif not re.match(r'^Scene\s+\d+$', scene, re.IGNORECASE):
+            scene_label = scene.strip(" -:.")
+
+    if not scene_label:
+        scene_label = "a cinematic scene"
+
     template = random.choice(INSTRUCTION_TEMPLATES[tier])
-    return template.format(scene=scene_clean)
+    return template.format(scene=scene_label)
 
 
 def count_words(text: str) -> int:
@@ -465,14 +547,16 @@ def reformat_row(row: Dict, tier: str) -> Dict:
         new_response = generate_detailed_response(parsed)
     
     # Generate matching instruction
-    new_instruction = generate_instruction(parsed.scene, tier)
+    new_instruction = generate_instruction(parsed.scene, parsed.description, tier)
     
-    # Extract tags - handle both list and string formats
+    # Extract tags - handle list, numpy array, and string formats
     tags = row.get("tags", [])
-    if isinstance(tags, list):
-        tags_str = ", ".join(tags)
+    if tags is None:
+        tags_str = ""
+    elif hasattr(tags, "__iter__") and not isinstance(tags, str):
+        tags_str = ", ".join(str(t) for t in tags)
     else:
-        tags_str = str(tags) if tags else ""
+        tags_str = str(tags)
     
     # Create the reformatted row with all fields needed by training script
     reformatted = {
