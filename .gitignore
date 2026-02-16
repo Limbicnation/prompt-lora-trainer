@@ -234,3 +234,6 @@ wandb/
 
 # llama.cpp (cloned for GGUF conversion, not a submodule)
 llama.cpp/
+
+# Unsloth compiled cache
+unsloth_compiled_cache/
