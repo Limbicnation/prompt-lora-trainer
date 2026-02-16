@@ -4,14 +4,14 @@
 # Model
 model_id: "Qwen/Qwen3-4B-Instruct-2507"
 
-# Dataset - Updated for De Forum
+# Dataset - Updated for De Forum v2 (varied-length outputs)
 # Use local path during development, HF Hub path after upload
-dataset_id: "Limbicnation/deforum-prompt-lora-dataset"
+dataset_id: "Limbicnation/deforum-prompt-lora-dataset-v2"
 dataset_text_field: "text"  # Pre-formatted chat text
-max_seq_length: 1024  # Reduced from 2048: fits 24GB VRAM with r=32
+max_seq_length: 512  # Reduced from 1024: v2 has shorter, varied outputs (15-100 words)
 
 # LoRA - Enhanced for domain-specific fine-tuning
-lora_r: 32  # Reduced from 64: r=64 is for 70B models, 32 is plenty for 4B
+lora_r: 16  # Reduced from 64: r=64 is for 70B models, 32 is plenty for 4B
 lora_alpha: 64  # 2x rank
 lora_dropout: 0.1  # Increased from 0.05: more regularization to combat overfitting
 lora_target_modules:
@@ -25,7 +25,8 @@ lora_target_modules:
 
 # Quantization (QLoRA)
 use_4bit: true
-bnb_4bit_compute_dtype: "bfloat16"
+use_8bit: false
+bnb_4bit_compute_dtype: "float16"
 bnb_4bit_quant_type: "nf4"
 
 # Training - Adjusted for custom dataset
@@ -39,24 +40,25 @@ lr_scheduler_type: "cosine"
 # Optimization
 optim: "paged_adamw_8bit"  # Memory efficient for LoRA
 fp16: false
-bf16: true
-gradient_checkpointing: true
+bf16: false
+gradient_checkpointing: false
 auto_find_batch_size: true  # Auto-reduce if OOM
 
 # Packing (disabled for longer sequences)
-packing: false  # Disabled: longer sequences need precise boundaries
+packing: false
+packing_strategy: ""  # Disabled: longer sequences need precise boundaries
 
 # Output
-output_dir: "./outputs/qwen3-4b-deforum-prompt-lora"
+output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v2"
 logging_steps: 10
 save_steps: 50  # More frequent saves (smaller dataset)
 eval_steps: 50  # Evaluate every N steps
 push_to_hub: true
-hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora"
+hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v2"
 
 # Monitoring
 report_to: "wandb"
-run_name: "sft-qwen3-4b-deforum-prompts"
+run_name: "sft-qwen3-4b-deforum-prompts-v2"
 
 # Evaluation
 eval_strategy: "steps"

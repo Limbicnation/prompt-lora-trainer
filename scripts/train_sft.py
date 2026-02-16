@@ -51,6 +51,7 @@ class TrainingConfig:
     
     # Quantization (QLoRA)
     use_4bit: bool = True
+    use_8bit: bool = False
     bnb_4bit_compute_dtype: str = "bfloat16"
     bnb_4bit_quant_type: str = "nf4"
     
@@ -249,6 +250,9 @@ def main():
             bnb_4bit_compute_dtype=getattr(torch, config.bnb_4bit_compute_dtype),
             bnb_4bit_use_double_quant=True,
         )
+    elif config.use_8bit:
+        print("🔧 Configuring 8-bit quantization...")
+        bnb_config = BitsAndBytesConfig(load_in_8bit=True)
     
     # Load model
     print(f"📦 Loading model: {config.model_id}...")
@@ -261,7 +265,7 @@ def main():
     )
     
     # Prepare for k-bit training
-    if config.use_4bit:
+    if config.use_4bit or config.use_8bit:
         model = prepare_model_for_kbit_training(model)
     
     # Tokenizer
