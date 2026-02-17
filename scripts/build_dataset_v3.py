@@ -8,14 +8,13 @@
 #   "tqdm>=4.65.0",
 #   "thefuzz>=0.22.0",
 #   "huggingface_hub>=0.22.0",
-#   "ollama>=0.1.0",
 # ]
 # ///
 """
 Build Deforum Prompt Dataset v3
 
-Cleans v2 dataset, augments with Creative Writing and Gutenberg Sci-Fi sources,
-and synthesizes cinematic prompts using local Ollama LLM.
+Cleans v2 dataset, augments with Creative Writing and Gutenberg Sci-Fi sources
+via direct passage extraction (scoring paragraphs for visual/atmospheric density).
 
 Usage:
     uv run scripts/build_dataset_v3.py --dry-run --seed 42
@@ -28,11 +27,9 @@ import json
 import os
 import random
 import re
-import time
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 import duckdb
-import ollama
 import pandas as pd
 from datasets import Dataset, DatasetDict
 from huggingface_hub import HfApi
@@ -204,85 +201,6 @@ def assign_tier(word_count: int) -> str:
         return "detailed"
 
 
-def synthesize_cinematic_prompt(source_text: str, instruction_hint: str = "", model: str = "qwen3:4b") -> Tuple[str, str]:
-    """
-    Use Ollama to synthesize a cinematic prompt from source text.
-    Returns: (instruction, response)
-    """
-    system_prompt = "You are a cinematic video prompt engineer specializing in the De Forum aesthetic: noir-influenced, minimalist, psychologically intense art film style."
-    
-    user_prompt = f"""Source text:
----
-{source_text[:800]}
----
-
-Rewrite this as a cinematic video diffusion prompt. Requirements:
-- 40-80 words
-- Include: subject, camera movement, lighting description, mood
-- NO character names (use "the figure", "a silhouette", "the subject")
-- NO repetitive phrases like "comes into view"
-- Varied lighting (avoid defaulting to "chiaroscuro")
-- Film grain, atmospheric, contemplative tone
-
-Output ONLY a JSON object:
-{{"instruction": "brief user request", "response": "the cinematic prompt"}}"""
-
-    try:
-        response = ollama.chat(
-            model=model,
-            messages=[
-                {'role': 'system', 'content': system_prompt},
-                {'role': 'user', 'content': user_prompt}
-            ],
-            options={
-                'temperature': 0.7,
-                'top_p': 0.8,
-                'num_predict': 200,
-                'repeat_penalty': 1.3
-            }
-        )
-        
-        content = response['message']['content']
-        
-        # Extract JSON
-        try:
-            # Try to find JSON in the response
-            json_match = re.search(r'\{.*?"instruction".*?"response".*?\}', content, re.DOTALL)
-            if json_match:
-                result = json.loads(json_match.group())
-                return result.get('instruction', instruction_hint), result.get('response', content[:300])
-        except json.JSONDecodeError:
-            pass
-        
-        # Fallback: use content as response
-        return instruction_hint, content[:300]
-        
-    except Exception as e:
-        print(f"  ⚠️ Ollama error: {e}")
-        return instruction_hint, source_text[:200]
-
-
-def batch_synthesize(
-    texts: List[str],
-    instruction_hints: List[str],
-    model: str = "qwen3:4b",
-    batch_size: int = 10
-) -> List[Tuple[str, str]]:
-    """Batch process texts with Ollama."""
-    results = []
-    
-    for i in tqdm(range(0, len(texts), batch_size), desc="Synthesizing with Ollama"):
-        batch_texts = texts[i:i+batch_size]
-        batch_hints = instruction_hints[i:i+batch_size]
-        
-        for text, hint in zip(batch_texts, batch_hints):
-            instruction, response = synthesize_cinematic_prompt(text, hint, model)
-            results.append((instruction, response))
-            time.sleep(0.1)  # Small delay to avoid overwhelming Ollama
-    
-    return results
-
-
 # =============================================================================
 # STAGE 1: Clean v2 Dataset
 # =============================================================================
@@ -331,7 +249,7 @@ def stage1_clean_v2(rng: random.Random, dry_run: bool = False) -> pd.DataFrame:
         instruction = diversify_sarah(instruction, rng)
 
         # Diversify chiaroscuro
-        response = diversify_chiaroscuro(response, rng, keep_ratio=0.2)
+        response = diversify_chiaroscuro(response, rng, keep_ratio=0.15)
 
         # Strip meta commentary
         response = strip_meta_commentary(response)
@@ -389,9 +307,6 @@ def stage1_clean_v2(rng: random.Random, dry_run: bool = False) -> pd.DataFrame:
 def stage2_creative_writing(
     rng: random.Random,
     dry_run: bool = False,
-    synthesize: bool = True,
-    ollama_model: str = "qwen3:4b",
-    batch_size: int = 10
 ) -> pd.DataFrame:
     """Process Creative Writing ShareGPT dataset."""
     print("\n" + "="*60)
@@ -472,46 +387,55 @@ def stage2_creative_writing(
     
     print(f"Selected top {len(top_items)} by visual density score")
     
-    if dry_run or not synthesize:
-        # Just use the original text
-        rows = []
-        for item in top_items:
-            instruction = f"Generate a cinematic video prompt for: {item['human'][:100]}"
-            response = item['gpt'][:200]
-            word_count = count_words(response)
-            tier = assign_tier(word_count)
-            
-            text = format_chat_template_simple(instruction, response)
-            
-            rows.append({
-                'instruction': instruction,
-                'response': response,
-                'tier': tier,
-                'word_count': word_count,
-                'text': text,
-                'source': 'creative_writing',
-            })
-        
-        return pd.DataFrame(rows)
-    
-    # Synthesize with Ollama
-    print(f"Synthesizing {len(top_items)} prompts with Ollama ({ollama_model})...")
-    
-    texts = [item['gpt'] for item in top_items]
-    hints = [f"Generate a cinematic video prompt for: {item['human'][:100]}" for item in top_items]
-    
-    synthesized = batch_synthesize(texts, hints, ollama_model, batch_size)
-    
+    # Extract cinematic passages directly (fast, no LLM needed).
+    # The Creative Writing GPT responses already contain rich, atmospheric text.
+    # We extract the best paragraph from each response and format it.
     rows = []
-    for item, (instruction, response) in zip(top_items, synthesized):
-        if not instruction:
-            instruction = f"Generate a cinematic video prompt for: {item['human'][:100]}"
-        
+    for item in tqdm(top_items, desc="Extracting passages"):
+        gpt_text = item['gpt']
+        instruction = f"Generate a cinematic video prompt for: {item['human'][:100]}"
+
+        # Split into paragraphs and score each for visual density
+        paragraphs = [p.strip() for p in gpt_text.split('\n\n') if p.strip()]
+        if not paragraphs:
+            paragraphs = [gpt_text]
+
+        best_para = ""
+        best_score = -1
+        for para in paragraphs:
+            wc = count_words(para)
+            if wc < 15 or wc > 120:
+                continue
+            score = score_text_for_visual_density(para)
+            if score > best_score:
+                best_score = score
+                best_para = para
+
+        # Fallback: use first paragraph truncated
+        if not best_para:
+            best_para = paragraphs[0] if paragraphs else gpt_text
+            words = best_para.split()
+            best_para = ' '.join(words[:80])
+
+        # Trim to target length (40-80 words)
+        words = best_para.split()
+        if len(words) > 80:
+            # Truncate at sentence boundary near 60-80 words
+            truncated = ' '.join(words[:80])
+            last_period = truncated.rfind('.')
+            if last_period > len(' '.join(words[:40])):
+                best_para = truncated[:last_period + 1]
+            else:
+                best_para = truncated
+
+        response = best_para.strip()
         word_count = count_words(response)
+        if word_count < 10:
+            continue
+
         tier = assign_tier(word_count)
-        
         text = format_chat_template_simple(instruction, response)
-        
+
         rows.append({
             'instruction': instruction,
             'response': response,
@@ -520,10 +444,11 @@ def stage2_creative_writing(
             'text': text,
             'source': 'creative_writing',
         })
-    
+
     result_df = pd.DataFrame(rows)
     print(f"Stage 2 Results: {len(result_df)} rows")
-    print(f"  Tier distribution: {result_df['tier'].value_counts().to_dict()}")
+    if len(result_df) > 0:
+        print(f"  Tier distribution: {result_df['tier'].value_counts().to_dict()}")
     
     return result_df
 
@@ -535,9 +460,6 @@ def stage2_creative_writing(
 def stage3_gutenberg(
     rng: random.Random,
     dry_run: bool = False,
-    synthesize: bool = True,
-    ollama_model: str = "qwen3:4b",
-    batch_size: int = 10
 ) -> pd.DataFrame:
     """Process Gutenberg Sci-Fi dataset."""
     print("\n" + "="*60)
@@ -634,56 +556,60 @@ def stage3_gutenberg(
     
     print(f"Selected top {len(top_chunks)} chunks by visual density")
     
-    if dry_run or not synthesize:
-        # Use original text
-        rows = []
-        for chunk in top_chunks:
-            # Extract first 2 sentences for instruction
-            sentences = chunk['text'].split('.')[:2]
-            hint = '. '.join(s.strip() for s in sentences if s.strip())
-            
-            instruction = f"Generate a cinematic video prompt inspired by: {hint[:150]}"
-            response = chunk['text'][:250]
-            word_count = count_words(response)
-            tier = assign_tier(word_count)
-            
-            text = format_chat_template_simple(instruction, response)
-            
-            rows.append({
-                'instruction': instruction,
-                'response': response,
-                'tier': tier,
-                'word_count': word_count,
-                'text': text,
-                'source': 'gutenberg_scifi',
-            })
-        
-        return pd.DataFrame(rows)
-    
-    # Synthesize with Ollama
-    print(f"Synthesizing {len(top_chunks)} prompts with Ollama ({ollama_model})...")
-    
-    texts = [chunk['text'] for chunk in top_chunks]
-    hints = []
-    for chunk in top_chunks:
-        sentences = chunk['text'].split('.')[:2]
-        hint = '. '.join(s.strip() for s in sentences if s.strip())
-        hints.append(f"Generate a cinematic video prompt inspired by: {hint[:150]}")
-    
-    synthesized = batch_synthesize(texts, hints, ollama_model, batch_size)
-    
+    # Extract cinematic passages directly (fast, no LLM needed).
+    # Gutenberg sci-fi contains rich atmospheric descriptions we can extract.
     rows = []
-    for chunk, (instruction, response) in zip(top_chunks, synthesized):
-        if not instruction:
-            sentences = chunk['text'].split('.')[:2]
-            hint = '. '.join(s.strip() for s in sentences if s.strip())
-            instruction = f"Generate a cinematic video prompt inspired by: {hint[:150]}"
-        
+    for chunk in tqdm(top_chunks, desc="Extracting passages"):
+        chunk_text = chunk['text']
+
+        # Build instruction from first 2 sentences
+        sentences = chunk_text.split('.')[:2]
+        hint = '. '.join(s.strip() for s in sentences if s.strip())
+        instruction = f"Generate a cinematic video prompt inspired by: {hint[:150]}"
+
+        # Split into paragraphs and score each for visual density
+        paragraphs = [p.strip() for p in chunk_text.split('\n\n') if p.strip()]
+        if not paragraphs:
+            # Try single-newline split as fallback
+            paragraphs = [p.strip() for p in chunk_text.split('\n') if p.strip()]
+        if not paragraphs:
+            paragraphs = [chunk_text]
+
+        best_para = ""
+        best_score = -1
+        for para in paragraphs:
+            wc = count_words(para)
+            if wc < 15 or wc > 120:
+                continue
+            score = score_text_for_visual_density(para, include_scifi=True)
+            if score > best_score:
+                best_score = score
+                best_para = para
+
+        # Fallback: use first paragraph truncated
+        if not best_para:
+            best_para = paragraphs[0] if paragraphs else chunk_text
+            words = best_para.split()
+            best_para = ' '.join(words[:80])
+
+        # Trim to target length (40-80 words) at sentence boundary
+        words = best_para.split()
+        if len(words) > 80:
+            truncated = ' '.join(words[:80])
+            last_period = truncated.rfind('.')
+            if last_period > len(' '.join(words[:40])):
+                best_para = truncated[:last_period + 1]
+            else:
+                best_para = truncated
+
+        response = best_para.strip()
         word_count = count_words(response)
+        if word_count < 10:
+            continue
+
         tier = assign_tier(word_count)
-        
         text = format_chat_template_simple(instruction, response)
-        
+
         rows.append({
             'instruction': instruction,
             'response': response,
@@ -692,11 +618,12 @@ def stage3_gutenberg(
             'text': text,
             'source': 'gutenberg_scifi',
         })
-    
+
     result_df = pd.DataFrame(rows)
     print(f"Stage 3 Results: {len(result_df)} rows")
-    print(f"  Tier distribution: {result_df['tier'].value_counts().to_dict()}")
-    
+    if len(result_df) > 0:
+        print(f"  Tier distribution: {result_df['tier'].value_counts().to_dict()}")
+
     return result_df
 
 
@@ -705,8 +632,10 @@ def stage3_gutenberg(
 # =============================================================================
 
 def compute_hash(text: str) -> str:
-    """Compute hash for blocking in deduplication."""
-    return hashlib.md5(text[:20].lower().encode()).hexdigest()[:8]
+    """Compute hash for blocking in deduplication.
+    Uses first 40 chars to reduce false block collisions on short texts.
+    """
+    return hashlib.md5(text[:40].lower().encode()).hexdigest()[:8]
 
 
 def fuzzy_deduplicate(df: pd.DataFrame, threshold: int = 85) -> pd.DataFrame:
@@ -837,8 +766,8 @@ def stage4_merge_and_push(
     combined = pd.concat(dfs, ignore_index=True)
     print(f"Combined: {len(combined)} rows")
     
-    # Deduplicate (use 90 threshold to be less aggressive, preserving more variety)
-    deduped = fuzzy_deduplicate(combined, threshold=90)
+    # Deduplicate (threshold 85 balances variety vs quality)
+    deduped = fuzzy_deduplicate(combined, threshold=85)
     
     # Validate
     checks = validate_dataset(deduped)
@@ -902,10 +831,6 @@ def main():
     parser.add_argument('--dry-run', action='store_true', help='Run all stages, print stats, do not push')
     parser.add_argument('--skip-creative', action='store_true', help='Skip Stage 2 (Creative Writing)')
     parser.add_argument('--skip-gutenberg', action='store_true', help='Skip Stage 3 (Gutenberg)')
-    parser.add_argument('--synthesize-with-ollama', action='store_true', default=True, help='Enable LLM synthesis')
-    parser.add_argument('--no-synthesize', dest='synthesize_with_ollama', action='store_false', help='Disable LLM synthesis')
-    parser.add_argument('--ollama-model', type=str, default='qwen3:4b', help='Ollama model for synthesis')
-    parser.add_argument('--batch-size', type=int, default=10, help='Batch size for Ollama')
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
     parser.add_argument('--target', type=str, default='Limbicnation/deforum-prompt-lora-dataset-v3', help='Target dataset ID')
     args = parser.parse_args()
@@ -915,7 +840,6 @@ def main():
     print("="*60)
     print(f"Mode: {'DRY RUN' if args.dry_run else 'FULL'}")
     print(f"Seed: {args.seed}")
-    print(f"Synthesis: {'enabled' if args.synthesize_with_ollama else 'disabled'} ({args.ollama_model})")
     print(f"Skip Creative: {args.skip_creative}")
     print(f"Skip Gutenberg: {args.skip_gutenberg}")
     print(f"Target: {args.target}")
@@ -938,25 +862,13 @@ def main():
     
     # Stage 2: Creative Writing
     if not args.skip_creative:
-        df2 = stage2_creative_writing(
-            rng,
-            dry_run=args.dry_run,
-            synthesize=args.synthesize_with_ollama,
-            ollama_model=args.ollama_model,
-            batch_size=args.batch_size
-        )
+        df2 = stage2_creative_writing(rng, dry_run=args.dry_run)
         if len(df2) > 0:
             dataframes.append(df2)
     
     # Stage 3: Gutenberg
     if not args.skip_gutenberg:
-        df3 = stage3_gutenberg(
-            rng,
-            dry_run=args.dry_run,
-            synthesize=args.synthesize_with_ollama,
-            ollama_model=args.ollama_model,
-            batch_size=args.batch_size
-        )
+        df3 = stage3_gutenberg(rng, dry_run=args.dry_run)
         if len(df3) > 0:
             dataframes.append(df3)
     
