@@ -27,8 +27,17 @@ from transformers import (
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from trl import SFTTrainer, SFTConfig
 from dotenv import load_dotenv
+import importlib
 
 load_dotenv()
+
+# Optional trackio import
+trackio = None
+try:
+    import trackio as _trackio
+    trackio = _trackio
+except ImportError:
+    pass
 
 
 @dataclass
@@ -336,6 +345,21 @@ def main():
         hub_token=token,
     )
     
+    # Initialize trackio if requested
+    if config.report_to == "trackio" and trackio is not None:
+        print("📊 Initializing Trackio monitoring...")
+        trackio.init(
+            run_name=config.run_name or f"sft-{config.model_id.split('/')[-1]}",
+            config={
+                "model_id": config.model_id,
+                "dataset_id": config.dataset_id,
+                "lora_r": config.lora_r,
+                "lora_alpha": config.lora_alpha,
+                "learning_rate": config.learning_rate,
+                "num_train_epochs": config.num_train_epochs,
+            }
+        )
+
     # Callbacks
     callbacks = []
     if config.early_stopping_patience and eval_dataset is not None:
