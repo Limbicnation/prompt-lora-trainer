@@ -13,3 +13,5 @@ PARAMETER temperature 0.8
 PARAMETER top_p 0.9
 PARAMETER top_k 40
 PARAMETER num_ctx 2048
+PARAMETER num_predict 300
+PARAMETER repeat_penalty 1.75
