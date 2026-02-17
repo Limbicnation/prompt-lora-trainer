@@ -29,10 +29,10 @@ use_4bit: true
 bnb_4bit_compute_dtype: "bfloat16"
 bnb_4bit_quant_type: "nf4"
 
-# Training
-num_train_epochs: 3
+# Training (small dataset needs more epochs; packing creates ~9 steps/epoch)
+num_train_epochs: 15
 per_device_train_batch_size: 2
-gradient_accumulation_steps: 8
+gradient_accumulation_steps: 4
 learning_rate: 2.0e-4
 warmup_ratio: 0.03
 lr_scheduler_type: "cosine"
@@ -50,13 +50,13 @@ packing: true
 # Output
 output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v4"
 logging_steps: 10
-save_steps: 25
+save_steps: 10
 push_to_hub: true
 hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v4"
 
 # Evaluation
 eval_strategy: "steps"
-eval_steps: 25
+eval_steps: 10
 load_best_model_at_end: true
 metric_for_best_model: "eval_loss"
 greater_is_better: false
