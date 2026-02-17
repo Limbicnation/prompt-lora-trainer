@@ -1,64 +1,94 @@
 # prompt-lora-trainer
 
-LoRA fine-tuning pipeline for training prompt-generation models on synthetic video/image prompt datasets.
+QLoRA fine-tuning pipeline for training Qwen3-4B to generate cinematic video diffusion prompts. Specializes in the **De Forum Art Film** aesthetic — noir-influenced, atmospheric, psychologically minimal.
 
-## 🎯 Objective
+## Published Models
 
-Train a LoRA adapter on **Qwen3-4B/8B Instruct** to generate high-quality video prompts compatible with ComfyUI, LTX-Video, and WanVideo.
+| Model | Dataset | Status |
+|-------|---------|--------|
+| [qwen3-4b-deforum-prompt-lora-v4](https://huggingface.co/Limbicnation/qwen3-4b-deforum-prompt-lora-v4) | deforum-v4 (Ollama-synthesized) | ✅ Latest |
+| [qwen3-4b-deforum-prompt-lora-v3](https://huggingface.co/Limbicnation/qwen3-4b-deforum-prompt-lora-v3) | deforum-v3.1 | ✅ Stable |
+| [qwen3-4b-prompt-lora](https://huggingface.co/Limbicnation/qwen3-4b-prompt-lora) | Video-Diffusion-Prompt-Style | ✅ v1 |
 
-## 📊 Dataset
+## Datasets
 
-| Dataset | Rows | Status |
-|---------|------|--------|
-| [Video-Diffusion-Prompt-Style](https://huggingface.co/datasets/Limbicnation/Video-Diffusion-Prompt-Style) | 752 | ✅ Ready |
+| Dataset | Rows | Notes |
+|---------|------|-------|
+| [deforum-prompt-lora-dataset-v4](https://huggingface.co/datasets/Limbicnation/deforum-prompt-lora-dataset-v4) | ~5,500 | Synthesized via qwen3-deforum-v3 Ollama model |
+| [deforum-prompt-lora-dataset-v3.1](https://huggingface.co/datasets/Limbicnation/deforum-prompt-lora-dataset-v3.1) | ~3,000 | Creative Writing + Gutenberg extraction |
+| [Video-Diffusion-Prompt-Style](https://huggingface.co/datasets/Limbicnation/Video-Diffusion-Prompt-Style) | 752 | Original general video prompts |
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
-# 1. Create environment
+# 1. Create environment (conda required — .venv-train has CUBLAS issues on cu128)
 conda create -n prompt-lora-trainer python=3.10 -y
 conda activate prompt-lora-trainer
 
 # 2. Install PyTorch (CUDA 12.4)
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 
-# 3. Install training deps
-pip install transformers accelerate datasets peft bitsandbytes trl huggingface-hub wandb python-dotenv pyyaml
+# 3. Install training deps via uv
+pip install uv
+uv sync
 
 # 4. Validate dataset
-python scripts/validate_dataset.py --dataset Limbicnation/Video-Diffusion-Prompt-Style
+uv run scripts/validate_dataset.py --dataset Limbicnation/deforum-prompt-lora-dataset-v4
 
 # 5. Train (dry-run first)
-python scripts/train_sft.py --config configs/sft_qwen3_4b.yaml --dry-run
-python scripts/train_sft.py --config configs/sft_qwen3_4b.yaml
+uv run scripts/train_sft.py --config configs/sft_qwen3_4b_deforum_v4.yaml --dry-run
+uv run scripts/train_sft.py --config configs/sft_qwen3_4b_deforum_v4.yaml
+
+# 6. Export: merge → GGUF → Ollama → HF Hub
+./convert_and_upload.sh
 ```
 
 ## 📁 Structure
 
 ```
-├── configs/sft_qwen3_4b.yaml   # Training config
+├── configs/
+│   ├── sft_qwen3_4b_deforum_v4.yaml    # Active: v4 training config
+│   ├── sft_qwen3_4b_deforum_v3.yaml    # v3 config (reference)
+│   └── sft_qwen3_4b.yaml               # v1 config (reference)
 ├── scripts/
-│   ├── train_sft.py            # Main SFT script (QLoRA)
-│   └── validate_dataset.py     # Dataset validator
-├── pyproject.toml              # Dependencies
-└── setup_env.sh                # Env setup script
+│   ├── train_sft.py                    # Main SFT script (QLoRA + early stopping)
+│   ├── build_dataset_v4.py             # Dataset builder (Ollama synthesis)
+│   ├── build_dataset_v3_extraction.py  # Dataset builder (text extraction only)
+│   ├── merge_and_convert_gguf.py       # LoRA merge + GGUF conversion
+│   └── validate_dataset.py             # Dataset format validator
+├── Modelfile.deforum-v4                # Ollama model definition (v4)
+├── Modelfile.deforum-v3                # Ollama model definition (v3)
+├── convert_and_upload.sh               # Full export pipeline
+└── pyproject.toml                      # Dependencies (uv)
 ```
 
-## ⚙️ Training Config
+## ⚙️ Training Config (v4)
 
 | Parameter | Value |
 |-----------|-------|
-| Base Model | Qwen3-4B-Instruct |
+| Base Model | Qwen3-4B-Instruct-2507 |
 | LoRA r/α | 16/32 |
-| Quantization | 4-bit NF4 (QLoRA) |
-| Batch | 4 × 4 gradient accum |
+| Target modules | q/k/v/o_proj (attention only) |
+| Quantization | 4-bit NF4 (QLoRA, bf16 compute) |
+| Batch | 2 × 4 gradient accum |
 | LR | 2e-4 (cosine) |
+| Epochs | 3 (early stopping, patience=2) |
+| Eval | Every 10 steps |
 
-## 📈 Progress
+## Ollama Deployment
 
-- [x] Dataset (752 prompts)
-- [x] Environment setup
-- [x] Training scripts
-- [ ] Dry-run validation
-- [ ] Full training
-- [ ] Push LoRA to Hub
+After GGUF export:
+
+```bash
+# Create Ollama model
+ollama create qwen3-deforum-v4 -f Modelfile.deforum-v4
+
+# Run
+ollama run qwen3-deforum-v4 "Generate a cinematic prompt for a rain-soaked alley at dusk"
+```
+
+## Known Issues
+
+- `extra_special_tokens` serialization bug: `convert_and_upload.sh` deletes the field at merge time
+- Use conda env, not `.venv-train` — the latter has torch 2.10+cu128 which causes CUBLAS errors on this driver
+- Small datasets overfit fast; always use eval split + early stopping (already in all v3+ configs)
