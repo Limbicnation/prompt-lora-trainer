@@ -40,6 +40,14 @@ from tqdm import tqdm
 # Configuration
 HF_TOKEN = os.environ.get("HF_TOKEN")
 
+
+def get_duckdb_connection() -> duckdb.DuckDBPyConnection:
+    """Create a DuckDB connection with HF token if available."""
+    conn = duckdb.connect()
+    if HF_TOKEN:
+        conn.execute("CREATE SECRET hf_token (TYPE HUGGINGFACE, TOKEN ?);", [HF_TOKEN])
+    return conn
+
 # Keyword lists for visual/atmospheric scoring
 SCORING_KEYWORDS = {
     "visual": [
@@ -212,16 +220,14 @@ def stage1_clean_v2(rng: random.Random, dry_run: bool = False) -> pd.DataFrame:
     print("="*60)
     
     # Load via DuckDB
-    conn = duckdb.connect()
-    if HF_TOKEN:
-        conn.execute("CREATE SECRET hf_token (TYPE HUGGINGFACE, TOKEN ?);", [HF_TOKEN])
+    conn = get_duckdb_connection()
     
     path = "hf://datasets/Limbicnation/deforum-prompt-lora-dataset-v2@~parquet/default/train/*.parquet"
     print(f"Loading from: {path}")
     
     try:
         df = conn.execute("SELECT * FROM read_parquet(?)", [path]).fetchdf()
-    except Exception as e:
+    except duckdb.Error as e:
         print(f"Error loading v2 dataset: {e}")
         conn.close()
         return pd.DataFrame()
@@ -314,16 +320,14 @@ def stage2_creative_writing(
     print("="*60)
     
     # Load via DuckDB
-    conn = duckdb.connect()
-    if HF_TOKEN:
-        conn.execute("CREATE SECRET hf_token (TYPE HUGGINGFACE, TOKEN ?);", [HF_TOKEN])
+    conn = get_duckdb_connection()
     
     path = "hf://datasets/ChaoticNeutrals/Creative_Writing-ShareGPT@~parquet/default/train/*.parquet"
     print(f"Loading from: {path}")
     
     try:
         df = conn.execute("SELECT * FROM read_parquet(?)", [path]).fetchdf()
-    except Exception as e:
+    except duckdb.Error as e:
         print(f"Error loading Creative Writing dataset: {e}")
         conn.close()
         return pd.DataFrame()
@@ -342,7 +346,7 @@ def stage2_creative_writing(
         if isinstance(conversations, str):
             try:
                 conversations = json.loads(conversations)
-            except:
+            except json.JSONDecodeError:
                 continue
         
         if conversations is None or len(conversations) < 2:
@@ -467,9 +471,7 @@ def stage3_gutenberg(
     print("="*60)
     
     # Load via DuckDB
-    conn = duckdb.connect()
-    if HF_TOKEN:
-        conn.execute("CREATE SECRET hf_token (TYPE HUGGINGFACE, TOKEN ?);", [HF_TOKEN])
+    conn = get_duckdb_connection()
     
     path = "hf://datasets/stevez80/Sci-Fi-Books-gutenberg@~parquet/default/train/*.parquet"
     print(f"Loading from: {path}")
@@ -480,7 +482,7 @@ def stage3_gutenberg(
             "SELECT * FROM read_parquet(?) USING SAMPLE 500",
             [path]
         ).fetchdf()
-    except Exception as e:
+    except duckdb.Error as e:
         print(f"Error loading Gutenberg dataset: {e}")
         conn.close()
         return pd.DataFrame()
@@ -516,7 +518,7 @@ def stage3_gutenberg(
             # Fallback: split by single newlines if no double newlines
             paragraphs = text.split('\n')
         
-        # Build chunks of 200-500 words using sliding window
+        # Build chunks of 200-500 words by splitting the text
         words = text.split()
         i = 0
         while i < len(words):

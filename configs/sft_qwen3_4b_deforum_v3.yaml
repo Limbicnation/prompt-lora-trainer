@@ -1,6 +1,6 @@
 # SFT Configuration for Qwen3-4B on De Forum Dataset v3
 # Improvements over v2:
-#   - Trackio monitoring (instead of wandb)
+#   - WandB monitoring for cloud sync
 #   - More frequent eval for better overfitting detection
 #   - Lower save_steps to preserve best checkpoints
 
@@ -46,11 +46,11 @@ auto_find_batch_size: false
 packing: true
 
 # Output
-output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v3"
+output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v3.1"
 logging_steps: 10
 save_steps: 25
 push_to_hub: true
-hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v3"
+hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v3.1"
 
 # Evaluation (more frequent for better monitoring)
 eval_strategy: "steps"
@@ -62,6 +62,6 @@ greater_is_better: false
 # Early stopping
 early_stopping_patience: 3
 
-# Monitoring - WandB (reliable cloud sync)
+# Monitoring - WandB
 report_to: "wandb"
 run_name: "sft-qwen3-4b-deforum-v3.1"

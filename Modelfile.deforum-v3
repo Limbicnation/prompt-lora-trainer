@@ -4,7 +4,7 @@
 #   ollama create qwen3-deforum-v3 -f Modelfile.deforum-v3
 #   ollama run qwen3-deforum-v3 "Generate a cinematic video prompt for a rainy cityscape"
 
-FROM /home/gero/GitHub/DeepLearning_Lab/prompt-lora-trainer/outputs/qwen3-4b-deforum-q8-v3.1.gguf
+FROM ./outputs/qwen3-4b-deforum-q8-v3.1.gguf
 
 # System prompt for cinematic video prompt generation (De Forum aesthetic)
 SYSTEM """You are a cinematic video prompt generator specializing in the De Forum Art Film aesthetic.
