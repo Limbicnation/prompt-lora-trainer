@@ -326,12 +326,13 @@ def stage1_clean_v2(rng: random.Random, dry_run: bool = False) -> pd.DataFrame:
         if count_words(instruction) < 3 or count_words(response) < 3:
             continue
         
-        # Diversify Sarah
+        # Diversify Sarah (both instruction and response)
         response = diversify_sarah(response, rng)
-        
+        instruction = diversify_sarah(instruction, rng)
+
         # Diversify chiaroscuro
         response = diversify_chiaroscuro(response, rng, keep_ratio=0.2)
-        
+
         # Strip meta commentary
         response = strip_meta_commentary(response)
         instruction = strip_meta_commentary(instruction)
@@ -573,7 +574,9 @@ def stage3_gutenberg(
         text = str(row.get('text', ''))
         title = str(row.get('title', 'Unknown'))
         
-        # Strip Gutenberg headers/footers
+        # Normalize line endings (real and escaped) and strip Gutenberg headers/footers
+        text = text.replace('\r\n', '\n').replace('\r', '\n')
+        text = text.replace('\\r\\n', '\n').replace('\\r', '\n')
         text = re.sub(r'\*\*\*\s*START OF.*?\*\*\*', '', text, flags=re.DOTALL | re.IGNORECASE)
         text = re.sub(r'\*\*\*\s*END OF.*?\*\*\*', '', text, flags=re.DOTALL | re.IGNORECASE)
         
@@ -774,8 +777,12 @@ def validate_dataset(df: pd.DataFrame) -> Dict[str, any]:
                 checks['word_counts_valid'] = False
                 print(f"  ⚠️ {tier}: {invalid}/{len(tier_df)} rows outside {min_w}-{max_w} word range")
     
-    # Check Sarah
-    sarah_count = df['response'].str.contains('Sarah', case=False, na=False).sum()
+    # Check Sarah (rows with Sarah in instruction OR response)
+    sarah_mask = (
+        df['response'].str.contains('Sarah', case=False, na=False)
+        | df['instruction'].str.contains('Sarah', case=False, na=False)
+    )
+    sarah_count = sarah_mask.sum()
     checks['sarah_pct'] = 100 * sarah_count / len(df) if len(df) > 0 else 0
     
     # Check chiaroscuro
