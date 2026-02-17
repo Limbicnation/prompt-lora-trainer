@@ -48,7 +48,7 @@ packing: true
 # Output
 output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v3"
 logging_steps: 10
-save_steps: 50
+save_steps: 25
 push_to_hub: true
 hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v3"
 
