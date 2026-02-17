@@ -1,0 +1,67 @@
+# SFT Configuration for Qwen3-4B on De Forum Dataset v3
+# Improvements over v2:
+#   - WandB monitoring for cloud sync
+#   - More frequent eval for better overfitting detection
+#   - Lower save_steps to preserve best checkpoints
+
+# Model
+model_id: "Qwen/Qwen3-4B-Instruct-2507"
+
+# Dataset
+dataset_id: "Limbicnation/deforum-prompt-lora-dataset-v3.1"
+dataset_text_field: "text"
+max_seq_length: 512
+
+# LoRA (same as v2)
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+
+# Quantization (QLoRA)
+use_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+
+# Training
+num_train_epochs: 3
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-4
+warmup_ratio: 0.03
+lr_scheduler_type: "cosine"
+
+# Optimization
+optim: "paged_adamw_8bit"
+fp16: false
+bf16: true
+gradient_checkpointing: true
+auto_find_batch_size: false
+
+# Packing
+packing: true
+
+# Output
+output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v3.1"
+logging_steps: 10
+save_steps: 25
+push_to_hub: true
+hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v3.1"
+
+# Evaluation (more frequent for better monitoring)
+eval_strategy: "steps"
+eval_steps: 25
+load_best_model_at_end: true
+metric_for_best_model: "eval_loss"
+greater_is_better: false
+
+# Early stopping
+early_stopping_patience: 3
+
+# Monitoring - WandB
+report_to: "wandb"
+run_name: "sft-qwen3-4b-deforum-v3.1"

@@ -1,0 +1,69 @@
+# SFT Configuration for Qwen3-4B on Deforum Dataset v4
+# Changes from v3:
+#   - Dataset: v4 (Ollama-synthesized, all new responses)
+#   - 3 epochs (not 5 — per Kimi feedback, avoid overfitting small dataset)
+#   - Higher lora_dropout (0.1) for regularization
+#   - Stronger early stopping (patience=2)
+#   - No Technical Parameters in training data
+
+# Model
+model_id: "Qwen/Qwen3-4B-Instruct-2507"
+
+# Dataset
+dataset_id: "Limbicnation/deforum-prompt-lora-dataset-v4"
+dataset_text_field: "text"
+max_seq_length: 512
+
+# LoRA
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.1
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+
+# Quantization (QLoRA)
+use_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+
+# Training (3 epochs per Kimi feedback — early stopping handles generalization)
+num_train_epochs: 3
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 4
+learning_rate: 2.0e-4
+warmup_ratio: 0.03
+lr_scheduler_type: "cosine"
+
+# Optimization
+optim: "paged_adamw_8bit"
+fp16: false
+bf16: true
+gradient_checkpointing: true
+auto_find_batch_size: false
+
+# Packing
+packing: true
+
+# Output
+output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v4"
+logging_steps: 10
+save_steps: 10
+push_to_hub: true
+hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v4"
+
+# Evaluation
+eval_strategy: "steps"
+eval_steps: 10
+load_best_model_at_end: true
+metric_for_best_model: "eval_loss"
+greater_is_better: false
+
+# Early stopping (stronger than v3)
+early_stopping_patience: 2
+
+# Monitoring
+report_to: "wandb"
+run_name: "sft-qwen3-4b-deforum-v4"
