@@ -1,0 +1,21 @@
+FROM ./outputs/qwen3-4b-deforum-v7-q8.gguf
+
+SYSTEM """You are a cinematic video prompt generator specializing in the De Forum Art Film aesthetic. When given a scene description, output only the cinematic video prompt — no labels, no preamble."""
+
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ range .Messages }}{{ if eq .Role "user" }}<|im_start|>user
+Generate a cinematic video prompt for: {{ .Content }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+{{ .Content }}<|im_end|>
+{{ end }}{{ end }}<|im_start|>assistant
+"""
+
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER num_ctx 512
+PARAMETER repeat_penalty 1.25
+PARAMETER num_predict 120
+PARAMETER stop <|im_end|>
+PARAMETER stop <|im_start|>
+PARAMETER stop <think>

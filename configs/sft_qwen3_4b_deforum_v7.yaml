@@ -1,0 +1,90 @@
+# SFT Configuration for Qwen3-4B on Deforum Dataset v7
+# Changes from v6 (FIXES MODEL OUTPUT ISSUES):
+#   - packing: false — prevents cross-example contamination ("Video aesthetic:" prefix bleeding)
+#   - lora_r: 32, lora_alpha: 64 — 2x capacity to override Qwen3's structured output patterns
+#   - lora_target_modules: +MLP layers (gate_proj, up_proj, down_proj) — broader format adaptation
+#   - num_train_epochs: 5 — more epochs needed since packing=false → fewer effective tokens/step
+#   - per_device_train_batch_size: 4 — VRAM headroom regained without packing
+#   - learning_rate: 1e-4 — conservative with expanded LoRA targets
+#   - max_seq_length: 384 — v7 instructions are short (<150 chars), 384 >> needed
+#   - group_by_length: true — reduce padding waste (efficiency gain without packing)
+#   - weight_decay: 0.01 — L2 regularization for better generalization on small dataset
+#   - bnb_4bit_use_double_quant: true — saves ~0.5GB VRAM
+#   - eval/save strategy: epoch-based (more stable than step-based for this size)
+#   - Dataset: v6 (1,483 clean rows) + fresh De Forum film scenes (SARAH character allowed)
+#
+# Create v7 dataset first:
+#   conda run -n prompt-lora-trainer uv run scripts/build_dataset_v7.py --dry-run
+#   conda run -n prompt-lora-trainer uv run scripts/build_dataset_v7.py
+
+# Model
+model_id: "Qwen/Qwen3-4B-Instruct-2507"
+
+# Dataset
+# NOTE: v7 dataset = v6 base (1,483 rows) + fresh De Forum film scenes (SARAH character allowed)
+# Create with: conda run -n prompt-lora-trainer uv run scripts/build_dataset_v7.py
+dataset_id: "Limbicnation/deforum-prompt-lora-dataset-v7"
+dataset_text_field: "text"
+max_seq_length: 384
+
+# LoRA (INCREASED CAPACITY — attention + MLP layers for full output format suppression)
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Quantization (QLoRA)
+use_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+bnb_4bit_use_double_quant: true
+
+# Training (more epochs because packing=false → fewer effective tokens per step)
+num_train_epochs: 5
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 2
+learning_rate: 1.0e-4
+warmup_ratio: 0.05
+lr_scheduler_type: "cosine_with_min_lr"
+lr_scheduler_kwargs:
+  min_lr: 1.0e-6
+weight_decay: 0.01
+
+# Optimization
+optim: "paged_adamw_8bit"
+fp16: false
+bf16: true
+gradient_checkpointing: true
+group_by_length: true
+
+# Packing (CRITICAL FIX — was causing cross-example contamination)
+packing: false
+
+# Output
+output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v7"
+logging_steps: 10
+save_strategy: "epoch"
+push_to_hub: true
+hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v7"
+
+# Evaluation (epoch-based — more stable than step-based for this dataset size)
+eval_strategy: "epoch"
+load_best_model_at_end: true
+metric_for_best_model: "eval_loss"
+greater_is_better: false
+
+# Early stopping (patience=3 for epoch-based eval; threshold prevents micro-fluctuation stops)
+early_stopping_patience: 3
+early_stopping_threshold: 0.001
+
+# Monitoring
+report_to: "wandb"
+wandb_project: "prompt-lora-trainer"
+run_name: "sft-qwen3-4b-deforum-v7"

@@ -1,0 +1,12 @@
+FROM ./outputs/qwen3-4b-deforum-v6-q8.gguf
+
+SYSTEM """You are a cinematic video prompt generator specializing in the De Forum Art Film aesthetic."""
+
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER num_ctx 512
+PARAMETER repeat_penalty 1.15
+PARAMETER num_predict 120
+PARAMETER stop <|im_end|>
+PARAMETER stop <|im_start|>
+PARAMETER stop <think>

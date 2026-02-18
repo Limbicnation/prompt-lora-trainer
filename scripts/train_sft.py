@@ -102,6 +102,16 @@ class TrainingConfig:
     metric_for_best_model: Optional[str] = None
     greater_is_better: Optional[bool] = None
     early_stopping_patience: Optional[int] = None
+    early_stopping_threshold: Optional[float] = None
+    save_strategy: Optional[str] = None
+
+    # Quantization extras
+    bnb_4bit_use_double_quant: bool = False
+
+    # Optimizer extras
+    weight_decay: float = 0.0
+    lr_scheduler_kwargs: Optional[dict] = None
+    group_by_length: bool = False
 
     # Preprocessing (optional, for config compatibility)
     preprocessing: Optional[dict] = None
@@ -258,7 +268,7 @@ def main():
             load_in_4bit=True,
             bnb_4bit_quant_type=config.bnb_4bit_quant_type,
             bnb_4bit_compute_dtype=getattr(torch, config.bnb_4bit_compute_dtype),
-            bnb_4bit_use_double_quant=True,
+            bnb_4bit_use_double_quant=config.bnb_4bit_use_double_quant,
         )
     elif config.use_8bit:
         print("🔧 Configuring 8-bit quantization...")
@@ -324,12 +334,16 @@ def main():
         learning_rate=config.learning_rate,
         warmup_ratio=config.warmup_ratio,
         lr_scheduler_type=config.lr_scheduler_type,
+        lr_scheduler_kwargs=config.lr_scheduler_kwargs,
+        weight_decay=config.weight_decay,
+        group_by_length=config.group_by_length,
         optim=config.optim,  # paged_adamw_8bit for LoRA
-        
+
         # GROUP 4: Logging/Output
         output_dir=config.output_dir,
         logging_steps=config.logging_steps,
         save_steps=config.save_steps,
+        save_strategy=config.save_strategy or "steps",
         report_to=config.report_to,
         run_name=config.run_name or f"sft-{config.model_id.split('/')[-1]}",
         
@@ -369,7 +383,10 @@ def main():
     callbacks = []
     if config.early_stopping_patience and eval_dataset is not None:
         from transformers import EarlyStoppingCallback
-        callbacks.append(EarlyStoppingCallback(early_stopping_patience=config.early_stopping_patience))
+        es_kwargs = {"early_stopping_patience": config.early_stopping_patience}
+        if config.early_stopping_threshold is not None:
+            es_kwargs["early_stopping_threshold"] = config.early_stopping_threshold
+        callbacks.append(EarlyStoppingCallback(**es_kwargs))
 
     # Trainer
     print("🏋️ Starting training...")
