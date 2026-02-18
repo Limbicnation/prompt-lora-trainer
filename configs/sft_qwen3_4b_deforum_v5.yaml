@@ -1,0 +1,68 @@
+# SFT Configuration for Qwen3-4B on Deforum Dataset v5
+# Changes from v4:
+#   - Dataset: v5 (curated scene seeds, hard quality gates, 12 instruction templates)
+#   - No list-format synthesis leakage in training data
+#   - All other hyperparams unchanged: r=16, alpha=32, early stopping patience=2
+
+# Model
+model_id: "Qwen/Qwen3-4B-Instruct-2507"
+
+# Dataset
+dataset_id: "Limbicnation/deforum-prompt-lora-dataset-v5"
+dataset_text_field: "text"
+max_seq_length: 512
+
+# LoRA
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.1
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+
+# Quantization (QLoRA)
+use_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+
+# Training (3 epochs — early stopping handles generalization on small datasets)
+num_train_epochs: 3
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 4
+learning_rate: 2.0e-4
+warmup_ratio: 0.03
+lr_scheduler_type: "cosine"
+
+# Optimization
+optim: "paged_adamw_8bit"
+fp16: false
+bf16: true
+gradient_checkpointing: true
+auto_find_batch_size: false
+
+# Packing
+packing: true
+
+# Output
+output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v5"
+logging_steps: 10
+save_steps: 10
+push_to_hub: true
+hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v5"
+
+# Evaluation
+eval_strategy: "steps"
+eval_steps: 10
+load_best_model_at_end: true
+metric_for_best_model: "eval_loss"
+greater_is_better: false
+
+# Early stopping (patience=2 — stop quickly if no improvement)
+early_stopping_patience: 2
+
+# Monitoring
+report_to: "wandb"
+wandb_project: "prompt-lora-trainer"
+run_name: "sft-qwen3-4b-deforum-v5"

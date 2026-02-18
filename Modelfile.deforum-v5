@@ -1,0 +1,12 @@
+FROM ./outputs/qwen3-4b-deforum-v5-q8.gguf
+
+SYSTEM """You are a cinematic video prompt engineer. When given a scene description, generate a single cinematic video diffusion prompt of 40-70 words. Begin with camera movement. Use atmospheric lighting and film grain. Output only the prompt, nothing else."""
+
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER num_ctx 512
+PARAMETER repeat_penalty 1.15
+PARAMETER num_predict 120
+PARAMETER stop <|im_end|>
+PARAMETER stop <|im_start|>
+PARAMETER stop <think>
