@@ -13,36 +13,42 @@
 # ]
 # ///
 """
-Build Deforum Prompt Dataset v5 — Hard Quality Gates + Curated Scene Seeds
+Build Deforum Prompt Dataset v6 — Decoupled Instruction/Synthesis Sources
 
-Key improvements over v4:
-- Stage 1 uses curated scene seeds (no screenplay/v1 contamination)
-- New synthesis prompt: list-free, explicit anti-leakage instructions
-- 12 instruction templates sampled randomly (~half without "prompt" keyword)
+Key fix over v5:
+- Stage 2/3 instructions now use a RANDOM SCENE SEED (from SCENE_SEEDS pool)
+  instead of raw creative-writing / Gutenberg text as the {scene} variable.
+- Source texts (creative writing, Gutenberg) are used ONLY internally by Ollama
+  for synthesis diversity — they NEVER appear in the instruction the model trains on.
+- This prevents the v5 failure: model outputting story prose / ShareGPT-style
+  "write a story..." instructions when given a simple scene description.
+
+All other v5 improvements retained:
 - Hard-reject filters: SD params, screenplay markers, synthesis leakage, input echo
-- Word count range: 30-90 (tighter than v4's 15-110)
+- 12 instruction templates sampled randomly (~half without "prompt" keyword)
 - Post-filter validation: 50-row sample check, halt if >5% fail
+- Word count range: 30-90
 
 Sources:
-  Stage 1: ~260 curated scene seeds (supports --stage1-limit for resampling)
-  Stage 2: Creative Writing ShareGPT top visual passages
-  Stage 3: Gutenberg Sci-Fi top visual chunks
+  Stage 1: ~260 curated scene seeds (instruction = scene seed, synthesis = scene seed)
+  Stage 2: Creative Writing ShareGPT (instruction = scene seed, synthesis = story passage)
+  Stage 3: Gutenberg Sci-Fi (instruction = scene seed, synthesis = book chunk)
 
 Usage:
     # Dry-run (5 samples per stage)
-    conda run -n prompt-lora-trainer uv run scripts/build_dataset_v5.py --dry-run --seed 42
+    conda run -n prompt-lora-trainer uv run scripts/build_dataset_v6.py --dry-run --seed 42
 
     # Pilot (~300 rows)
-    conda run -n prompt-lora-trainer uv run scripts/build_dataset_v5.py \\
+    conda run -n prompt-lora-trainer uv run scripts/build_dataset_v6.py \\
       --seed 42 --stage1-limit 100 --stage2-limit 100 --stage3-limit 100
 
-    # Full run (~1,200+ rows)
-    conda run -n prompt-lora-trainer uv run scripts/build_dataset_v5.py \\
-      --seed 42 --target Limbicnation/deforum-prompt-lora-dataset-v5
+    # Full run (~1,600+ rows)
+    conda run -n prompt-lora-trainer uv run scripts/build_dataset_v6.py \\
+      --seed 42 --target Limbicnation/deforum-prompt-lora-dataset-v6
 
     # Full run with larger model
-    conda run -n prompt-lora-trainer uv run scripts/build_dataset_v5.py \\
-      --seed 42 --ollama-model qwen3:8b --target Limbicnation/deforum-prompt-lora-dataset-v5
+    conda run -n prompt-lora-trainer uv run scripts/build_dataset_v6.py \\
+      --seed 42 --ollama-model qwen3:8b --target Limbicnation/deforum-prompt-lora-dataset-v6
 """
 
 import argparse
@@ -628,13 +634,25 @@ def ollama_generate(
     model: str = None,
     retries: int = 2,
     debug: bool = False,
+    scene_seed: Optional[str] = None,
 ) -> Optional[str]:
     """Synthesize a cinematic prompt from source text using Ollama.
 
+    If scene_seed is provided (Stage 2/3), the prompt instructs Ollama to write
+    about the scene seed while drawing visual style from source_text.
     Uses ollama.chat() to properly separate thinking tokens from content.
     """
     model = model or OLLAMA_MODEL
-    prompt = SYNTHESIS_PROMPT.format(source_text=source_text[:400])
+    if scene_seed:
+        # Stage 2/3: scene seed drives the topic; source text provides style/texture
+        prompt = (
+            f"Write a cinematic video diffusion prompt for this scene: {scene_seed}\n\n"
+            f"Draw visual atmosphere and texture from this passage: {source_text[:300]}\n\n"
+            "40-70 words. Begin with camera movement. Film grain. No technical specs. "
+            "No character names. No introductory phrases. Output ONLY the prompt."
+        )
+    else:
+        prompt = SYNTHESIS_PROMPT.format(source_text=source_text[:400])
     messages = [
         {"role": "system", "content": SYSTEM_MESSAGE},
         {"role": "user", "content": prompt},
@@ -832,15 +850,15 @@ def stage2_creative_writing(
     rejected = 0
 
     for item in tqdm(top_items, desc="Stage 2: Synthesizing"):
-        # Use best 40-80 word visual paragraph as source text
+        # Use best 40-80 word visual paragraph as source text for Ollama synthesis
         source_text = extract_best_paragraph(item["gpt"], min_words=40, max_words=80)
 
-        # Derive scene description from human message
-        scene = re.sub(r"(?i)^(write|create|describe|generate)\s+(a\s+)?(scene|story|passage|description)\s+(where|about|of|in)\s*", "", item["human"])
-        scene = scene.strip()[:120] or source_text[:80]
+        # v6 FIX: instruction uses a clean scene seed — NOT the story text.
+        # Source text is only used internally by Ollama for style/texture inspiration.
+        scene = rng.choice(list(SCENE_SEEDS))
         instruction = random_instruction(rng, scene)
 
-        response = ollama_generate(source_text, model=model, debug=debug)
+        response = ollama_generate(source_text, model=model, debug=debug, scene_seed=scene)
         if response is None:
             rejected += 1
             continue
@@ -970,18 +988,12 @@ def stage3_gutenberg(
     for chunk in tqdm(top_chunks, desc="Stage 3: Synthesizing"):
         source_text = chunk["text"]
 
-        # Derive scene from first 1-2 sentences, skip Gutenberg boilerplate sentences
-        sentences = re.split(r"(?<=[.!?])\s+", source_text)
-        good_sentences = [
-            s.strip() for s in sentences
-            if s.strip()
-            and not re.search(r"(?i)project gutenberg|this ebook|anyone anywhere", s)
-            and len(s.split()) > 4
-        ]
-        scene = ". ".join(good_sentences[:2])[:120] if good_sentences else source_text[:80]
+        # v6 FIX: instruction uses a clean scene seed — NOT the Gutenberg text.
+        # Source text is only used internally by Ollama for style/texture inspiration.
+        scene = rng.choice(list(SCENE_SEEDS))
         instruction = random_instruction(rng, scene)
 
-        response = ollama_generate(source_text, model=model, debug=debug)
+        response = ollama_generate(source_text, model=model, debug=debug, scene_seed=scene)
         if response is None:
             rejected += 1
             continue
@@ -1229,14 +1241,14 @@ def stage4_merge_and_push(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Build Deforum Prompt Dataset v5 (Hard Quality Gates + Curated Seeds)",
+        description="Build Deforum Prompt Dataset v6 (Decoupled Instruction/Synthesis Sources)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
     parser.add_argument("--dry-run", action="store_true",
                         help="Synthesize 5 samples per stage, print stats, no push")
     parser.add_argument("--seed", type=int, default=42, help="Random seed")
-    parser.add_argument("--target", type=str, default="Limbicnation/deforum-prompt-lora-dataset-v5",
+    parser.add_argument("--target", type=str, default="Limbicnation/deforum-prompt-lora-dataset-v6",
                         help="Target dataset ID on Hub")
     parser.add_argument("--ollama-model", type=str, default=OLLAMA_MODEL,
                         help="Ollama model for synthesis (default: qwen3:4b)")

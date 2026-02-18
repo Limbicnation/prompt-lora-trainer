@@ -1,14 +1,14 @@
-# SFT Configuration for Qwen3-4B on Deforum Dataset v5
-# Changes from v4:
-#   - Dataset: v5 (curated scene seeds, hard quality gates, 12 instruction templates)
-#   - No list-format synthesis leakage in training data
+# SFT Configuration for Qwen3-4B on Deforum Dataset v6
+# Changes from v5:
+#   - Dataset: v6 (decoupled instruction/synthesis sources — key architectural fix)
+#   - Stage 2/3 instructions now use clean scene seeds instead of story/Gutenberg text
 #   - All other hyperparams unchanged: r=16, alpha=32, early stopping patience=2
 
 # Model
 model_id: "Qwen/Qwen3-4B-Instruct-2507"
 
 # Dataset
-dataset_id: "Limbicnation/deforum-prompt-lora-dataset-v5"
+dataset_id: "Limbicnation/deforum-prompt-lora-dataset-v6"
 dataset_text_field: "text"
 max_seq_length: 512
 
@@ -46,11 +46,11 @@ auto_find_batch_size: false
 packing: true
 
 # Output
-output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v5"
+output_dir: "./outputs/qwen3-4b-deforum-prompt-lora-v6"
 logging_steps: 10
 save_steps: 10
 push_to_hub: true
-hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v5"
+hub_model_id: "Limbicnation/qwen3-4b-deforum-prompt-lora-v6"
 
 # Evaluation
 eval_strategy: "steps"
@@ -65,4 +65,4 @@ early_stopping_patience: 2
 # Monitoring
 report_to: "wandb"
 wandb_project: "prompt-lora-trainer"
-run_name: "sft-qwen3-4b-deforum-v5"
+run_name: "sft-qwen3-4b-deforum-v6"

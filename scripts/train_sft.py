@@ -93,6 +93,7 @@ class TrainingConfig:
     # Monitoring
     report_to: str = "wandb"
     run_name: Optional[str] = None
+    wandb_project: Optional[str] = None
     
     # Evaluation (optional)
     eval_steps: Optional[int] = None
@@ -296,10 +297,14 @@ def main():
     model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
     
+    # Set W&B project name before trainer init (env var is picked up by wandb.init internally)
+    if config.wandb_project and config.report_to == "wandb":
+        os.environ["WANDB_PROJECT"] = config.wandb_project
+
     # Detect bf16 support
     bf16_supported = torch.cuda.is_bf16_supported(including_emulation=False)
     use_bf16 = config.bf16 and bf16_supported
-    
+
     # Training arguments (following HF SFTConfig best practices)
     training_args = SFTConfig(
         # GROUP 1: Memory usage
