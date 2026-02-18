@@ -53,9 +53,7 @@ conda run -n prompt-lora-trainer python scripts/train_sft.py \
 │   └── sft_qwen3_4b.yaml               # v1 original config (reference)
 ├── scripts/
 │   ├── train_sft.py                    # Main SFT script (QLoRA + early stopping)
-│   ├── build_dataset_v7.py             # Dataset builder v7 (decoupled sources)
-│   ├── build_dataset_v6.py             # Dataset builder v6 (reference)
-│   ├── build_dataset_v5.py             # Dataset builder v5 (reference)
+│   ├── build_dataset_v7.py             # Dataset builder (current)
 │   ├── merge_and_convert_gguf.py       # LoRA merge + GGUF conversion
 │   └── validate_dataset.py             # Dataset format validator
 ├── Modelfile.deforum-v7                # Ollama model definition (v7, with auto-prefix template)
