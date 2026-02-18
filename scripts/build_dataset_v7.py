@@ -42,14 +42,12 @@ Usage:
 """
 
 import argparse
-import hashlib
-import json
 import os
 import random
 import re
 import sys
 import time
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 
 import ollama as ollama_lib
 import pandas as pd
@@ -285,9 +283,6 @@ def ollama_generate(scene_seed: str, model: str, debug: bool = False) -> Optiona
             return None
     return None
 
-
-def compute_hash(text: str) -> str:
-    return hashlib.md5(text[:40].lower().encode()).hexdigest()[:8]
 
 
 def fuzzy_deduplicate(df: pd.DataFrame, existing_responses: set, threshold: int = 85) -> pd.DataFrame:

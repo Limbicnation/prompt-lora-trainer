@@ -1267,7 +1267,7 @@ def main():
     model = args.ollama_model
 
     print("=" * 60)
-    print("BUILD DATASET v5 (HARD QUALITY GATES)")
+    print("BUILD DATASET v6 (DECOUPLED INSTRUCTION/SYNTHESIS SOURCES)")
     print("=" * 60)
     print(f"Mode:    {'DRY RUN' if args.dry_run else 'FULL'}")
     print(f"Seed:    {args.seed}")
