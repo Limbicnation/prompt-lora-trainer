@@ -1,4 +1,4 @@
-# prompt-lora-trainer
+# prompt-lora-trainer 🤖 ⚡ 🎑
 
 <p align="center">
   <img src="banner/ascii-banner.png" alt="Prompt LoRA Trainer Banner" width="720">
