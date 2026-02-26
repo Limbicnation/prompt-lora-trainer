@@ -183,6 +183,12 @@ def format_prompt(example: dict) -> str:
 
 
 def main():
+    try:
+        from banner import print_banner
+        print_banner()
+    except Exception:
+        pass  # Banner is cosmetic — never block training
+
     parser = argparse.ArgumentParser(description="SFT LoRA Training for Prompt Generation")
     parser.add_argument("--config", type=str, help="Path to YAML config file")
     parser.add_argument("--model", type=str, help="Model ID (overrides config)")
