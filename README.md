@@ -1,5 +1,9 @@
 # prompt-lora-trainer
 
+<p align="center">
+  <img src="banner/ascii-banner.png" alt="Prompt LoRA Trainer Banner" width="720">
+</p>
+
 QLoRA fine-tuning pipeline for training Qwen3-4B to generate cinematic video diffusion prompts. Specializes in the **De Forum Art Film** aesthetic — noir-influenced, atmospheric, psychologically minimal.
 
 ## Published Models
