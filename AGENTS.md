@@ -51,29 +51,27 @@
 
 ```
 prompt-lora-trainer/
+├── banner/                           # CLI/README branding assets
+│   └── ascii-banner.png             # Banner image for README
 ├── configs/                          # Training configurations
 │   ├── sft_qwen3_4b.yaml            # Standard SFT config (Video-Diffusion-Prompt-Style)
 │   ├── sft_qwen3_4b_deforum.yaml    # Enhanced config for De Forum dataset
+│   ├── sft_qwen3_4b_deforum_v7.yaml # Active v7 config (packing=false, expanded LoRA)
 │   └── dataset_config.yaml          # Dataset processing configuration
 ├── scripts/                          # Training and utility scripts
-│   ├── train_sft.py                 # Main SFT training script (QLoRA)
+│   ├── train_sft.py                 # Main SFT training script (QLoRA, displays banner)
+│   ├── banner.py                    # ASCII art CLI banner (cosmetic, auto-loaded)
+│   ├── build_dataset_v7.py          # Dataset builder (current)
 │   ├── validate_dataset.py          # Dataset validation utility
 │   ├── process_deforum_data.py      # De Forum data processing pipeline
 │   ├── upload_dataset_to_hub.py     # HuggingFace Hub upload utility
 │   └── merge_and_convert_gguf.py    # LoRA merging and GGUF conversion
-├── inputs/                           # Raw input data (storyboard files)
 ├── outputs/                          # Training outputs (excluded from git)
-│   ├── qwen3-4b-prompt-lora/        # LoRA adapter files
-│   ├── qwen3-4b-prompt-lora-merged/ # Merged model
-│   └── *.gguf                       # Ollama-compatible models
-├── notebooks/                        # Jupyter notebooks (empty)
-├── wandb/                           # Weights & Biases logs (excluded from git)
 ├── pyproject.toml                   # Project metadata and dependencies
 ├── setup_env.sh                     # Environment setup script
 ├── .env                             # API keys (excluded from git)
-├── Modelfile.qwen3-prompt-lora      # Ollama model definition
-├── hf-skills-training.md            # HF Skills training reference guide
-└── IMPLEMENTATION_PLAN.md           # Detailed implementation plan
+├── Modelfile.deforum-v7             # Ollama model definition (v7, auto-prefix template)
+└── AGENTS.md                        # This file
 ```
 
 ---
@@ -97,6 +95,7 @@ pip install transformers accelerate datasets peft bitsandbytes trl huggingface-h
 ```
 
 Or use the setup script:
+
 ```bash
 chmod +x setup_env.sh
 ./setup_env.sh
@@ -361,6 +360,7 @@ python scripts/validate_dataset.py --dataset <dataset_id>
 ```
 
 Checks for:
+
 - SFT compatibility (messages, text, prompt_response, instruction_output formats)
 - DPO compatibility (chosen/rejected columns)
 - Sample row display for manual inspection
@@ -373,6 +373,7 @@ python scripts/train_sft.py --config configs/sft_qwen3_4b.yaml --dry-run
 ```
 
 Validates:
+
 - Configuration loading
 - Dataset accessibility
 - Model loading
@@ -385,6 +386,7 @@ Validates:
 ### HuggingFace Hub
 
 Models are automatically pushed to Hub with:
+
 - LoRA adapter files (safetensors)
 - Training configuration
 - Model card with training details
@@ -394,11 +396,13 @@ Models are automatically pushed to Hub with:
 For local deployment:
 
 1. Convert to GGUF format using `llama.cpp`:
+
    ```bash
    python convert_hf_to_gguf.py <merged_model_dir> --outtype q4_k_m
    ```
 
 2. Create Ollama model with `Modelfile`:
+
    ```dockerfile
    FROM ./outputs/model-Q8_0.gguf
    
@@ -435,7 +439,25 @@ For local deployment:
 1. Create script in `scripts/` with proper shebang and docstring
 2. Use `TrainingConfig` dataclass pattern for configuration
 3. Support `--dry-run` flag for validation
-4. Add to this AGENTS.md documentation
+4. Add banner display at startup (see pattern below)
+5. Add to this AGENTS.md documentation
+
+### Banner / Cosmetic Import Pattern
+
+Use this pattern for any optional cosmetic feature that should never block core functionality:
+
+```python
+try:
+    from banner import print_banner
+    print_banner()
+except Exception:
+    pass  # Cosmetic — never block core functionality
+```
+
+Key points:
+
+- Broad `Exception` catch is intentional (not just `ImportError`) — prevents `SyntaxError`, `NameError`, etc. from blocking training
+- `from banner import print_banner` works because Python adds the script's directory to `sys.path[0]`
 
 ### Adding a New Dataset
 
