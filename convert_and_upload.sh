@@ -107,7 +107,12 @@ echo "✅ GGUF created: $(du -h "$GGUF_OUTPUT_FILE" | cut -f1)"
 echo ""
 echo "Step 3: Creating Ollama model..."
 GGUF_BASENAME="$(basename "$GGUF_OUTPUT_FILE")"
-if [ -n "$MODELFILE" ] && [ -f "$MODELFILE" ]; then
+if [ -n "$MODELFILE" ]; then
+    if [ ! -f "$MODELFILE" ]; then
+        echo "❌ MODELFILE='$MODELFILE' is set but the file does not exist." >&2
+        echo "   Either fix the path or unset MODELFILE to use the inline default." >&2
+        exit 1
+    fi
     echo "  Using custom Modelfile: $MODELFILE"
     cp "$MODELFILE" ./outputs/Modelfile
 else

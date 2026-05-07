@@ -228,7 +228,7 @@ def main():
     # Load dataset
     print(f"📊 Loading dataset: {config.dataset_id}...")
     try:
-        if os.path.exists(config.dataset_id) and config.dataset_id.endswith(".json"):
+        if os.path.exists(config.dataset_id) and (config.dataset_id.endswith(".json") or config.dataset_id.endswith(".jsonl")):
             dataset = load_dataset("json", data_files=config.dataset_id, split="train")
         else:
             dataset = load_dataset(config.dataset_id, split="train", token=token)
@@ -288,7 +288,7 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(
         config.model_id,
         quantization_config=bnb_config,
-        device_map="auto",
+        device_map={"": 0},
         trust_remote_code=config.trust_remote_code,
         token=token,
     )

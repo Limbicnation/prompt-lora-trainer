@@ -62,7 +62,10 @@ load_dotenv()
 
 V1_DATASET_ID = "Limbicnation/images-diffusion-prompt-style-v1"
 V2_DATASET_ID = "Limbicnation/images-diffusion-prompt-style-v2"
-LOCAL_V1_JSONL = "/home/gero/GitHub/limbicnation/ComfyUI-PromptGenerator/data/prompts_clean.jsonl"
+LOCAL_V1_JSONL = os.environ.get(
+    "PROMPTS_CLEAN_JSONL",
+    str(Path(__file__).resolve().parent.parent / "data" / "prompts_clean.jsonl"),
+)
 TRAIN_TOKENIZER_ID = "Qwen/Qwen2.5-7B-Instruct"   # for text-field rendering
 
 SYSTEM_PROMPT_TRAIN = (
@@ -414,14 +417,16 @@ def render_text(tokenizer, instruction: str, response: str, negative: str) -> st
     return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
 
 
-def finalize_records(records: list[dict], hf_token: str | None) -> list[dict]:
-    """Build final v1-compatible schema with curated negatives fallback + Qwen-rendered text."""
+def finalize_records(records: list[dict], tokenizer) -> list[dict]:
+    """Build final v1-compatible schema with curated negatives fallback + Qwen-rendered text.
+
+    The tokenizer is passed in (loaded once at main() startup as a fail-fast)
+    instead of being loaded here, after expensive Gemini calls have run.
+    """
     import random
-    from transformers import AutoTokenizer
 
     rng = random.Random(SEED)
     print(f"📝 Stage 5a: rendering text field with {TRAIN_TOKENIZER_ID}")
-    tokenizer = AutoTokenizer.from_pretrained(TRAIN_TOKENIZER_ID, token=hf_token)
 
     out = []
     for r in records:
@@ -440,14 +445,35 @@ def finalize_records(records: list[dict], hf_token: str | None) -> list[dict]:
     return out
 
 
+def save_local_fallback(records: list[dict]) -> Path:
+    """Always save records locally — protects against Hub push failures."""
+    from pathlib import Path
+    fallback = Path(__file__).resolve().parent.parent / "data" / "synthesize_v2_records.jsonl"
+    fallback.parent.mkdir(parents=True, exist_ok=True)
+    with fallback.open("w") as f:
+        for r in records:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    print(f"   💾 Local backup written: {fallback}")
+    return fallback
+
+
 def push_dataset(records: list[dict], hub_id: str, token: str) -> None:
+    # Save local backup FIRST so we never lose data even if push fails
+    save_local_fallback(records)
+
     print(f"📤 Stage 5: pushing {len(records)} rows to {hub_id}")
     ds = Dataset.from_list(records)
     split = ds.train_test_split(test_size=0.10, seed=SEED)
-    DatasetDict({"train": split["train"], "validation": split["test"]}).push_to_hub(
-        hub_id, private=True, token=token
-    )
-    print(f"   🎉 https://huggingface.co/datasets/{hub_id}")
+    try:
+        DatasetDict({"train": split["train"], "validation": split["test"]}).push_to_hub(
+            hub_id, private=True, token=token
+        )
+        print(f"   🎉 https://huggingface.co/datasets/{hub_id}")
+    except Exception as e:
+        print(f"   ⚠ Hub push failed: {type(e).__name__}: {str(e)[:200]}", file=sys.stderr)
+        print(f"   Local backup at data/synthesize_v2_records.jsonl is intact — "
+              f"upload separately once token has write permission.", file=sys.stderr)
+        raise
 
 
 # =============================================================================
@@ -472,6 +498,14 @@ def main() -> int:
     if not hf_token and not args.dry_run:
         print("ERROR: HF_TOKEN required for Hub push (or use --dry-run)", file=sys.stderr)
         return 1
+
+    # Fail-fast: load tokenizer up front so a typo in TRAIN_TOKENIZER_ID is caught
+    # before any Gemini API calls run (those are the expensive ones).
+    from transformers import AutoTokenizer
+    print(f"🔡 Loading tokenizer (fail-fast): {TRAIN_TOKENIZER_ID}")
+    tokenizer = AutoTokenizer.from_pretrained(
+        TRAIN_TOKENIZER_ID, token=hf_token, trust_remote_code=False
+    )
 
     print(f"🌱 Stage 0: loading source {args.source}")
     if os.path.isfile(args.source) and args.source.endswith((".json", ".jsonl")):
@@ -507,7 +541,7 @@ def main() -> int:
     rule_passed = rule_filter(raw)
     deduped = semantic_dedup(rule_passed)
     judged = judge_all(client, deduped)
-    final = finalize_records(judged, hf_token)
+    final = finalize_records(judged, tokenizer)
 
     print(f"\n📊 Pipeline summary (elapsed {time.time()-t0:.1f}s):")
     print(f"   seeds      → {len(seeds)}")

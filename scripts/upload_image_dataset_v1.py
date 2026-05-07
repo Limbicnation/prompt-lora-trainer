@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Upload pre-cleaned image-prompt dataset to Hugging Face Hub.
 
-Reads the JSONL produced by the external `merge_and_clean.py`
-(/home/gero/GitHub/limbicnation/ComfyUI-PromptGenerator/scripts/merge_and_clean.py),
-pre-renders the `text` field with Qwen2.5's chat template (overriding the default
+Reads the JSONL produced by the external `merge_and_clean.py` script (in the
+ComfyUI-PromptGenerator repo). Source path is resolved in this order:
+  1. --source CLI argument
+  2. PROMPTS_CLEAN_JSONL environment variable
+  3. <repo_root>/data/prompts_clean.jsonl (default)
+
+Pre-renders the `text` field with Qwen2.5's chat template (overriding the default
 Qwen system message with our prompt-engineering one), splits 90/10, and
 pushes to Limbicnation/images-diffusion-prompt-style-v1.
 
@@ -28,8 +32,9 @@ from transformers import AutoTokenizer
 
 load_dotenv()
 
-DEFAULT_SOURCE = (
-    "/home/gero/GitHub/limbicnation/ComfyUI-PromptGenerator/data/prompts_clean.jsonl"
+DEFAULT_SOURCE = os.environ.get(
+    "PROMPTS_CLEAN_JSONL",
+    str(Path(__file__).resolve().parent.parent / "data" / "prompts_clean.jsonl"),
 )
 DEFAULT_HUB_ID = "Limbicnation/images-diffusion-prompt-style-v1"
 TOKENIZER_ID = "Qwen/Qwen2.5-7B-Instruct"
@@ -86,7 +91,7 @@ def main() -> int:
     parser.add_argument("--source", type=Path, default=Path(DEFAULT_SOURCE))
     parser.add_argument("--hub-id", default=DEFAULT_HUB_ID)
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--private", action="store_true", default=True)
+    parser.add_argument("--private", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
 
     token = os.environ.get("HF_TOKEN")
@@ -106,7 +111,7 @@ def main() -> int:
     validate(rows)
 
     print(f"🔡 Loading tokenizer: {TOKENIZER_ID}")
-    tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_ID, token=token)
+    tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_ID, token=token, trust_remote_code=False)
 
     print(f"📝 Rendering text field with chat template ({TOKENIZER_ID})")
     enriched = []
