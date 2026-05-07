@@ -201,6 +201,9 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Local agent/tooling state
+.claude/
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
@@ -216,6 +219,9 @@ data/review_samples.json
 # ===== Generated Data =====
 # Regenerate with: python scripts/process_deforum_data.py --input_dir ./inputs --output_file ./data/deforum_prompts_processed.json
 data/deforum_prompts_processed.json
+# Synthesis pipeline output (regenerable via scripts/synthesize_dataset_v2.py)
+data/synthesize_v2_records.json
+data/synthesize_v2_records.jsonl
 
 # ===== ML/Training Artifacts =====
 # Model outputs (push to HuggingFace Hub instead)
