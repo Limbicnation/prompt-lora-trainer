@@ -1,0 +1,20 @@
+FROM ./outputs/qwen2-5-7b-image-v1-q8.gguf
+
+SYSTEM """You are an expert image prompt generator for Stable Diffusion / FLUX. When given a style name or scene description, output the image prompt followed by an optional negative prompt on a new line prefixed with 'Negative:'. No labels, no preamble, no command-line flags."""
+
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ range .Messages }}{{ if eq .Role "user" }}<|im_start|>user
+{{ .Content }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+{{ .Content }}<|im_end|>
+{{ end }}{{ end }}<|im_start|>assistant
+"""
+
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER num_ctx 1024
+PARAMETER repeat_penalty 1.2
+PARAMETER num_predict 250
+PARAMETER stop <|im_end|>
+PARAMETER stop <|im_start|>

@@ -1,0 +1,83 @@
+# SFT Configuration for Qwen2.5-7B-Instruct (image-prompt LoRA v1)
+#
+# Path A choice (revised from initial Gemma 3n E2B prototype):
+#   - 7B base model gives meaningfully richer vocabulary than 2B
+#   - QLoRA 4-bit fits in ~12 GB VRAM on a 24GB 4090 — plenty of headroom
+#   - LoRA r=32, alpha=64 mirrors v7's expanded capacity
+#
+# Dataset is already built externally (1,250 rows merged + cleaned):
+#   ~/GitHub/limbicnation/ComfyUI-PromptGenerator/scripts/merge_and_clean.py
+# Then uploaded with Qwen chat template via:
+#   python scripts/upload_image_dataset_v1.py
+
+# Model
+model_id: "Qwen/Qwen2.5-7B-Instruct"
+trust_remote_code: true   # Qwen models require it
+
+# Dataset
+dataset_id: "Limbicnation/images-diffusion-prompt-style-v1"
+dataset_text_field: "text"
+max_seq_length: 512        # Avg 384 chars (~100 tokens); 512 covers 95th pctl
+
+# LoRA (mirrors v7 capacity — attention + MLP layers)
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Quantization (QLoRA — 7B model, 4-bit fits comfortably)
+use_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+bnb_4bit_use_double_quant: true
+
+# Training (~1,250 rows; rely on early stopping)
+num_train_epochs: 5
+per_device_train_batch_size: 4          # 7B+QLoRA, conservative; v7 also uses 4
+gradient_accumulation_steps: 2          # effective batch = 8
+auto_find_batch_size: false             # never silently halve
+learning_rate: 1.0e-4                   # v7 setting (conservative with expanded LoRA targets)
+warmup_ratio: 0.05
+lr_scheduler_type: "cosine_with_min_lr"
+lr_scheduler_kwargs:
+  min_lr: 1.0e-6
+weight_decay: 0.01
+
+# Optimization
+optim: "paged_adamw_8bit"               # QLoRA-appropriate
+fp16: false
+bf16: true
+gradient_checkpointing: true
+group_by_length: true
+
+# Packing — false (v7 lesson: prevents cross-example contamination on small datasets)
+packing: false
+
+# Output
+output_dir: "./outputs/qwen2-5-7b-image-prompt-lora-v1"
+logging_steps: 10
+save_strategy: "epoch"
+push_to_hub: true
+hub_model_id: "Limbicnation/qwen2-5-7b-image-prompt-lora-v1"
+
+# Evaluation
+eval_strategy: "epoch"
+load_best_model_at_end: true
+metric_for_best_model: "eval_loss"
+greater_is_better: false
+
+# Early stopping
+early_stopping_patience: 3
+early_stopping_threshold: 0.001
+
+# Monitoring
+report_to: "wandb"
+wandb_project: "prompt-lora-trainer"
+run_name: "sft-qwen2-5-7b-image-v1"

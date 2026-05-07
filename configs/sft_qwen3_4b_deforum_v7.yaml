@@ -19,6 +19,7 @@
 
 # Model
 model_id: "Qwen/Qwen3-4B-Instruct-2507"
+trust_remote_code: true   # Qwen3 model requires it
 
 # Dataset
 # NOTE: v7 dataset = v6 base (1,483 rows) + fresh De Forum film scenes (SARAH character allowed)

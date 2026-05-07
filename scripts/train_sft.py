@@ -63,6 +63,9 @@ class TrainingConfig:
     use_8bit: bool = False
     bnb_4bit_compute_dtype: str = "bfloat16"
     bnb_4bit_quant_type: str = "nf4"
+
+    # Security: only enable for models that require it (e.g. Qwen/* models)
+    trust_remote_code: bool = False
     
     # Training
     num_train_epochs: int = 3
@@ -281,21 +284,23 @@ def main():
         bnb_config = BitsAndBytesConfig(load_in_8bit=True)
     
     # Load model
-    print(f"📦 Loading model: {config.model_id}...")
+    print(f"📦 Loading model: {config.model_id} (trust_remote_code={config.trust_remote_code})...")
     model = AutoModelForCausalLM.from_pretrained(
         config.model_id,
         quantization_config=bnb_config,
         device_map="auto",
-        trust_remote_code=True,  # Required for Qwen models; only use with trusted model sources
+        trust_remote_code=config.trust_remote_code,
         token=token,
     )
-    
+
     # Prepare for k-bit training
     if config.use_4bit or config.use_8bit:
         model = prepare_model_for_kbit_training(model)
-    
+
     # Tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(config.model_id, token=token)
+    tokenizer = AutoTokenizer.from_pretrained(
+        config.model_id, token=token, trust_remote_code=config.trust_remote_code
+    )
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     
