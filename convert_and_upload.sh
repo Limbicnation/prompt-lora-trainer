@@ -52,6 +52,17 @@ if [ -z "$HF_TOKEN" ]; then
     exit 1
 fi
 
+# Accelerated Hub transfers via hf_transfer (Rust) — big win for the multi-GB GGUF
+# upload and the base-model pull. On by default; disable with HF_HUB_ENABLE_HF_TRANSFER=0.
+# NOTE: when enabled, huggingface_hub REQUIRES the hf_transfer package, so install it
+# up front (before the first Hub download in Step 1).
+: "${HF_HUB_ENABLE_HF_TRANSFER:=1}"
+export HF_HUB_ENABLE_HF_TRANSFER
+if [ "$HF_HUB_ENABLE_HF_TRANSFER" = "1" ]; then
+    python -c "import hf_transfer" 2>/dev/null || pip install -q hf_transfer
+    echo "🚀 hf_transfer enabled for fast Hub transfers"
+fi
+
 # Step 1: Merge LoRA
 echo ""
 echo "Step 1: Merging LoRA adapter..."
