@@ -1,0 +1,28 @@
+FROM ./outputs/qwen2-5-7b-dual-stream-q8.gguf
+
+# Dual-stream image-prompt model (Qwen2.5-7B QLoRA).
+# Routing is done by the USER via a dialect instruction prefix, e.g.:
+#   "Generate a FLUX (T5-XXL) image prompt for: <concept>"
+#   "Generate an SDXL image prompt for: <concept>"
+#   "Write a compact descriptive caption for: <concept>"
+#   "List image steering modifiers for: <concept>"
+# No auto-prefix TEMPLATE — the prefix IS the routing signal and must vary.
+
+SYSTEM """You are an expert image prompt generator for Stable Diffusion / FLUX. Given a concept and a target model, produce the prompt in that model's dialect. No labels, no preamble, no command-line flags."""
+
+# Qwen2.5 chat template — REQUIRED. Without it Ollama passes a bare prompt and the
+# model (trained on full im_start/im_end turns) never emits <|im_end|> and rambles
+# into other dialects.
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ if .Prompt }}<|im_start|>user
+{{ .Prompt }}<|im_end|>
+{{ end }}<|im_start|>assistant
+{{ .Response }}<|im_end|>
+"""
+
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.2
+PARAMETER num_ctx 2048
+PARAMETER stop <|im_end|>

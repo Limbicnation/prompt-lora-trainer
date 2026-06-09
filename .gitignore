@@ -222,6 +222,8 @@ data/deforum_prompts_processed.json
 # Synthesis pipeline output (regenerable via scripts/synthesize_dataset_v2.py)
 data/synthesize_v2_records.json
 data/synthesize_v2_records.jsonl
+# Dual-stream pipeline output (on HF Hub, regenerable via scripts/generate_dual_stream_dataset.py)
+data/dual_stream_records.jsonl
 
 # ===== ML/Training Artifacts =====
 # Model outputs (push to HuggingFace Hub instead)
