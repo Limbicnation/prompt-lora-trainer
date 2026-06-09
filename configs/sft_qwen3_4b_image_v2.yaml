@@ -1,0 +1,77 @@
+# SFT Configuration for Qwen3-4B-Instruct-2507 (image-prompt LoRA v2)
+# Adapted from sft_qwen2_5_7b_image_v2.yaml for RTX 4090 (24GB)
+#
+# Uses v2 dataset (~6,700 synthetic rows) with Qwen3-4B instead of 7B
+# to fit within 24GB VRAM.
+
+# Model
+model_id: "Qwen/Qwen3-4B-Instruct-2507"
+trust_remote_code: true
+
+# Dataset — local v2 dataset (Hub push failed, use local copy)
+dataset_id: "data/synthesize_v2_records.json"
+dataset_text_field: "text"
+max_seq_length: 512
+
+# LoRA (expanded target modules like v2)
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Quantization (QLoRA)
+use_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+bnb_4bit_use_double_quant: true
+
+# Training
+num_train_epochs: 3
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 2          # effective batch = 8
+auto_find_batch_size: true              # Auto-reduce if OOM
+learning_rate: 1.0e-4
+warmup_ratio: 0.05
+lr_scheduler_type: "cosine_with_min_lr"
+lr_scheduler_kwargs:
+  min_lr: 1.0e-6
+weight_decay: 0.01
+
+# Optimization
+optim: "paged_adamw_8bit"
+fp16: false
+bf16: true
+gradient_checkpointing: true
+group_by_length: true
+
+# Packing — false (prevents cross-example contamination)
+packing: false
+
+# Output
+output_dir: "./outputs/qwen3-4b-image-prompt-lora-v2"
+logging_steps: 20
+save_strategy: "epoch"
+push_to_hub: true
+hub_model_id: "Limbicnation/qwen3-4b-image-prompt-lora-v2"
+
+# Evaluation
+eval_strategy: "epoch"
+load_best_model_at_end: true
+metric_for_best_model: "eval_loss"
+greater_is_better: false
+
+# Early stopping
+early_stopping_patience: 2
+early_stopping_threshold: 0.001
+
+# Monitoring
+report_to: "none"
+wandb_project: "prompt-lora-trainer"
+run_name: "sft-qwen3-4b-image-v2"
