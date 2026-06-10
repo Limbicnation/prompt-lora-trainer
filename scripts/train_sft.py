@@ -129,9 +129,20 @@ def load_config(config_path: str) -> TrainingConfig:
 
 def format_prompt(example: dict) -> str:
     """Format dataset row into training prompt with schema auto-detection."""
+    # Dual-stream rows (e.g. deforum-dual-stream-video-v8): flat instruction→response,
+    # routed at inference by the instruction prefix. These carry NO style/camera/tags/
+    # context fields, so the 6-section deforum template below would train empty
+    # scaffolding headers (the v6 contamination failure mode). Emit a minimal 2-section
+    # prompt instead.
+    if "target_model" in example and "instruction" in example and "response" in example:
+        return (
+            f"### Instruction:\n{example['instruction'].strip()}\n\n"
+            f"### Response:\n{example['response'].strip()}"
+        ).strip()
+
     # Schema detection
     is_deforum = "instruction" in example and "response" in example
-    
+
     if is_deforum:
         instruction = example.get("instruction", "Generate a cinematic video prompt.")
         response = example.get("response", "")

@@ -1,0 +1,81 @@
+# SFT Configuration for Qwen3-4B on the deforum video dual-stream dataset (v8)
+# Source: Limbicnation/deforum-dual-stream-video-v8 (4,359 train rows after fan-out:
+#   wan_video / ltx_video / compact_caption dialects; non-visual tokens stripped).
+# Derived from sft_qwen3_4b_deforum_v7.yaml. Key differences vs v7:
+#   - dataset_id → the new video dual-stream dataset (~2.8x more rows than v7's 1,547)
+#   - num_train_epochs: 3 (not 5) — more data converges faster; v7's 5 epochs were for a
+#     much smaller corpus. Early stopping still guards overfit.
+#   - The dataset has no `text` column → train_sft.py's format_prompt() builds the
+#     ### Instruction/Response text from instruction+response (same as the deforum line).
+#   - The published `validation` split is ignored: train_sft.py re-splits `train` 90/10.
+
+# Model
+model_id: "Qwen/Qwen3-4B-Instruct-2507"
+trust_remote_code: true   # Qwen3 model requires it
+
+# Dataset
+dataset_id: "Limbicnation/deforum-dual-stream-video-v8"
+dataset_text_field: "text"
+max_seq_length: 384   # video responses <=80w + short instruction; 384 >> needed
+
+# LoRA (attention + MLP layers — same capacity as v7)
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Quantization (QLoRA)
+use_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+bnb_4bit_use_double_quant: true
+
+# Training
+num_train_epochs: 3
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 2
+learning_rate: 1.0e-4
+warmup_ratio: 0.05
+lr_scheduler_type: "cosine_with_min_lr"
+lr_scheduler_kwargs:
+  min_lr: 1.0e-6
+weight_decay: 0.01
+
+# Optimization
+optim: "paged_adamw_8bit"
+fp16: false
+bf16: true
+gradient_checkpointing: true
+group_by_length: true
+
+# Packing (CRITICAL — prevents cross-example contamination on short rows)
+packing: false
+
+# Output
+output_dir: "./outputs/qwen3-4b-deforum-video-dual-stream-lora-v1"
+logging_steps: 10
+save_strategy: "epoch"
+push_to_hub: true
+hub_model_id: "Limbicnation/qwen3-4b-deforum-video-dual-stream-lora-v1"
+
+# Evaluation (epoch-based)
+eval_strategy: "epoch"
+load_best_model_at_end: true
+metric_for_best_model: "eval_loss"
+greater_is_better: false
+
+# Early stopping
+early_stopping_patience: 2
+early_stopping_threshold: 0.001
+
+# Monitoring
+report_to: "wandb"
+wandb_project: "prompt-lora-trainer"
+run_name: "sft-qwen3-4b-deforum-video-dual-stream-v1"

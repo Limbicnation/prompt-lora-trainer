@@ -249,17 +249,44 @@ TRANSFORM_SCHEMA = {
 def _extract_style(instruction: str, fallback: str) -> str:
     """Pull a clean concept/style name out of an instruction.
 
-    Handles the image v2 form ("...in the style of '<style>'") and the deforum form
-    ("Generate a cinematic video prompt for: <concept>" / "Write a De Forum art film
-    prompt for: <concept>").
+    The v7 corpus wraps the scene concept in ~10 different instruction templates
+    (the image v2 set uses a different one). This must strip the directive wrapper and
+    return only the concept, otherwise rows train an empty instruction → response map.
+
+    Handled forms:
+      - image v2:       "...in the style of '<style>'"
+      - colon-delimited: "Generate a cinematic video prompt for: <concept>",
+                         "Video concept: <concept>", "Visualize this scene: <concept>",
+                         "Cinematic video prompt: <concept>", "Create a video of: <concept>"
+      - "for" no colon:  "Video diffusion prompt for <concept>"
+      - trailing suffix: "<concept> — describe this cinematically"
+      - bare concept:    "<concept>" (no directive wrapper)
     """
-    m = re.search(r"style of '([^']+)'", instruction or "")
+    s = (instruction or "").strip()
+    if not s:
+        return (fallback or "").strip()
+
+    m = re.search(r"style of '([^']+)'", s)
     if m:
         return m.group(1).strip().lstrip(":").strip()
-    m = re.search(r"\bfor:\s*(.+)$", instruction or "", re.IGNORECASE | re.DOTALL)
+
+    # Strip trailing directive suffixes ("... — describe this cinematically").
+    s = re.sub(r"\s*[—–-]\s*(describe|render|visuali[sz]e|make|create|film)\b.*$", "",
+               s, flags=re.IGNORECASE).strip()
+
+    # Concept after a colon delimiter (covers "for:", "Video concept:", "scene:", etc.).
+    if ":" in s:
+        cand = s.split(":", 1)[1].strip()
+        if cand:
+            return cand
+
+    # "... for <concept>" without a colon.
+    m = re.search(r"\bfor\s+(.+)$", s, re.IGNORECASE | re.DOTALL)
     if m:
         return m.group(1).strip()
-    return (fallback or "").strip()
+
+    # Bare concept with no directive wrapper.
+    return s or (fallback or "").strip()
 
 
 def load_inputs(args) -> tuple[list[dict], str]:
