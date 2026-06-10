@@ -203,6 +203,7 @@ cython_debug/
 
 # Local agent/tooling state
 .claude/
+.kilo/
 
 # Marimo
 marimo/_static/
