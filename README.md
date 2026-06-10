@@ -28,6 +28,7 @@ End-to-end on a single 24 GB GPU: dataset → QLoRA training → eval → merge 
 - [Deployment](#deployment)
 - [ComfyUI integration](#comfyui-integration)
 - [Troubleshooting](#troubleshooting)
+- [Hugging Face diffusion model trainer](#hugging-face-diffusion-model-trainer)
 - [References](#references)
 
 ---
@@ -464,6 +465,203 @@ Multiple `conda run` invocations can deadlock on the conda lock. Bypass by invok
 
 ```bash
 /home/<user>/anaconda3/envs/prompt-lora-trainer/bin/python scripts/train_sft.py --config <yaml>
+```
+
+---
+
+## Hugging Face diffusion model trainer
+
+Train custom LoRA adapters for diffusion models (FLUX, SDXL, SD1.5) and upload to Hugging Face Hub.
+
+### Quick start
+
+#### 1. Prepare training data
+
+Structure your dataset:
+```
+dataset/
+├── image1.png          # Training images
+├── image1.txt          # Captions (same basename)
+├── image2.png
+├── image2.txt
+└── ...
+```
+
+Caption format:
+```
+trigger_word, description of image, style tags
+```
+
+#### 2. Choose training method
+
+| Method | Best For | VRAM | Location |
+|--------|----------|------|----------|
+| AI-Toolkit | FLUX models | 12GB+ | `./ai-toolkit/` |
+| Diffusers | SDXL/SD1.5 | 8GB+ | `train_pixelart_diffusers.py` |
+| Custom Trainer | FLUX.2-klein | 16GB+ | `./flux2-klein-lora/` |
+
+#### 3. Train with AI-Toolkit (Recommended for FLUX)
+
+```bash
+# Create config from template
+cp train_pixelart_flux_klein.yaml my_config.yaml
+
+# Edit config for your dataset
+# - Update trigger_word
+# - Set folder_path to your dataset
+# - Adjust steps based on dataset size
+
+# Run training
+uv run ./ai-toolkit/run.py my_config.yaml
+```
+
+#### 4. Upload to Hub
+
+```bash
+# Create model repo first
+uv run scripts/create_model_repo.py --name "username/my-lora"
+
+# Upload trained weights
+uv run scripts/upload_lora.py \
+  --weights ./output/model.safetensors \
+  --repo_id "username/my-lora"
+```
+
+### Configuration templates
+
+#### FLUX.1-dev (12GB VRAM)
+```yaml
+job: extension
+config:
+  name: "my-flux-lora"
+  process:
+    - type: 'sd_trainer'
+      training_folder: "./output"
+      device: cuda:0
+      trigger_word: "your trigger"
+      network:
+        type: "lora"
+        linear: 16
+        linear_alpha: 16
+      save:
+        save_every: 500
+        push_to_hub: true
+        hf_repo_id: username/model-name
+      datasets:
+        - folder_path: "./training_data"
+          caption_ext: "txt"
+          resolution: [512, 768]
+      train:
+        batch_size: 1
+        steps: 2000
+        gradient_accumulation_steps: 8
+        optimizer: "adamw8bit"
+        lr: 1e-4
+        dtype: bf16
+      model:
+        name_or_path: "black-forest-labs/FLUX.1-dev"
+        is_flux: true
+        quantize: true
+```
+
+#### SDXL (8GB VRAM)
+```python
+# train_sdxl_lora.py
+BASE_MODEL = "stabilityai/stable-diffusion-xl-base-1.0"
+RESOLUTION = 1024
+BATCH_SIZE = 1
+GRADIENT_ACCUMULATION_STEPS = 4
+NUM_EPOCHS = 10
+LEARNING_RATE = 1e-4
+LORA_RANK = 64
+```
+
+#### SD 1.5 (6GB VRAM)
+```python
+BASE_MODEL = "stable-diffusion-v1-5/stable-diffusion-v1-5"
+RESOLUTION = 512
+BATCH_SIZE = 2
+GRADIENT_ACCUMULATION_STEPS = 2
+NUM_EPOCHS = 15
+LEARNING_RATE = 1e-4
+LORA_RANK = 32
+```
+
+### Training parameter guide
+
+#### LoRA rank
+- **Rank 4-8**: Minimal style transfer, small files (~10MB)
+- **Rank 16-32**: Good balance for most use cases (~50MB)
+- **Rank 64-128**: High fidelity, complex styles (~200MB)
+- **Rank 256+**: Near full fine-tune quality (~500MB+)
+
+#### Learning rate
+| Model | Recommended LR | Notes |
+|-------|---------------|-------|
+| FLUX | 1e-4 | Can go up to 2e-4 for small datasets |
+| SDXL | 1e-4 | Standard LoRA rate |
+| SD 1.5 | 1e-4 to 5e-4 | Higher rates often work |
+
+#### Steps vs epochs
+- Small dataset (<50 images): 2000-4000 steps
+- Medium dataset (50-200): 1500-2500 steps
+- Large dataset (200+): 1000-2000 steps
+- Rule: More images = fewer steps needed per image
+
+#### Resolution guidelines
+| Model | Min | Recommended | Max |
+|-------|-----|-------------|-----|
+| FLUX | 512 | 512-1024 | 2048 |
+| SDXL | 512 | 1024 | 1536 |
+| SD 1.5 | 256 | 512 | 768 |
+
+### Scripts reference
+
+All scripts use PEP 723 inline dependencies. Run with `uv run script.py`.
+
+#### `scripts/create_model_repo.py`
+Create a new model repository on Hugging Face Hub.
+```bash
+uv run scripts/create_model_repo.py \
+  --name "username/my-lora" \
+  --private  # Optional
+```
+
+#### `scripts/upload_lora.py`
+Upload trained LoRA weights to Hub.
+```bash
+uv run scripts/upload_lora.py \
+  --weights "./output/pytorch_lora_weights.safetensors" \
+  --repo_id "username/my-lora" \
+  --trigger_word "pixel art sprite" \
+  --tags "lora flux pixel-art"
+```
+
+#### `scripts/estimate_training.py`
+Estimate training time and VRAM requirements.
+```bash
+uv run scripts/estimate_training.py \
+  --model "FLUX" \
+  --resolution 512 \
+  --batch_size 1 \
+  --steps 2000
+```
+
+#### `scripts/generate_config.py`
+Generate VRAM-optimized training config files for FLUX, SDXL, or SD1.5.
+```bash
+uv run scripts/generate_config.py \
+  --model "FLUX" \
+  --vram 12 \
+  --output "train_config.yaml"
+```
+
+#### `scripts/validate_dataset.py`
+Validate dataset structure: checks images, captions, resolutions, and corruption.
+```bash
+uv run scripts/validate_dataset.py \
+  --data_dir "./training_data" \
+  --caption_ext "txt"
 ```
 
 ---
