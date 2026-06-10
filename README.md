@@ -40,7 +40,8 @@ End-to-end on a single 24 GB GPU: dataset → QLoRA training → eval → merge 
 |---|---|---|---|
 | [`qwen2-5-7b-image-prompt-lora-v2`](https://huggingface.co/Limbicnation/qwen2-5-7b-image-prompt-lora-v2) | Qwen2.5-7B-Instruct | Image (SD/FLUX) | Latest, v2 |
 | [`qwen2-5-7b-image-prompt-lora-v1`](https://huggingface.co/Limbicnation/qwen2-5-7b-image-prompt-lora-v1) | Qwen2.5-3B-Instruct | Image | v1, smaller base |
-| [`qwen3-4b-deforum-prompt-lora-v7`](https://huggingface.co/Limbicnation/qwen3-4b-deforum-prompt-lora-v7) | Qwen3-4B-Instruct-2507 | Video | Latest video model |
+| [`qwen3-4b-deforum-video-dual-stream-lora-v1`](https://huggingface.co/Limbicnation/qwen3-4b-deforum-video-dual-stream-lora-v1) | Qwen3-4B-Instruct-2507 | Video (Dual-Stream) | Latest, v8 |
+| [`qwen3-4b-deforum-prompt-lora-v7`](https://huggingface.co/Limbicnation/qwen3-4b-deforum-prompt-lora-v7) | Qwen3-4B-Instruct-2507 | Video (Single-Field) | v7 video model |
 | [`qwen3-4b-deforum-prompt-lora-v2`](https://huggingface.co/Limbicnation/qwen3-4b-deforum-prompt-lora-v2) | Qwen3-4B-Instruct-2507 | Video | v2, overfits |
 | [`qwen3-4b-prompt-lora`](https://huggingface.co/Limbicnation/qwen3-4b-prompt-lora) | Qwen3-4B-Instruct-2507 | Video | v1 |
 
@@ -49,6 +50,7 @@ End-to-end on a single 24 GB GPU: dataset → QLoRA training → eval → merge 
 | Dataset | Rows | Notes |
 |---|---|---|
 | [`images-diffusion-prompt-style-v2`](https://huggingface.co/datasets/Limbicnation/images-diffusion-prompt-style-v2) | 6,722 train / 100 val | Synthetic via Gemini 2.5-flash-lite, judge-filtered |
+| [`deforum-dual-stream-video-v8`](https://huggingface.co/datasets/Limbicnation/deforum-dual-stream-video-v8) | 4,356 train / 484 val | Multi-dialect video prompt dataset (wan_video, ltx_video, compact_caption) |
 | [`images-diffusion-prompt-style-v1`](https://huggingface.co/datasets/Limbicnation/images-diffusion-prompt-style-v1) | 1,125 train / 125 val | Curated/cleaned from real SD prompts |
 | [`deforum-prompt-lora-dataset-v7`](https://huggingface.co/datasets/Limbicnation/deforum-prompt-lora-dataset-v7) | 1,547 train / 172 val | Decoupled instruction/synthesis |
 | [`Video-Diffusion-Prompt-Style`](https://huggingface.co/datasets/Limbicnation/Video-Diffusion-Prompt-Style) | 752 | Original general video prompts |
@@ -58,8 +60,9 @@ End-to-end on a single 24 GB GPU: dataset → QLoRA training → eval → merge 
 After running `convert_and_upload.sh`:
 
 ```
-qwen2-5-7b-image-prompt:v2      8.1 GB    Image prompts (latest)
-qwen3-4b-deforum-prompt:v7      4.3 GB    Video prompts (latest)
+qwen2-5-7b-image-prompt:v2              8.1 GB    Image prompts (latest)
+qwen3-4b-deforum-video-dual-stream:v1   4.3 GB    Video prompts (dual-stream, latest)
+qwen3-4b-deforum-prompt:v7              4.3 GB    Video prompts (single-field)
 ```
 
 ---
@@ -150,7 +153,25 @@ MODELFILE=./Modelfile.image-v1 \
 ./convert_and_upload.sh
 ```
 
-**Video prompts (Qwen3-4B → v7):**
+**Video prompts (Qwen3-4B → v8 dual-stream):**
+
+```bash
+# Dry-run + train using the dual-stream video configuration
+python scripts/train_sft.py --config configs/sft_qwen3_4b_deforum_video_dual_stream.yaml --dry-run
+python scripts/train_sft.py --config configs/sft_qwen3_4b_deforum_video_dual_stream.yaml
+
+# Merge, convert and upload the resulting adapter to Ollama and HF Hub
+MODEL_BASENAME=qwen3-4b-deforum-video-dual-stream-lora-v1 \
+BASE_MODEL_ID=Qwen/Qwen3-4B-Instruct-2507 \
+LORA_ADAPTER_DIR=./outputs/qwen3-4b-deforum-video-dual-stream-lora-v1 \
+HF_REPO_ID=Limbicnation/qwen3-4b-deforum-video-dual-stream-lora-v1 \
+OLLAMA_MODEL_NAME=qwen3-4b-deforum-video-dual-stream:v1 \
+TRUST_REMOTE_CODE=true \
+MODELFILE=./Modelfile.dual-stream \
+./convert_and_upload.sh
+```
+
+**Legacy Video prompts (Qwen3-4B → v7 single-field):**
 
 ```bash
 python scripts/train_sft.py --config configs/sft_qwen3_4b_deforum_v7.yaml --dry-run
@@ -211,7 +232,8 @@ python scripts/train_sft.py --config configs/sft_qwen3_4b_deforum_v7.yaml
 ├── configs/
 │   ├── sft_qwen2_5_7b_image_v1.yaml         Active: 1,250-row image v1 (3B base)
 │   ├── sft_qwen2_5_7b_image_v2.yaml         Active: 6,722-row image v2 (7B base)
-│   ├── sft_qwen3_4b_deforum_v7.yaml         Active: video v7
+│   ├── sft_qwen3_4b_deforum_v7.yaml         Active: video v7 (single-field)
+│   ├── sft_qwen3_4b_deforum_video_dual_stream.yaml   Active: video v8 (dual-stream)
 │   ├── sft_qwen3_4b_deforum_v{2..6}.yaml    Historical configs (reference only)
 │   └── dataset_config.yaml                  Dataset-builder defaults
 ├── scripts/
@@ -236,7 +258,8 @@ python scripts/train_sft.py --config configs/sft_qwen3_4b_deforum_v7.yaml
 ├── data/                            Local datasets (raw inputs gitignored)
 ├── notebooks/                       Exploration notebooks
 ├── AGENTS.md                        Full project context for AI agents
-└── CLAUDE.md                        Project conventions and best-practices
+├── CLAUDE.md                        Project conventions and best-practices
+└── docs/                            Additional documentation (MLOps evaluation, Ollama/ComfyUI guide)
 ```
 
 ---
@@ -276,6 +299,7 @@ Each `configs/sft_*.yaml` is a complete training spec consumed by `scripts/train
 | Image v1 | `sft_qwen2_5_7b_image_v1.yaml` | Qwen2.5-3B-Instruct | 32 / 64 | 5 | Best at epoch 3, eval_loss 0.4356 |
 | Image v2 | `sft_qwen2_5_7b_image_v2.yaml` | Qwen2.5-7B-Instruct | 32 / 64 | 3 | Still descending at epoch 3, eval_loss 0.6339 |
 | Video v7 | `sft_qwen3_4b_deforum_v7.yaml` | Qwen3-4B-Instruct-2507 | 32 / 64 | 5 | Best at epoch 2, eval_loss 1.2113 |
+| Video v8 | `sft_qwen3_4b_deforum_video_dual_stream.yaml` | Qwen3-4B-Instruct-2507 | 32 / 64 | 3 | Dual-stream dataset (wan_video, ltx_video, compact_caption) |
 
 ---
 
