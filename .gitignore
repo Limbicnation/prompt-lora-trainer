@@ -225,6 +225,7 @@ data/synthesize_v2_records.json
 data/synthesize_v2_records.jsonl
 # Dual-stream pipeline output (on HF Hub, regenerable via scripts/generate_dual_stream_dataset.py)
 data/dual_stream_records.jsonl
+data/dual_stream_video_v8.jsonl
 
 # ===== ML/Training Artifacts =====
 # Model outputs (push to HuggingFace Hub instead)
