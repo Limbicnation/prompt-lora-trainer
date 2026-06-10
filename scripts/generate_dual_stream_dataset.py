@@ -29,11 +29,18 @@ Row schema:
       "response": "..."               # the prompt in that dialect
     }
 
-Dialects (target_model → response shape):
+Two dialect sets, selected with --dialect-set (default image):
+  image (Stable Diffusion / FLUX):
     flux_t5            dense natural-language prose, 40-120w
     sdxl_dual_clip     front-loaded comma tokens, 15-60w
     compact_caption    25-50w enriched caption (≥1 lighting term)
     steering_modifiers 5-8 comma-separated tags
+  video (LTX-Video / WanVideo):
+    wan_video          Subject+Scene+Motion prose, 20-80w (≥1 camera + ≥1 lighting term)
+    ltx_video          motion-centric shot prose, 20-80w (≥1 camera term)
+    compact_caption    ≤25w global caption
+  Video dialects additionally HARD-REJECT non-visual tokens (scent/sound/memory/...),
+  which contaminate 47.1% of the deforum-v7 source responses.
 
 Two input modes (auto-detected):
   TRANSFORM (primary) — --dataset rows with a `response` column (e.g.
@@ -56,6 +63,11 @@ Usage:
     uv run scripts/generate_dual_stream_dataset.py \
         --dataset Limbicnation/images-diffusion-prompt-style-v2 \
         --render-text --hub-id Limbicnation/dual-stream-image-prompts
+
+    # Video dialects: transform the deforum v7 corpus (Ollama, dry-run smoke test)
+    uv run scripts/generate_dual_stream_dataset.py \
+        --dataset Limbicnation/deforum-prompt-lora-dataset-v7 \
+        --dialect-set video --backend ollama --max-rows 20 --dry-run
 
     # Generate from raw descriptions
     uv run scripts/generate_dual_stream_dataset.py \
@@ -235,10 +247,18 @@ TRANSFORM_SCHEMA = {
 # =============================================================================
 
 def _extract_style(instruction: str, fallback: str) -> str:
-    """Pull a clean concept/style name out of a v2-style instruction."""
+    """Pull a clean concept/style name out of an instruction.
+
+    Handles the image v2 form ("...in the style of '<style>'") and the deforum form
+    ("Generate a cinematic video prompt for: <concept>" / "Write a De Forum art film
+    prompt for: <concept>").
+    """
     m = re.search(r"style of '([^']+)'", instruction or "")
     if m:
         return m.group(1).strip().lstrip(":").strip()
+    m = re.search(r"\bfor:\s*(.+)$", instruction or "", re.IGNORECASE | re.DOTALL)
+    if m:
+        return m.group(1).strip()
     return (fallback or "").strip()
 
 
@@ -302,14 +322,16 @@ def load_inputs(args) -> tuple[list[dict], str]:
 # STAGE 1: GENERATION (produces a 4-field bundle per concept)
 # =============================================================================
 
-def _make_user_prompt(row: dict, mode: str) -> str:
+def _make_user_prompt(row: dict, mode: str, dialect_set: str = "image") -> str:
     if mode == "transform":
         axis = f"\nEMPHASIS AXIS: {row['axis']}" if row.get("axis") else ""
+        label = "SOURCE CINEMATIC PROMPT" if dialect_set == "video" else "SOURCE FLUX PROMPT"
         return (
-            f"SOURCE FLUX PROMPT:\n{row['flux_seed']}{axis}\n\n"
+            f"{label}:\n{row['flux_seed']}{axis}\n\n"
             "Derive the other prompt structures now."
         )
-    return f"IMAGE DESCRIPTION:\n{row['concept']}\n\nWrite the four prompt structures now."
+    label = "SCENE DESCRIPTION" if dialect_set == "video" else "IMAGE DESCRIPTION"
+    return f"{label}:\n{row['concept']}\n\nWrite the prompt structures now."
 
 
 def _extract_json(text: str) -> dict | None:
@@ -329,12 +351,28 @@ def _extract_json(text: str) -> dict | None:
     return None
 
 
-def _assemble(row: dict, data: dict, mode: str) -> dict | None:
-    """Build a flat 4-field bundle from an LLM JSON payload.
+def _assemble(row: dict, data: dict, mode: str, dialect_set: str = "image") -> dict | None:
+    """Build a flat bundle (one key per dialect) from an LLM JSON payload.
 
-    Returns {concept, flux_t5, sdxl_dual_clip, compact_caption, steering_modifiers}
-    or None if any field is missing.
+    image: {concept, flux_t5, sdxl_dual_clip, compact_caption, steering_modifiers}
+    video: {concept, wan_video, ltx_video, compact_caption}
+    Returns None if any required field is missing.
     """
+    if dialect_set == "video":
+        # Video transform rewrites all three dialects (it does not anchor the source
+        # verbatim — the source carries non-visual content that must be stripped).
+        wan = (data.get("wan_video") or "").strip()
+        ltx = (data.get("ltx_video") or "").strip()
+        caption = (data.get("compact_caption") or "").strip()
+        if not (wan and ltx and caption):
+            return None
+        return {
+            "concept": row["concept"],
+            "wan_video": wan,
+            "ltx_video": ltx,
+            "compact_caption": caption,
+        }
+
     if mode == "transform":
         flux = row["flux_seed"]
         sdxl = (data.get("sdxl_dual_clip") or "").strip()
@@ -357,14 +395,14 @@ def _assemble(row: dict, data: dict, mode: str) -> dict | None:
     }
 
 
-def gemini_one(client, schema, row: dict, mode: str) -> dict | None:
+def gemini_one(client, schema, row: dict, mode: str, dialect_set: str = "image") -> dict | None:
     from google.genai import types as genai_types
 
-    system = SYSTEM_TRANSFORM if mode == "transform" else SYSTEM_GENERATE
+    system = SYSTEM_BY[(dialect_set, mode)]
     try:
         resp = client.models.generate_content(
             model=GEN_MODEL,
-            contents=_make_user_prompt(row, mode),
+            contents=_make_user_prompt(row, mode, dialect_set),
             config=genai_types.GenerateContentConfig(
                 system_instruction=system,
                 temperature=0.8,
@@ -375,7 +413,7 @@ def gemini_one(client, schema, row: dict, mode: str) -> dict | None:
             ),
         )
         data = json.loads(resp.text)
-        return _assemble(row, data, mode)
+        return _assemble(row, data, mode, dialect_set)
     except Exception as e:
         msg = str(e)[:160].replace("\n", " ")
         print(f"  ⚠ gen failed [{row['concept'][:40]!r}]: {type(e).__name__}: {msg}",
@@ -383,13 +421,15 @@ def gemini_one(client, schema, row: dict, mode: str) -> dict | None:
         return None
 
 
-def ollama_one(model: str, row: dict, mode: str, debug: bool = False) -> dict | None:
+def ollama_one(
+    model: str, row: dict, mode: str, dialect_set: str = "image", debug: bool = False
+) -> dict | None:
     import ollama as ollama_lib
 
-    system = SYSTEM_TRANSFORM if mode == "transform" else SYSTEM_GENERATE
+    system = SYSTEM_BY[(dialect_set, mode)]
     messages = [
         {"role": "system", "content": system},
-        {"role": "user", "content": _make_user_prompt(row, mode)},
+        {"role": "user", "content": _make_user_prompt(row, mode, dialect_set)},
     ]
     for attempt in range(3):
         try:
@@ -402,7 +442,7 @@ def ollama_one(model: str, row: dict, mode: str, debug: bool = False) -> dict | 
                 print(f"    [DEBUG] {content[:160]}", file=sys.stderr)
             data = _extract_json(content)
             if data:
-                out = _assemble(row, data, mode)
+                out = _assemble(row, data, mode, dialect_set)
                 if out:
                     return out
             if attempt < 2:
@@ -417,24 +457,27 @@ def ollama_one(model: str, row: dict, mode: str, debug: bool = False) -> dict | 
 
 
 def generate_all(rows: list[dict], mode: str, args) -> list[dict]:
-    print(f"🎨 Stage 1: {mode} {len(rows)} concepts via {args.backend}")
+    dset = args.dialect_set
+    print(f"🎨 Stage 1: {mode} {len(rows)} concepts via {args.backend} (dialect-set={dset})")
     bundles: list[dict] = []
 
     if args.backend == "gemini":
         from google import genai
 
         client = genai.Client(api_key=args.gemini_key)
-        schema = TRANSFORM_SCHEMA if mode == "transform" else GENERATE_SCHEMA
+        schema = SCHEMA_BY[(dset, mode)]
         workers = 1 if args.concurrent <= 1 else min(args.concurrent, MAX_CONCURRENT)
         with ThreadPoolExecutor(max_workers=workers) as pool:
-            futures = {pool.submit(gemini_one, client, schema, r, mode): r for r in rows}
+            futures = {
+                pool.submit(gemini_one, client, schema, r, mode, dset): r for r in rows
+            }
             for fut in tqdm(as_completed(futures), total=len(futures), desc="generate"):
                 r = fut.result()
                 if r is not None:
                     bundles.append(r)
     else:  # ollama — sequential (local model, no concurrency benefit)
         for row in tqdm(rows, desc="generate"):
-            r = ollama_one(args.ollama_model, row, mode, debug=args.debug)
+            r = ollama_one(args.ollama_model, row, mode, dset, debug=args.debug)
             if r is not None:
                 bundles.append(r)
 
@@ -512,19 +555,199 @@ DIALECT_GATES = {
 }
 
 
-def fan_out_and_gate(bundles: list[dict], debug: bool = False) -> list[dict]:
-    """Explode each bundle into up to 4 flat rows; gate each dialect independently."""
+# =============================================================================
+# VIDEO DIALECT SET (LTX-Video / WanVideo)
+# =============================================================================
+# Calibrated against Limbicnation/deforum-prompt-lora-dataset-v7 (1,547 train rows):
+#   response words — median 48, p90 57, max 75 (0% reach 90w).
+#   camera term present 89.2% (start with a camera clause 72.9%) → hard gate ok.
+#   lighting term present 99.0% → hard gate ok.
+#   non-visual token (scent/sound/memory/...) present 47.1% → strip in prompt + hard gate.
+# The video corpus is cinematic prose, NOT image/lens prose, so camera/lighting vocab
+# and word budgets differ from the image set above.
+
+VIDEO_DIALECTS: dict[str, str] = {
+    "wan_video": "Generate a WanVideo (UMT5) prompt for:",
+    "ltx_video": "Generate an LTX-Video prompt for:",
+    "compact_caption": "Write a compact video caption for:",
+}
+
+# Source responses are median 48w but ~47% of that is non-visual padding; once the
+# rewrite strips scents/sounds/abstractions the visual core lands near 20-30w. A higher
+# floor would force the model to re-pad with the fluff we are removing, so keep it at 20.
+VID_MIN_W, VID_MAX_W = 20, 80
+VCAPTION_MIN_W, VCAPTION_MAX_W = 4, 25  # plan §3: compact caption <=25 words
+
+# Cinematic camera-motion vocabulary (not lens specs — see CAMERA_TERMS above for image).
+VIDEO_CAMERA_TERMS = [
+    "pan", "tilt", "zoom", "dolly", "track", "tracking", "crane", "push", "pull",
+    "orbit", "aerial", "handheld", "static", "close-up", "closeup", "wide shot",
+    "low-angle", "low angle", "high-angle", "high angle", "camera", "shot", "pov",
+    "drone", "steadicam", "whip pan", "rack focus",
+]
+# Cinematic lighting/atmosphere vocabulary present in the deforum corpus.
+VIDEO_LIGHTING_TERMS = [
+    "light", "lighting", "lit", "chiaroscuro", "backlit", "back light", "rim light",
+    "glow", "shadow", "silhouette", "grain", "film grain", "golden hour", "blue hour",
+    "twilight", "dusk", "dawn", "candlelight", "neon", "volumetric", "god rays",
+    "moonlight", "sunlight", "haze", "fog", "overcast",
+]
+
+# Non-visual content a camera cannot capture — abstractions, senses, sounds, emotions.
+# Hard-rejected in every video dialect (defense in depth behind the LLM rewrite).
+NONVISUAL_TERMS = [
+    "scent", "aroma", "smell", "odor", "odour", "fragran", "perfume", "stench",
+    "sound", "music", "melody", "song", "echo", "whisper", "hum", "silence",
+    "scream", "sob", "cry", "voice", "noise", "roar", "rustle",
+    "grief", "sorrow", "rebellion", "unspoken", "longing", "nostalg", "yearning",
+    "memory", "memories", "remember", "dread", "despair", "loneliness",
+    "taste", "flavor", "flavour",
+]
+NONVISUAL_RE = re.compile(
+    r"\b(" + "|".join(re.escape(t) for t in NONVISUAL_TERMS) + r")\w*", re.IGNORECASE
+)
+
+
+def _has_nonvisual(text: str) -> bool:
+    return bool(NONVISUAL_RE.search(text))
+
+
+def _gate_wan_video(text: str) -> tuple[list[str], list[str]]:
+    fails, warns = [], []
+    w = _words(text)
+    if not (VID_MIN_W <= w <= VID_MAX_W):
+        fails.append(f"wan_video {w}w outside [{VID_MIN_W},{VID_MAX_W}]")
+    low = text.lower()
+    if not any(t in low for t in VIDEO_CAMERA_TERMS):
+        fails.append("wan_video: no camera term")     # hard (89.2% pass in v7)
+    if not any(t in low for t in VIDEO_LIGHTING_TERMS):
+        fails.append("wan_video: no lighting term")   # hard (99.0% pass in v7)
+    if _has_nonvisual(text):
+        fails.append("wan_video: non-visual token")
+    if re.search(r"^\s*[-*•]|\n\s*\d+\.", text):
+        fails.append("wan_video: list formatting (not prose)")
+    return fails, warns
+
+
+def _gate_ltx_video(text: str) -> tuple[list[str], list[str]]:
+    fails, warns = [], []
+    w = _words(text)
+    if not (VID_MIN_W <= w <= VID_MAX_W):
+        fails.append(f"ltx_video {w}w outside [{VID_MIN_W},{VID_MAX_W}]")
+    low = text.lower()
+    if not any(t in low for t in VIDEO_CAMERA_TERMS):
+        fails.append("ltx_video: no camera term")
+    if _has_nonvisual(text):
+        fails.append("ltx_video: non-visual token")
+    if re.search(r"^\s*[-*•]|\n\s*\d+\.", text):
+        fails.append("ltx_video: list formatting (not prose)")
+    return fails, warns
+
+
+def _gate_compact_caption_video(text: str) -> tuple[list[str], list[str]]:
+    fails, warns = [], []
+    w = _words(text)
+    if not (VCAPTION_MIN_W <= w <= VCAPTION_MAX_W):
+        fails.append(f"caption {w}w outside [{VCAPTION_MIN_W},{VCAPTION_MAX_W}]")
+    low = text.lower()
+    if any(b in low for b in BUZZWORDS):
+        fails.append("caption: filler buzzword")
+    if _has_nonvisual(text):
+        fails.append("caption: non-visual token")
+    if not any(t in low for t in VIDEO_LIGHTING_TERMS):
+        warns.append("caption: no lighting term")     # soft — captions are terse
+    return fails, warns
+
+
+VIDEO_DIALECT_GATES = {
+    "wan_video": _gate_wan_video,
+    "ltx_video": _gate_ltx_video,
+    "compact_caption": _gate_compact_caption_video,
+}
+
+_VIDEO_FIELD_RULES = (
+    "STRICTLY REMOVE all non-visual content: scents, smells, tastes, sounds, music, "
+    "silence, screams, voices, and abstract/emotional metaphors (memory, grief, "
+    "rebellion, unspoken tension, longing). Keep ONLY what a camera can physically see.\n\n"
+    "Field rules:\n"
+    "- wan_video: 25-70 words. Order as Subject, then Scene, then Motion. Natural-language "
+    "prose. Must include the camera movement and one concrete lighting/atmosphere cue.\n"
+    "- ltx_video: 25-70 words. Motion-centric shot description: lead with the camera move, "
+    "then subject and visible action. Prose, no bullet points, no lists.\n"
+    "- compact_caption: 25 words or fewer. Dense global caption naming the subject, the "
+    "setting, and one visible lighting cue. No filler adjectives."
+)
+
+SYSTEM_TRANSFORM_VIDEO = (
+    "You are an expert prompt engineer for text-to-video diffusion models "
+    "(WanVideo/UMT5, LTX-Video/T5-XXL). You are given an existing cinematic shot "
+    "description. Rewrite it into video-model prompt dialects WITHOUT changing the "
+    "subject, setting, camera movement, or lighting.\n\n"
+    + _VIDEO_FIELD_RULES
+    + "\n\nReturn STRICT JSON with keys: wan_video, ltx_video, compact_caption. "
+    "No markdown fences, no preamble."
+)
+
+SYSTEM_GENERATE_VIDEO = (
+    "You are an expert prompt engineer for text-to-video diffusion models "
+    "(WanVideo/UMT5, LTX-Video/T5-XXL). Given a raw scene description, write three "
+    "video-model prompt dialects for it.\n\n"
+    + _VIDEO_FIELD_RULES
+    + "\n\nReturn STRICT JSON with keys: wan_video, ltx_video, compact_caption. "
+    "No markdown fences, no preamble."
+)
+
+VIDEO_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "wan_video": {"type": "STRING"},
+        "ltx_video": {"type": "STRING"},
+        "compact_caption": {"type": "STRING"},
+    },
+    "required": ["wan_video", "ltx_video", "compact_caption"],
+}
+
+SYSTEM_PROMPT_TRAIN_VIDEO = (
+    "You are an expert text-to-video prompt generator for diffusion models "
+    "(WanVideo, LTX-Video). Given a concept and a target model, produce the prompt in "
+    "that model's dialect. No labels, no preamble, no command-line flags."
+)
+
+# Registries keyed by --dialect-set (and mode where relevant).
+DIALECTS_BY = {"image": DIALECTS, "video": VIDEO_DIALECTS}
+GATES_BY = {"image": DIALECT_GATES, "video": VIDEO_DIALECT_GATES}
+SYSTEM_PROMPT_TRAIN_BY = {"image": SYSTEM_PROMPT_TRAIN, "video": SYSTEM_PROMPT_TRAIN_VIDEO}
+SYSTEM_BY = {
+    ("image", "transform"): SYSTEM_TRANSFORM,
+    ("image", "generate"): SYSTEM_GENERATE,
+    ("video", "transform"): SYSTEM_TRANSFORM_VIDEO,
+    ("video", "generate"): SYSTEM_GENERATE_VIDEO,
+}
+SCHEMA_BY = {
+    ("image", "transform"): TRANSFORM_SCHEMA,
+    ("image", "generate"): GENERATE_SCHEMA,
+    ("video", "transform"): VIDEO_SCHEMA,
+    ("video", "generate"): VIDEO_SCHEMA,
+}
+
+
+def fan_out_and_gate(
+    bundles: list[dict], dialect_set: str = "image", debug: bool = False
+) -> list[dict]:
+    """Explode each bundle into flat rows (one per dialect); gate each independently."""
     print("🧹 Stage 2: fan-out + per-dialect gates")
+    dialects = DIALECTS_BY[dialect_set]
+    gates = GATES_BY[dialect_set]
     rows: list[dict] = []
     n_warn = 0
-    per_dialect = {d: 0 for d in DIALECTS}
+    per_dialect = {d: 0 for d in dialects}
 
     for b in bundles:
-        for dialect, prefix in DIALECTS.items():
+        for dialect, prefix in dialects.items():
             text = (b.get(dialect) or "").strip()
             if not text:
                 continue
-            fails, warns = DIALECT_GATES[dialect](text)
+            fails, warns = gates[dialect](text)
             if _has_bad_pattern(text):
                 fails.append(f"{dialect}: forbidden pattern (flag/markdown/preamble)")
             if fails:
@@ -542,7 +765,7 @@ def fan_out_and_gate(bundles: list[dict], debug: bool = False) -> list[dict]:
             })
             per_dialect[dialect] += 1
 
-    total_candidates = len(bundles) * len(DIALECTS)
+    total_candidates = len(bundles) * len(dialects)
     print(f"   {len(rows)}/{total_candidates} rows passed ({n_warn} with soft warnings)")
     print("   by dialect: " + ", ".join(f"{d}={n}" for d, n in per_dialect.items()))
     return rows
@@ -552,17 +775,18 @@ def fan_out_and_gate(bundles: list[dict], debug: bool = False) -> list[dict]:
 # STAGE 3: OUTPUT
 # =============================================================================
 
-def render_text_field(rows: list[dict]) -> None:
+def render_text_field(rows: list[dict], dialect_set: str = "image") -> None:
     """Add a Qwen-chat-template `text` column in-place (drop-in for train_sft.py)."""
     from transformers import AutoTokenizer
 
     print(f"📝 Rendering `text` field with {TRAIN_TOKENIZER_ID}")
+    system_prompt = SYSTEM_PROMPT_TRAIN_BY[dialect_set]
     tok = AutoTokenizer.from_pretrained(
         TRAIN_TOKENIZER_ID, token=os.environ.get("HF_TOKEN"), trust_remote_code=False
     )
     for r in rows:
         messages = [
-            {"role": "system", "content": SYSTEM_PROMPT_TRAIN},
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": r["instruction"]},
             {"role": "assistant", "content": r["response"]},
         ]
@@ -610,6 +834,10 @@ def main() -> int:
     src.add_argument("--dataset", help="HF dataset id (transform mode if it has a `response` column)")
     src.add_argument("--input", help="Local JSONL/JSON file of raw descriptions")
     parser.add_argument("--split", default="train", help="Dataset split (default: train)")
+    parser.add_argument(
+        "--dialect-set", choices=["image", "video"], default="image",
+        help="image: flux_t5/sdxl/caption/modifiers; video: wan_video/ltx_video/caption",
+    )
     parser.add_argument("--backend", choices=["gemini", "ollama"], default="gemini")
     parser.add_argument("--ollama-model", default=DEFAULT_OLLAMA_MODEL)
     parser.add_argument("--output", default=DEFAULT_OUTPUT, help="Local JSONL output path")
@@ -647,7 +875,7 @@ def main() -> int:
 
     t0 = time.time()
     bundles = generate_all(rows, mode, args)
-    final = fan_out_and_gate(bundles, debug=args.debug)
+    final = fan_out_and_gate(bundles, dialect_set=args.dialect_set, debug=args.debug)
 
     print(f"\n📊 Summary (elapsed {time.time() - t0:.1f}s):")
     print(f"   concepts   → {len(rows)}")
@@ -673,7 +901,7 @@ def main() -> int:
     # discard generated rows (this previously lost a full run to a missing jinja2).
     write_jsonl(final, args.output)
     if args.render_text:
-        render_text_field(final)
+        render_text_field(final, dialect_set=args.dialect_set)
         write_jsonl(final, args.output)  # re-write with the `text` column
     if args.hub_id:
         push_dataset(final, args.hub_id, hf_token)
