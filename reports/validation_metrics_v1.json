@@ -1,0 +1,236 @@
+{
+  "adapter": {
+    "wan_video": {
+      "n": 30,
+      "avd": 0.0453,
+      "fc": 0.9833,
+      "stc": 0.7053,
+      "camera_lead_rate": 0.9,
+      "grain_rate": 0.2667,
+      "hallucination_rate": 0.0,
+      "median_wc": 36,
+      "distinct_2": 0.7414,
+      "max_single_camera_share": 0.8
+    },
+    "ltx_video": {
+      "n": 30,
+      "avd": 0.0346,
+      "fc": 0.9889,
+      "stc": 0.7194,
+      "camera_lead_rate": 0.9333,
+      "grain_rate": 0.2333,
+      "hallucination_rate": 0.0,
+      "median_wc": 36,
+      "distinct_2": 0.7589,
+      "max_single_camera_share": 0.8667
+    },
+    "compact_caption": {
+      "n": 30,
+      "avd": 0.0033,
+      "fc": 1.0,
+      "stc": 0.7275,
+      "camera_lead_rate": 0.0333,
+      "grain_rate": 0.0,
+      "hallucination_rate": 0.0,
+      "median_wc": 8,
+      "distinct_2": 0.9244,
+      "max_single_camera_share": 0.0
+    }
+  },
+  "base": {
+    "wan_video": {
+      "n": 30,
+      "avd": 0.0082,
+      "fc": 0.5834,
+      "stc": 0.7357,
+      "camera_lead_rate": 0.0,
+      "grain_rate": 0.0333,
+      "hallucination_rate": 0.0,
+      "median_wc": 97,
+      "distinct_2": 0.8282,
+      "max_single_camera_share": 0.0333
+    },
+    "ltx_video": {
+      "n": 30,
+      "avd": 0.0089,
+      "fc": 0.6222,
+      "stc": 0.7088,
+      "camera_lead_rate": 0.0,
+      "grain_rate": 0.0,
+      "hallucination_rate": 0.0,
+      "median_wc": 91,
+      "distinct_2": 0.8172,
+      "max_single_camera_share": 0.0333
+    },
+    "compact_caption": {
+      "n": 30,
+      "avd": 0.0045,
+      "fc": 0.775,
+      "stc": 0.7317,
+      "camera_lead_rate": 0.0333,
+      "grain_rate": 0.0,
+      "hallucination_rate": 0.0,
+      "median_wc": 58,
+      "distinct_2": 0.6789,
+      "max_single_camera_share": 0.0
+    }
+  },
+  "gates": [
+    {
+      "gate": "wan_video.fc>=0.9",
+      "severity": "hard",
+      "passed": true,
+      "value": "0.983"
+    },
+    {
+      "gate": "wan_video.stc>=0.7",
+      "severity": "hard",
+      "passed": true,
+      "value": "0.705"
+    },
+    {
+      "gate": "wan_video.avd>=0.1",
+      "severity": "soft",
+      "passed": false,
+      "value": "0.045"
+    },
+    {
+      "gate": "wan_video.camera_lead>=0.85",
+      "severity": "soft",
+      "passed": true,
+      "value": "0.900"
+    },
+    {
+      "gate": "wan_video.hallucination<=0.01",
+      "severity": "hard",
+      "passed": true,
+      "value": "0.000"
+    },
+    {
+      "gate": "wan_video.grain<=0.15",
+      "severity": "soft",
+      "passed": false,
+      "value": "0.267"
+    },
+    {
+      "gate": "wan_video.distinct2>=0.6",
+      "severity": "soft",
+      "passed": true,
+      "value": "0.741"
+    },
+    {
+      "gate": "wan_video.single_cam<=0.35",
+      "severity": "soft",
+      "passed": false,
+      "value": "0.800"
+    },
+    {
+      "gate": "wan_video.fc_delta_vs_base>=0.1",
+      "severity": "hard",
+      "passed": true,
+      "value": "+0.400"
+    },
+    {
+      "gate": "ltx_video.fc>=0.9",
+      "severity": "hard",
+      "passed": true,
+      "value": "0.989"
+    },
+    {
+      "gate": "ltx_video.stc>=0.7",
+      "severity": "hard",
+      "passed": true,
+      "value": "0.719"
+    },
+    {
+      "gate": "ltx_video.avd>=0.08",
+      "severity": "soft",
+      "passed": false,
+      "value": "0.035"
+    },
+    {
+      "gate": "ltx_video.camera_lead>=0.85",
+      "severity": "soft",
+      "passed": true,
+      "value": "0.933"
+    },
+    {
+      "gate": "ltx_video.hallucination<=0.01",
+      "severity": "hard",
+      "passed": true,
+      "value": "0.000"
+    },
+    {
+      "gate": "ltx_video.grain<=0.15",
+      "severity": "soft",
+      "passed": false,
+      "value": "0.233"
+    },
+    {
+      "gate": "ltx_video.distinct2>=0.6",
+      "severity": "soft",
+      "passed": true,
+      "value": "0.759"
+    },
+    {
+      "gate": "ltx_video.single_cam<=0.35",
+      "severity": "soft",
+      "passed": false,
+      "value": "0.867"
+    },
+    {
+      "gate": "ltx_video.fc_delta_vs_base>=0.1",
+      "severity": "hard",
+      "passed": true,
+      "value": "+0.367"
+    },
+    {
+      "gate": "compact_caption.fc>=0.95",
+      "severity": "hard",
+      "passed": true,
+      "value": "1.000"
+    },
+    {
+      "gate": "compact_caption.stc>=0.68",
+      "severity": "hard",
+      "passed": true,
+      "value": "0.728"
+    },
+    {
+      "gate": "compact_caption.avd>=0.0",
+      "severity": "soft",
+      "passed": true,
+      "value": "0.003"
+    },
+    {
+      "gate": "compact_caption.hallucination<=0.01",
+      "severity": "hard",
+      "passed": true,
+      "value": "0.000"
+    },
+    {
+      "gate": "compact_caption.grain<=0.15",
+      "severity": "soft",
+      "passed": true,
+      "value": "0.000"
+    },
+    {
+      "gate": "compact_caption.distinct2>=0.6",
+      "severity": "soft",
+      "passed": true,
+      "value": "0.924"
+    },
+    {
+      "gate": "compact_caption.single_cam<=0.35",
+      "severity": "soft",
+      "passed": true,
+      "value": "0.000"
+    },
+    {
+      "gate": "compact_caption.fc_delta_vs_base>=0.1",
+      "severity": "hard",
+      "passed": true,
+      "value": "+0.225"
+    }
+  ]
+}

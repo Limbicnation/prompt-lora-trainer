@@ -247,3 +247,6 @@ llama.cpp/
 
 # Unsloth compiled cache
 unsloth_compiled_cache/
+
+# Reproducible model-output validation dump (regenerate: scripts/validate_model_output.py)
+data/validation_generations_v1.jsonl

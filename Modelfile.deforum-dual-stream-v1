@@ -1,0 +1,25 @@
+FROM qwen3-4b-deforum-dual-stream-lora:v1
+
+# Qwen3-4B video dual-stream prompt model (QLoRA, merged to Q8 GGUF).
+# Trained on the RAW "### Instruction / ### Response" text format — NOT a chat
+# template. Routing is by a dialect prefix inside the user message; the prefix IS
+# the routing signal and must vary, so there is no single auto-prefix:
+#   "Generate a WanVideo (UMT5) prompt for: <concept>"
+#   "Generate an LTX-Video prompt for: <concept>"
+#   "Write a compact video caption for: <concept>"
+#
+# The TEMPLATE wraps the user prompt in the training scaffold, so callers
+# (ComfyUI, CLI) send only "<dialect prefix> <concept>" and still get clean,
+# preamble-free output. Without this wrapper a bare prefix leaks a markdown
+# header ("### WanVideo Prompt: ...") — the FC failure mode found in validation.
+TEMPLATE """### Instruction:
+{{ .Prompt }}
+
+### Response:
+"""
+
+PARAMETER temperature 0.7
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.2
+PARAMETER num_ctx 4096
+PARAMETER stop "### Instruction:"

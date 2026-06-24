@@ -1,0 +1,101 @@
+version: "1.0.0"
+
+metadata:
+  name: video-prompt-validation
+  model_under_test: Limbicnation/qwen3-4b-deforum-video-dual-stream-lora-v1
+  base_model: Qwen/Qwen3-4B-Instruct-2507
+  target_architectures: [ltx-video, wan2.1]
+  text_encoders: [t5-xxl, umt5]
+  dialects: [wan_video, ltx_video, compact_caption]
+  owner: limbicnation
+  description: >-
+    End-to-end validation of TRL/QLoRA fine-tuned video-prompt outputs against
+    LTX-Video and Wan2.1 requirements. Gates the Hub/Ollama promotion of new
+    adapter revisions. Thresholds calibrated from the v8 dataset measurements.
+
+evaluation_pipeline:
+
+  preconditions:
+    inference_format: "### Instruction:\\n{prefix} {concept}\\n\\n### Response:\\n"
+    chat_template_forbidden: true            # v8 trained on raw text format, not Qwen3 chat
+    dialect_prefixes:
+      wan_video: "Generate a WanVideo (UMT5) prompt for:"
+      ltx_video: "Generate an LTX-Video prompt for:"
+      compact_caption: "Write a compact video caption for:"
+    decoding: { do_sample: false, max_new_tokens: 120 }  # greedy = reproducible
+
+  phase_1_ingestion_and_baseline:
+    test_set: data/validation_test_concepts.jsonl
+    test_set_size: 30
+    ood_fraction: 0.80
+    assert_ood_disjoint_from: data/dual_stream_video_v8.jsonl
+    references:
+      base: { adapter: disabled }
+      previous: Limbicnation/qwen3-4b-deforum-prompt-lora-v7
+    generations_out: data/validation_generations_v1.jsonl
+
+  phase_2_automated_metrics:
+    scorer: scripts/validate_model_output.py
+    metrics_out: reports/validation_metrics_v1.json
+    metrics:
+      action_verb_density:
+        definition: (motion_verb_tokens + camera_move_tokens) / total_tokens
+        lexicon: [dolly, pan, tilt, track, tracking, push, pull, zoom, orbit,
+                  crane, glide, drift, sweep, rise, descend, rotate, handheld, aerial]
+      spatial_temporal_consistency:
+        definition: 0.5*concept_grounding + 0.3*single_scene + 0.2*temporal_order
+        concept_grounding: { method: sbert_cosine, min: 0.45 }
+        single_scene: { method: rule_plus_nli_no_contradiction }
+        temporal_order: { method: camera_subject_setting_order }
+      formatting_compliance:
+        definition: mean of 6 binary checks
+        checks: [camera_token_present, leads_with_camera_verb, wordcount_in_window,
+                 no_cli_flags, no_chat_token_leak, no_markdown_or_preamble]
+
+  phase_3_human_in_the_loop:
+    sample_size: 30
+    stratification: { per_dialect: 10, ood_weighted: true }
+    raters: 2
+    min_mean_score: 0.85
+    min_inter_rater_kappa: 0.60
+    feedback: disagreements_become_gate_fixtures
+
+  phase_4_cicd_gating_and_deployment:
+    trigger: pre_hub_push
+    on_hard_gate_fail: block_promotion
+    on_soft_gate_fail: warn_and_open_issue
+    on_pass: { tag_revision: true, record_manifest_hash: true }
+    promotion_targets: [huggingface_hub, ollama]
+
+metrics_thresholds:
+  # stc_min calibrated to sbert-MiniLM grounding: clean prompt ~0.72, hallucinated ~0.42,
+  # non-camera-led ~0.62 -> gate discriminates on the single_scene/temporal deductions.
+  per_dialect:
+    wan_video:        { avd_min: 0.10, stc_min: 0.70, fc_min: 0.90, camera_lead_min: 0.85, wordcount: [21, 56] }
+    ltx_video:        { avd_min: 0.08, stc_min: 0.70, fc_min: 0.90, camera_lead_min: 0.85, wordcount: [20, 50] }
+    compact_caption:  { avd_min: 0.00, stc_min: 0.68, fc_min: 0.95, camera_lead_min: null, wordcount: [5, 20] }
+  corpus_guardrails:
+    hallucination_rate_max: 0.01      # measured 0.0099 on v8 train
+    film_grain_freq_max: 0.15         # measured 0.266 -> reduction target
+    distinct_2_min: 0.60
+    single_camera_move_share_max: 0.35  # measured dolly ~0.49 -> diversify
+  regression_vs_base:
+    avd_delta_min: 0.03               # fine-tuned must exceed base model
+    fc_delta_min: 0.10
+
+deployment_gates:
+  hard:                               # any failure blocks promotion
+    - all_per_dialect.fc_min
+    - all_per_dialect.stc_min
+    - corpus_guardrails.hallucination_rate_max
+    - regression_vs_base.fc_delta_min
+    - phase_3_human_in_the_loop.min_mean_score
+    - preconditions.chat_template_forbidden
+  soft:                               # warn + open issue, do not block
+    - all_per_dialect.avd_min
+    - all_per_dialect.camera_lead_min
+    - corpus_guardrails.film_grain_freq_max
+    - corpus_guardrails.single_camera_move_share_max
+  rollback:
+    strategy: keep_previous_revision_live_until_all_hard_gates_pass
+    previous_known_good: Limbicnation/qwen3-4b-deforum-prompt-lora-v7
