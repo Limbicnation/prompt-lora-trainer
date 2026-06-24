@@ -378,7 +378,12 @@ def check_gates(adapter_agg: dict, base_agg: dict | None) -> list[tuple]:
 
 
 # --- model -----------------------------------------------------------------------------
-def load():
+def load(adapter_dir: Path = ADAPTER_DIR):
+    if not (adapter_dir / "adapter_config.json").exists():
+        raise FileNotFoundError(
+            f"LoRA adapter not found at {adapter_dir}. Train it first, download it from the Hub "
+            f"(Limbicnation/qwen3-4b-deforum-video-dual-stream-lora-v1), or pass --adapter-dir."
+        )
     bnb = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
@@ -389,9 +394,9 @@ def load():
     base = AutoModelForCausalLM.from_pretrained(
         BASE_ID, device_map="auto", quantization_config=bnb, trust_remote_code=True
     )
-    print(f"📥 Loading adapter: {ADAPTER_DIR}")
-    model = PeftModel.from_pretrained(base, str(ADAPTER_DIR))
-    tok = AutoTokenizer.from_pretrained(str(ADAPTER_DIR))
+    print(f"📥 Loading adapter: {adapter_dir}")
+    model = PeftModel.from_pretrained(base, str(adapter_dir))
+    tok = AutoTokenizer.from_pretrained(str(adapter_dir))
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
     return model, tok
@@ -468,6 +473,7 @@ def main() -> int:
     p.add_argument("--no-base", action="store_true", help="skip base-model baseline generation")
     p.add_argument("--limit", type=int, default=0, help="limit number of concepts (0 = all)")
     p.add_argument("--max-new-tokens", type=int, default=120)
+    p.add_argument("--adapter-dir", type=Path, default=ADAPTER_DIR, help="LoRA adapter directory")
     p.add_argument(
         "--rescore",
         action="store_true",
@@ -476,28 +482,35 @@ def main() -> int:
     args = p.parse_args()
 
     if args.rescore:
+        if not GEN_OUT.exists():
+            raise FileNotFoundError(f"No saved generations at {GEN_OUT}; run a full pass first.")
         records = [json.loads(line) for line in GEN_OUT.read_text().splitlines() if line.strip()]
         for r in records:  # re-score stored outputs with the current metric definitions
             r["score"] = score_prompt(r["output"], r["concept"], r["dialect"])
         GEN_OUT.write_text("\n".join(json.dumps(r) for r in records) + "\n")
         return report(records)
 
-    model, tok = load()
+    model, tok = load(args.adapter_dir)
     if args.smoke:
         return smoke(model, tok)
 
     concepts = [json.loads(line) for line in TEST_CONCEPTS.read_text().splitlines() if line.strip()]
-    train_concepts = {
-        json.loads(line)["original_concept"].lower()
-        for line in TRAIN_DATA.read_text().splitlines()
-        if line.strip()
-    }
-    leaked = [
-        c["concept"]
-        for c in concepts
-        if c.get("split") == "ood" and c["concept"].lower() in train_concepts
-    ]
-    assert not leaked, f"OOD concepts leaked into training data: {leaked}"
+    # Leak-check OOD concepts against the training set. The training jsonl is gitignored, so on a
+    # fresh clone it may be absent — skip the check (with a warning) rather than crash.
+    if TRAIN_DATA.exists():
+        train_concepts = {
+            json.loads(line)["original_concept"].lower()
+            for line in TRAIN_DATA.read_text().splitlines()
+            if line.strip()
+        }
+        leaked = [
+            c["concept"]
+            for c in concepts
+            if c.get("split") == "ood" and c["concept"].lower() in train_concepts
+        ]
+        assert not leaked, f"OOD concepts leaked into training data: {leaked}"
+    else:
+        print(f"⚠️  {TRAIN_DATA} not found — skipping OOD leak-check.")
     if args.limit:
         concepts = concepts[: args.limit]
 
